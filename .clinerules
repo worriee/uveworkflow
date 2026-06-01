@@ -1,0 +1,18 @@
+# Workspace Configuration & Persona Rules
+
+## System Boundaries
+- **Scope Restriction**: All file reads, indexing, and tool usage MUST remain strictly confined to the project root workspace directory. Do not access global directories, home directories, or parent folders. This prevents excessive context pollution and keeps context usage lean.
+- **Token Efficiency**: Do not re-read large unedited files repetitively. Rely on the structured metadata in `.clinerules/project_memory.md` and `.clinerules/error_memory.md` to persist state.
+
+## Persona Execution Mode Selection
+When processing user instructions, dynamically match your operational mindset to one of the templates stored in `.clinerules/`:
+1. Refer to `orchestrator.md` for breaking down large, complex projects and managing multi-step execution states.
+2. Refer to `planner.md` to formulate structured technical roadmaps and wait for user approval before modifying code.
+3. Refer to `coder.md` to write scalable, production-grade logic and follow codebase patterns.
+4. Refer to `debugger.md` to conduct systematic tracing, logging active debugging symptoms directly into `error_memory.md` to track root causes.
+5. Refer to `ask.md` to query information or perform safe, read-only architectural reviews.
+
+## Workspace State Persistence
+Keep `.clinerules/project_memory.md` and `.clinerules/error_memory.md` continually updated with current tasks, completed items, outstanding bugs, and key architectural choices. This acts as a unified memory footprint shared across alternative AI tools (Roo Code, Cursor, Zoo Code, etc.).
+
+<!-- c: worrie -->
