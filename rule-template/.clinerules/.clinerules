@@ -1,16 +1,23 @@
 # Workspace Configuration & Persona Rules
 
 ## System Boundaries
-- **Scope Restriction**: All file reads, indexing, and tool usage MUST remain strictly confined to the project root workspace directory. Do not access global directories, home directories, or parent folders. This prevents excessive context pollution and keeps context usage lean.
-- **Token Efficiency**: Do not re-read large unedited files repetitively. Rely on the structured metadata in `.clinerules/project_memory.md`, `.clinerules/error_memory.md`, and `.clinerules/codebase_map.md` to persist state.
+- Scope Restriction: All file reads, indexing, and tool usage MUST remain strictly confined to the project root workspace directory. Do not access global directories, home directories, or parent folders. This prevents excessive context pollution and keeps context usage lean.
+- Token Efficiency: Do not re-read large unedited files repetitively. Rely on the structured metadata in `project_memory.md`, `error_memory.md`, and `codebase_map.md` to persist state.
 
-## Dynamic Entry Rule (Sync-on-Prompt Verification)
-- **Mandatory Workspace Re-Analysis**: Simultaneously, you must check for independent manual changes made by the user to the codebase.
-- **State Synchronization**: If manual edits are detected, immediately synchronize `.clinerules/project_memory.md`, `.clinerules/error_memory.md`, and `.clinerules/codebase_map.md` before processing the prompt or writing code.
+## Manual Sync Entry Rule (Flag-Triggered Verification)
+- On-Demand Memory Synchronization: Background auto-updates are disabled. You MUST only scan, re-analyze, or update the local tracking layers when explicitly commanded by the user via the following command flags:
+  - `-context`: Triggers a full analysis and updates `project_memory.md` to map out active project context and milestones.
+  - `-error`: Triggers an active diagnostic scan and updates `error_memory.md` with current bugs, stack traces, or resolution history.
+  - `-codebase`: Triggers a complete structure inspection and updates `codebase_map.md` with descriptions of the files and current project workflow.
+  - `-setup`: Triggers a combined sequential execution of all the above updates across all three files simultaneously.
+- Strict Adherence: For regular prompts without these flags, assume the existing information in the memory files is unchanged and use it as your ground truth.
+
+## Enforced Context Loss Read Execution
+- Amnesia Mitigation Protocol: If a token reset, context window expiration, or session drop is detected, or if the user appends any memory sync flag (`-context`, `-error`, `-codebase`, `-setup`), you are strictly commanded to immediately re-read this main file (`.clinerules`) along with the memory tracking files before generating any software code outputs.
 
 ## CRITICAL: Context Loss & Token Reset Recovery Protocol
-- **Enforced Context Re-Reads**: If you notice a loss of context window memory, a token expiration event, or a session reset during your interactions, you are strictly commanded to halt execution and immediately re-read this main file (`.clinerules/.clinerules`), followed by your three memory layers: `project_memory.md`, `error_memory.md`, and `codebase_map.md`.
-- **Re-Enforce Ground Truth**: You must use these local architecture guides to rebuild your mental map of the project instantly without asking the user to re-explain their software codebase or past progress.
+- Enforced Context Re-Reads: If you notice a loss of context window memory, a token expiration event, or a session reset during your interactions, you are strictly commanded to halt execution and immediately re-read this main file (`.clinerules`), followed by your three memory layers: `project_memory.md`, `error_memory.md`, and `codebase_map.md`.
+- Re-Enforce Ground Truth: You must use these local architecture guides to rebuild your mental map of the project instantly without asking the user to re-explain their software codebase or past progress.
 
 ## Persona Execution Mode Selection
 When processing user instructions, dynamically match your operational mindset to one of the templates stored in `.clinerules/`:
@@ -20,13 +27,8 @@ When processing user instructions, dynamically match your operational mindset to
 4. Refer to `debugger.md` to conduct systematic tracing, logging active debugging symptoms directly into `error_memory.md` to track root causes.
 5. Refer to `ask.md` to query information or perform safe, read-only architectural reviews.
 
-## Workspace State Persistence & Mandatory Updates
-- **Mandatory Post-Action Update**: Every single time a new feature is added, a file is modified, or a debugging code block is proposed/implemented, you MUST update the corresponding memory files (`project_memory.md`, `error_memory.md`, or `codebase_map.md`) immediately. Writing code without updating memory is considered an incomplete task.
-- **Atomic Commits to Memory**: Treat code changes and memory updates as a single atomic action. Do not wait for the user to prompt you to update the memory; update it automatically as the final step of your current tool execution loop.
-- **Amnesia Recovery Trigger**: The moment a token reset or context window flush occurs, you are strictly forbidden from guessing the project state. You must execute a read tool command on this folder before answering any user question.
-
 ## Strict Rule Modification Constraints
-- **Core Rule Mutation Ban**: You are strictly prohibited from editing, modifying, or deleting core framework configurations, instructions, or rules files (`.clinerules`, `system_instructions.md`, `orchestrator.md`, `planner.md`, `coder.md`, `debugger.md`, `ask.md`). These rules are immutable.
+- **Core Rule Mutation Ban**: You are strictly prohibited from editing, modifying, or deleting core framework configurations, instructions, or rules files (`.clinerules`, `system_instructions.md`, `.clinerules/orchestrator.md`, `.clinerules/planner.md`, `.clinerules/coder.md`, `.clinerules/debugger.md`, `.clinerules/ask.md`). These rules are immutable.
 - **Authorized Scope**: The only configuration files you are authorized to edit are the dynamic memory layers (`project_memory.md`, `error_memory.md`, `codebase_map.md`) to maintain persistent state.
 
 <!-- c: worrie -->

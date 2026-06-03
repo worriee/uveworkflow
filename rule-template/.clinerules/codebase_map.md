@@ -15,7 +15,6 @@
 
 ### 📂 Key Folders
 * `/src` - Contains the main operational code logic.
-* `/.clinerules` - System instruction profiles and state tracking engines.
 
 ### 📄 File-by-File Breakdown
 * `filename.ext`: *[Describe exactly what this file does, who imports it, and its main responsibility in plain, easy-to-learn terms for a beginner.]*

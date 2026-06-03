@@ -1,34 +1,34 @@
 # Workspace Configuration & Persona Rules
 
 ## System Boundaries
-- **Scope Restriction**: All file reads, indexing, and tool usage MUST remain strictly confined to the project root workspace directory. Do not access global directories, home directories, or parent folders. This prevents excessive context pollution and keeps context usage lean.
-- **Token Efficiency**: Do not re-read large unedited files repetitively. Rely on the structured metadata in `.roo/rules/project_memory.md`, `.roo/rules/error_memory.md`, and `.roo/rules/codebase_map.md` to persist state.
+- Scope Restriction: All file reads, indexing, and tool usage MUST remain strictly confined to the project root workspace directory. Do not access global directories, home directories, or parent folders. This prevents excessive context pollution and keeps context usage lean.
+- Token Efficiency: Do not re-read large unedited files repetitively. Rely on the structured metadata in `.roo/rules/project_memory.md`, `.roo/rules/error_memory.md`, and `.roo/rules/codebase_map.md` to persist state.
 
 ## Manual Sync Entry Rule (Flag-Triggered Verification)
-- **On-Demand Memory Synchronization**: Background auto-updates are disabled. You MUST only scan, re-analyze, or update the local tracking layers when explicitly commanded by the user via the following command flags:
+- On-Demand Memory Synchronization: Background auto-updates are disabled. You MUST only scan, re-analyze, or update the local tracking layers when explicitly commanded by the user via the following command flags:
   - `-context`: Triggers a full analysis and updates `.roo/rules/project_memory.md` to map out active project context and milestones.
   - `-error`: Triggers an active diagnostic scan and updates `.roo/rules/error_memory.md` with current bugs, stack traces, or resolution history.
   - `-codebase`: Triggers a complete structure inspection and updates `.roo/rules/codebase_map.md` with descriptions of the files and current project workflow.
   - `-setup`: Triggers a combined sequential execution of all the above updates across all three files simultaneously.
-- **Strict Adherence**: For regular prompts without these flags, assume the existing information in the memory files is unchanged and use it as your ground truth.
+- Strict Adherence: For regular prompts without these flags, assume the existing information in the memory files is unchanged and use it as your ground truth.
 
 ## Enforced Context Loss Read Execution
-- **Amnesia Mitigation Protocol**: If a token reset, context window expiration, or session drop is detected, or if the user appends any memory sync flag (`-context`, `-error`, `-codebase`, `-setup`), you are strictly commanded to immediately re-read this main file (`.clinerules`) along with the memory tracking files before generating any software code outputs.
+- Amnesia Mitigation Protocol: If a token reset, context window expiration, or session drop is detected, or if the user appends any memory sync flag (`-context`, `-error`, `-codebase`, `-setup`), you are strictly commanded to immediately re-read this main file (`.roo/rules/.clinerules`) along with the memory tracking files before generating any software code outputs.
 
 ## CRITICAL: Context Loss & Token Reset Recovery Protocol
-- **Enforced Context Re-Reads**: If you notice a loss of context window memory, a token expiration event, or a session reset during your interactions, you are strictly commanded to halt execution and immediately re-read this main file (`.roo/rules/.clinerules`), followed by your three memory layers: `project_memory.md`, `error_memory.md`, and `codebase_map.md`.
-- **Re-Enforce Ground Truth**: You must use these local architecture guides to rebuild your mental map of the project instantly without asking the user to re-explain their software codebase or past progress.
+- Enforced Context Re-Reads: If you notice a loss of context window memory, a token expiration event, or a session reset during your interactions, you are strictly commanded to halt execution and immediately re-read this main file (`.roo/rules/.clinerules`), followed by your three memory layers: `.roo/rules/project_memory.md`, `.roo/rules/error_memory.md`, and `.roo/rules/codebase_map.md`.
+- Re-Enforce Ground Truth: You must use these local architecture guides to rebuild your mental map of the project instantly without asking the user to re-explain their software codebase or past progress.
 
 ## Persona Execution Mode Selection
-When processing user instructions, dynamically match your operational mindset to one of the templates stored in `.roo/rules-*/`:
-1. Refer to `orchestrator.md` for breaking down large, complex projects and managing multi-step execution states.
-2. Refer to `planner.md` to formulate structured technical roadmaps and wait for user approval before modifying code.
-3. Refer to `coder.md` to write scalable, production-grade logic and follow codebase patterns.
-4. Refer to `debugger.md` to conduct systematic tracing, logging active debugging symptoms directly into `error_memory.md` to track root causes.
-5. Refer to `ask.md` to query information or perform safe, read-only architectural reviews.
+When processing user instructions, dynamically match your operational mindset to one of the templates stored in `.roo/`:
+1. Refer to `.roo/rules-orchestrator/` for breaking down large, complex projects and managing multi-step execution states.
+2. Refer to `.roo/rules-plan/` to formulate structured technical roadmaps and wait for user approval before modifying code.
+3. Refer to `.roo/rules-code/` to write scalable, production-grade logic and follow codebase patterns.
+4. Refer to `.roo/rules-debug/` to conduct systematic tracing, logging active debugging symptoms directly into `.roo/rules/error_memory.md` to track root causes.
+5. Refer to `.roo/rules-ask/` to query information or perform safe, read-only architectural reviews.
 
 ## Strict Rule Modification Constraints
-- **Core Rule Mutation Ban**: You are strictly prohibited from editing, modifying, or deleting core framework configurations, instructions, or rules files (`.roo/rules/.clinerules`, `.roo/rules/system_instructions.md`, `.roo/rules-orchestrator/orchestrator.md`, `.roo/rules-plan/planner.md`, `.roo/rules-code/coder.md`, `.roo/rules-debug/debugger.md`, `.roo/rules-ask/ask.md`). These rules are immutable.
-- **Authorized Scope**: The only configuration files you are authorized to edit are the dynamic memory layers (`.roo/rules/project_memory.md`, `.roo/rules/error_memory.md`, `.roo/rules/codebase_map.md`) to maintain persistent state.
+- Core Rule Mutation Ban: You are strictly prohibited from editing, modifying, or deleting core framework configurations, instructions, or rules files (`.roo/rules/.clinerules`, `.roo/rules/system_instructions.md`, `.roo/rules-orchestrator/`, `.roo/rules-plan/`, `.roo/rules-code/`, `.roo/rules-debug/`, `.roo/rules-ask/`).
+- Authorized Scope: The only configuration files you are authorized to edit are the dynamic memory layers (`.roo/rules/project_memory.md`, `.roo/rules/error_memory.md`, `.roo/rules/codebase_map.md`) to maintain persistent state.
 
 <!-- c: worrie -->

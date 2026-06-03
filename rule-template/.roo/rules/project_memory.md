@@ -1,8 +1,8 @@
 # Project Memory & Context Tracker
 
 ## 0. Last Synchronized Checkpoint
-- **Last AI Analysis Timestamp**: *[AI must update this field on every state modification]*
-- **Discovered Manual User Edits**: *[AI logs any changes made manually by the user here]*
+- **Last AI Analysis Timestamp**: [Month Day, Year, HH:MM AM/PM PST]
+- **Discovered Manual User Edits**: [AI logs any changes made manually by the user here]
 
 ## 1. Project Overview
 *Provide a high-level description of what this project is, its primary tech stack, core goals, and active constraints.*
