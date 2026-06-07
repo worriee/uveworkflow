@@ -147,10 +147,10 @@ Feedback is a must, tbh the .clinerules template of mine isn't working properly 
 
 # Own Usages
 
-<table>
+<p align="center">
     <img src="assets/usage1.png" width="200"/>
     <img src="assets/usage2.png" width="200" height="130"/>
     <img src="assets/usage3.png" width="200" height="130"/>
     <img src="assets/usage4.png" width="200" height="130"/>
     <img src="assets/usage5.png" width="200" height="130"/>
-</table>
+</p>
