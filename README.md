@@ -1,15 +1,16 @@
-## Recent Updates: 07/06/2026
+# Workspace Rules Template
 
-- New Rule Added: Rule Folder Isolation - You are strictly forbidden from creating any new folders or files inside the `.roo/` directory. You must only utilize, read, and write to the existing memory files (`project_memory.md`, `error_memory.md`, and `codebase_map.md`).
-- Context Memory Update: Added a new section in project_memory.md. 
-<br>Section 6: DOCUMENTED IMPLEMENTATION PLANS & FEATURE FLOWS
-<br>You are strictly commanded to use this section to log full architectural design maps, planned execution outlines, or documented system feature flows when requested. You must maximize this section to prevent creating cluttering outside files.
+Make your VS Code AI agent smarter, faster, and highly token-efficient! It stops the AI from guessing your code structure or forgetting past progress. Saves time when moving to other AI agents without re-explaining everything so that it understands current context.
 
 ---
 
-# Workspace Rules Template
+## Recent Updates: 07/06/2026
 
-Make your VS Code AI agent smarter, faster, and highly token-efficient! It stops the AI from guessing your code structure or forgetting past progress. Saves time when moving to other ai agents without re-explaining everything so that it understands current context.
+- **Rule Folder Isolation:** You are strictly forbidden from creating any new folders or files inside the `.roo/` directory. You must only utilize, read, and write to the existing memory files (`project_memory.md`, `error_memory.md`, and `codebase_map.md`).
+- **Context Memory Update:** Added a new section in `project_memory.md`.
+  
+  **Section 6: DOCUMENTED IMPLEMENTATION PLANS & FEATURE FLOWS**
+  You are strictly commanded to use this section to log full architectural design maps, planned execution outlines, or documented system feature flows when requested. You must maximize this section to prevent creating cluttering outside files.
 
 ---
 
@@ -28,7 +29,7 @@ By default, AI coding assistants can quickly fill up your context window by read
 
 This template builds an **AI Memory Layer** inside your local project. It forces the AI to follow strict project rules, adopt specialized roles (like Coder or Debugger), and track its own progress in small, lightweight markdown files.
 
-<b>Why Workspace instead of Global Rules?:</b> Global rules enforce a single memory layout across all projects. This causes critical context contamination, as memory files from prior projects leak into new ones upon initialization. Workspace rules isolate project documentation strictly within the local directory, ensuring that the AI’s contextual understanding remains perfectly aligned with the current workspace.
+**Why Workspace instead of Global Rules?:** Global rules enforce a single memory layout across all projects. This causes critical context contamination, as memory files from prior projects leak into new ones upon initialization. Workspace rules isolate project documentation strictly within the local directory, ensuring that the AI’s contextual understanding remains perfectly aligned with the current workspace.
 
 ---
 
@@ -36,125 +37,136 @@ This template builds an **AI Memory Layer** inside your local project. It forces
 
 Here is a visual map (based on updated roo code global rules directory) of how every file works together to manage your AI assistant:
 
-```text
-Your-Project-Root/
-│
-└── .roo/                                # Core configurations directory
-    ├── rules/                           # Main instruction and memory files
-    │   ├── .clinerules                  # Main configuration layout and boundaries
-    │   ├── system_instructions.md       # Optimization rules and timezone settings
-    │   ├── codebase_map.md              # [Memory] Tracks your app's workflow and code paths
-    │   ├── error_memory.md              # [Memory] Tracks active and fixed error logs
-    │   └── project_memory.md            # [Memory] Tracks active context and project overview
-    │
-    ├── rules-ask/
-    │   └── ask.md                       # Persona for reading code and explaining concepts
-    ├── rules-code/
-    │   └── coder.md                     # Persona for writing clean, production-grade logic
-    ├── rules-debug/
-    │   └── debugger.md                  # Persona for deep root-cause error analysis
-    ├── rules-orchestrator/
-    │   └── orchestrator.md              # Persona for managing massive, multi-step task, and acting all personas at once
-    └── rules-plan/
-        └── planner.md                   # Persona for creating technical roadmaps first
+```mermaid
+graph TD
+    Root[Your-Project-Root/] --> Roo[.roo/]
+    
+    Roo --> Rules[rules/]
+    Rules --> C1[.clinerules]
+    Rules --> C2[system_instructions.md]
+    Rules --> M1[codebase_map.md]
+    Rules --> M2[error_memory.md]
+    Rules --> M3[project_memory.md]
+    
+    Roo --> P1[rules-ask/ask.md]
+    Roo --> P2[rules-code/coder.md]
+    Roo --> P3[rules-debug/debugger.md]
+    Roo --> P4[rules-orchestrator/orchestrator.md]
+    Roo --> P5[rules-plan/planner.md]
+
+    style M1 fill:#3498db,stroke:#2980b9,color:#fff
+    style M2 fill:#3498db,stroke:#2980b9,color:#fff
+    style M3 fill:#3498db,stroke:#2980b9,color:#fff
 ```
+## Quick File Breakdown
 
-# Quick File Breakdown:
+- `rules/.clinerules` & `rules/system_instructions.md`: These files act as the AI's permanent "brain constraints." They define safety zones, timezone standards, and force the AI to respect your local project boundaries.
 
-- rules/.clinerules & rules/system_instructions.md: These files act as the AI's permanent "brain constraints." They define safety zones, timezone standards, and force the AI to respect your local project boundaries.
+- The Dynamic Memory Files (`project_memory.md, error_memory.md, codebase_map.md`): These are the only tracking files the AI is allowed to write into. They act as short cheat sheets so the AI always knows what it did in your last chat session.
 
-- The Dynamic Memory Files (project_memory.md, error_memory.md, codebase_map.md): These are the only tracking files the AI is allowed to write into. They act as short cheat sheets so the AI always knows what it did in your last chat session.
+- The Sub-folders (`rules-ask/`, `rules-code/`, etc.): Whenever you choose a different mode in your extension, the AI automatically reads the matching .md file inside these folders to change its mindset instantly.
 
-- The Sub-folders (rules-ask/, rules-code/, etc.): Whenever you choose a different mode in your extension, the AI automatically reads the matching .md file inside these folders to change its mindset instantly.
+---
 
-# ⚡ Prompt Triggers (Manual Commands)
+## Prompt Triggers (Manual Commands)
 
 Type these prompts depending on these situations!
 
-<br>[Newly Added: Manual Triggers on Persona's]
+[Newly Added: Manual Triggers on Persona's]
 
--o, -p, -c, -d, -a (Orchestrator, Planner, Coder, Debug, Ask)
-
-<b>What it does:</b> Type -p in your prompt so the ai acts as planner that plans your expected ideas.
-<br>Example to prompt: "-p I want to build a comprehensive fitness and nutrition app that seamlessly integrates calorie tracking with gym progress logging".
-
----
-
--setup
-
-<b>What it does:</b> Dynamically inspects your whole workspace and updates all three memory layers at once. Use this on your very first prompt or whenever you start a brand new chat session!
-
----
-
--context
-
-<b>What it does:</b> Scans your current project structure and updates project_memory.md to record your active project workflow.
+| Command / Flag | Type | What it does / Purpose | Use Case |
+| :--- | :--- | :--- | :--- |
+| `-o` | Persona | **Orchestrator** - Managing massive, multi-step task, and acting all personas at once | Prompting a general plan or massive implementation. |
+| `-p` | Persona | **Planner** - Plans your expected ideas | -p [discuss your plan] |
+| `-c` | Persona | **Coder** - Writing clean, production-grade logic | Use this to act on agreed proposed plan from agent. |
+| `-d` | Persona | **Debug** - Deep root-cause error analysis | -d [clearly state your error such as sending error logs] |
+| `-a` | Persona | **Ask** - Reading code and explaining concepts | If you want to ask or clarify something. |
+| `-setup` | Memory | Dynamically inspects your whole workspace and updates all three memory layers at once. | Use this on your very first prompt or whenever you start a brand new chat session! |
+| `-context` | Memory | Scans your current project structure and updates project_memory.md to record your active project workflow. | Use when you update the context so the agent is aware of the current state. You can also use this when migrating to other ai agents that's compatible with this template. |
+| `-error` | Memory | Analyzes active debugging traces and updates error_memory.md with current bugs, logs, and resolution steps. Records history of fixed errors to prevent hallucinating. | Every debugging session include -error in your prompt so it records resolved and current errors. |
+| `-codebase` | Memory | Looks over your code layout and updates codebase_map.md with simple descriptions of your active application workflow. Records techstack and explains purpose of every file. | Best practices to use this prompt is when you're about to deploy or finished building your project. |
 
 ---
 
--error
-
-<b>What it does:</b> Analyzes active debugging traces and updates error_memory.md with current bugs, logs, and resolution steps. It also records history fixed errors to prevent hallucinating and bringing up old fixed bugs. Every debugging session include -error on your prompt
-
----
-
--codebase
-
-<b>What it does:</b> Looks over your code layout and updates codebase_map.md with simple descriptions of your active application workflow. This is useful if you're vibe learning xd, It records your app's techstack and even explain to you the purpose of every file so you can keep track of ai changes and your current app state. Best practices to use this prompt is when you're about to deploy or finished building your project.
-<br>
-<br>
-
-# Why Manual Triggers Instead of Auto-Updates?
+## Why Manual Triggers Instead of Auto-Updates?
 
 This template explicitly bans the AI from modifying its memory files in the background while it is generating code. You must type the flags manually to make it update its memory.
 
-# Key Benefits of Manual Triggering:
+### Key Benefits of Manual Triggering:
 
-<b>Massive Token & Money Savings:</b> Automatic background updates force the AI to analyze, rewrite, and reread your entire repository structure on every single prompt. Manual syncing cuts out this massive token usage entirely since you will manage when to update the memory files.
-
-<b>Full Control of Personas:</b> You manually trigger personas on how you want the ai to act based on your prompt.
-
-# Prevents AI Hallucination:
-
-If the AI rewrites its memory tracking layers during an active bug patch, it can get confused and mess up its instructions. Manual triggers give you total control over when the AI updates its project roadmap.
-
-# Clean Session Recovery:
-
-If your context window resets or expires, simply type -setup in a fresh chat. The AI will read its lightweight memory logs and rebuild its mental map of your code instantly without needing you to re-explain anything.
+- **Massive Token & Money Savings:** Automatic background updates force the AI to analyze, rewrite, and reread your entire repository structure on every single prompt. Manual syncing cuts out this massive token usage entirely since you will manage when to update the memory files.
+- **Full Control of Personas:** You manually trigger personas on how you want the AI to act based on your prompt.
+- **Prevents AI Hallucination:** If the AI rewrites its memory tracking layers during an active bug patch, it can get confused and mess up its instructions. Manual triggers give you total control over when the AI updates its project roadmap.
+- **Clean Session Recovery:** If your context window resets or expires, simply type `-setup` in a fresh chat. The AI will read its lightweight memory logs and rebuild its mental map of your code instantly without needing you to re-explain anything.
 
 ---
 
-# Installation Guide
+## Installation Guide
 
-## 1. Move to your downloads folder
+### 1. Move to your downloads folder
 
+```bash
 cd Downloads
+```
 
-## 2. Clone the template repository
+### 2. Clone the template repository
 
+```bash
 git clone https://github.com/worriee/clinerulestemplate.git
+```
 
-## Final Step:
+### Final Step:
 
-Copy the .roo folder (or .clinerules folder depending on your extension you're working with) from the cloned template directory and paste it directly at the root of your current project workspace.
+Copy the `.roo` folder (or `.clinerules` folder depending on your extension you're working with) from the cloned template directory and paste it directly at the root of your current project workspace.
 
-Start your very first prompt in ai agent using -setup and start cooking 🔥.
+Start your very first prompt in AI agent using `-setup` and start cooking 🔥.
 
-## Kilo Code Guide (you can use neither of .roo and .clinerules together with their existing memory logs.)
+### Kilo Code Guide (you can use neither of .roo and .clinerules together with their existing memory logs.)
 
 **First Chat Session**
-<br><br>You: "Read the rules and active parameters stored within the [template folder u want to retain] directory layout. Apply the system constraints instantly."
-<br><br>AI: I have read your...
-<br><br>You: "-setup" OR "read existing memory files so you'll have the current context of the project"
+
+You: "Read the rules and active parameters stored within the [template folder u want to retain] directory layout. Apply the system constraints instantly."
+
+AI: I have read your...
+
+You: "-setup" OR "read existing memory files so you'll have the current context of the project"
 
 ---
 
-Feedback is a must, tbh the .clinerules template of mine isn't working properly in cline extension. It often overlaps to the context window and forgets frequently. Maybe because I'm using free api ai model from openrouter lol. But this maybe works for you, so give it a try :>.
+## FAQ
+
+**Q: What happens if I forget to type a memory flag manually?** <br>The AI will still write code normally, but it won't update its internal progress tracking logs. If your chat session expires or resets, the AI won't know where you left off. Just type the correct flag (`-context`, `-error`, etc.) on your next prompt to sync it up.
+
+**Q: Why can't the AI just update the memory files on its own every time?**
+<br>Because reading and rewriting the whole memory layout on every single message uses a massive amount of tokens, which costs you more money. It also slows down the AI and makes it prone to messing up active code instructions when it gets confused during bug fixes.
+
+**Q: Will the AI create extra folders or clutter my project?**
+<br>No. A strict rule stops the AI from creating any new folders inside `.roo/`. It is only allowed to read and edit the existing `project_memory.md`, `error_memory.md`, and `codebase_map.md` files.
+
+**Q: I am starting a completely new chat session. What do I type first?**
+<br>Type `-setup`. This tells the AI to read the local memory logs immediately so it gets the exact context of your project without you having to re-explain everything.
+
+**Q: I use OpenRouter free models and the AI keeps forgetting things mid-chat. Is this normal?**
+<br>Yes, free or smaller API models often have smaller context limits or weaker memory retention. If the AI starts acting lost or forgets instructions, just run `-setup` again in a fresh prompt to force-reload its brain with your project context.
+
+**Q: What if I have a huge project plan or database design map? Where should the AI save it?**
+<br>Don't let the AI make random markdown files on your root directory. It is strictly instructed to log all architectural roadmaps, system flows, and complex feature plans inside Section 6 of your `project_memory.md` file.
+
+**Q: Can I mix persona flags with memory flags in the same prompt?**
+<br>Yes! If you want the AI to analyze a bug and update your logs simultaneously, you can type something like `-d here is the error trace, please fix it and run -error`. The AI will adopt the Debugger mindset and update your tracking files at the same time.
+
+**Q: Do I need to copy the configuration folder into every single project workspace?**
+<br>Yes. This configuration runs on a workspace level instead of global rules. This guarantees that your different projects don't leak context, history, or code descriptions into each other.
+
+**Q: What should I do if the AI keeps hallucinating old errors that I already fixed?**
+<br>Make sure to run the `-error` command regularly when debugging. The template forces the AI to look at historical resolved bugs inside `error_memory.md` so it remembers exactly how they were handled and won't try to reuse old broken logic.
+
+**Q: Can I use this setup with vanilla VS Code or other extensions like Copilot?**
+<br>This template is specifically tailored for AI agents that natively read local configurations via custom persona directories or instructions (like Cline, Roo Code, Zoo Code, and Kilo Code). It won't have the same automated behavior on standard extensions that don't look for workspace-level rule files.
 
 ---
-<br>
 
-# Own Usages
+## Own Usages
 
 <p align="center">
     <img src="assets/usage1.png" width="200"/>
