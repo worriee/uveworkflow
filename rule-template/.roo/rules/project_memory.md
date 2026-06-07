@@ -51,4 +51,16 @@ _Document the foundational rules, workflows, or operational flows unique to this
 
 \_Keep a running history of critical architectural choices, patterns to follow, or constraints to prevent AI hallucination or regression.
 
+---
+
+## 6. DOCUMENTED IMPLEMENTATION PLANS & FEATURE FLOWS
+You are strictly commanded to use this section to log full architectural design maps, planned execution outlines, or documented system feature flows when requested. You must maximize this section to prevent creating cluttering outside files. Use the following format strictly:
+
+### [FLOW-001] Title of Implemented Flow
+- **Context/Objective**: [What feature or process flow does this plan describe?]
+- **Step-by-Step Logic Outline**:
+  1. [Step 1 description]
+  2. [Step 2 description]
+- **Dependencies Involved**: [List files, databases, or modules impacted by this flow]
+
 <!-- c: worrie -->

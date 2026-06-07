@@ -1,3 +1,12 @@
+## Recent Updates: 07/06/2026
+
+- New Rule Added: Rule Folder Isolation - You are strictly forbidden from creating any new folders or files inside the `.roo/` directory. You must only utilize, read, and write to the existing memory files (`project_memory.md`, `error_memory.md`, and `codebase_map.md`).
+- Context Memory Update: Added a new section in project_memory.md. 
+<br>Section 6: DOCUMENTED IMPLEMENTATION PLANS & FEATURE FLOWS
+<br>You are strictly commanded to use this section to log full architectural design maps, planned execution outlines, or documented system feature flows when requested. You must maximize this section to prevent creating cluttering outside files.
+
+---
+
 # Workspace Rules Template
 
 Make your VS Code AI agent smarter, faster, and highly token-efficient! It stops the AI from guessing your code structure or forgetting past progress. Saves time when moving to other ai agents without re-explaining everything so that it understands current context.
@@ -153,4 +162,6 @@ Feedback is a must, tbh the .clinerules template of mine isn't working properly 
     <img src="assets/usage3.png" width="200"/>
     <img src="assets/usage4.png" width="200"/>
     <img src="assets/usage5.png" width="200"/>
+    <img src="assets/usage6.png" width="200"/>
+    <img src="assets/usage7.png" width="200"/>
 </p>

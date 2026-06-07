@@ -3,6 +3,7 @@
 ## 1. Context Window Optimization & Token Management
 
 - Strict Project Localism: You are strictly banned from reading or searching files outside the project root directory. Do not scan systemic, global, or unrelated historical directories. This prevents context bloating and ensures complete isolation.
+- **Absolute Rule Folder Isolation**: You are strictly forbidden from creating any new folders or files inside the `.clinerules/` directory. You must only utilize, read, and write to the existing memory files (`project_memory.md`, `error_memory.md`, and `codebase_map.md`) inside this directory.
 - Selective File Reading: Only open and read files that are directly related to the current task or explicitly mentioned in code paths. Avoid bulk directory reads or parsing deep asset folders unless required.
 - Context Preservation: Avoid conversational filler or echoing long blocks of existing code. Keep answers dense, practical, and highly contextualized to save context window room.
 
@@ -18,8 +19,8 @@
 
 - **Prohibited Background Mutating**: Do not alter, overwrite, or touch `.clinerules/project_memory.md`, `.clinerules/error_memory.md`, or `.clinerules/codebase_map.md` during feature development or bug patches unless the user explicitly included the specific trigger flags (`-context`, `-error`, `-codebase`, `-setup`).
 - **Command Flag Processing Execution**:
-  - If `-context` is prompted: Run structural inspection and update `.clinerules/project_memory.md`.
-  - If `-error` is prompted: Analyze debugging traces and update `.clinerules/error_memory.md`.
+  - If `-context` is prompted: Run structural inspection and update `.clinerules/project_memory.md` together with its timestamp.
+  - If `-error` is prompted: Analyze debugging traces and update `.clinerules/error_memory.md` together with its timestamp.
   - If `-codebase` is prompted: Log directory maps and file utilities inside `.clinerules/codebase_map.md`.
   - If `-setup` is prompted: Synchronize all state documentation tools instantly.
 - **Directory Indexing & Failover Protocol**: When executing filesystem exploration commands (especially during `-setup`), you must strictly adhere to the following environment-specific shell rules:
@@ -32,7 +33,7 @@
 
 ## 4. Rule Immutability & Modification Restrictions
 
-- Zero-Tolerance Rule Tampering: You are strictly prohibited from mutating or editing any systemic instruction or persona file (`.clinerules/system_instructions.md`, `.clinerules/.clinerules`, `.clinerules/orchestrator.md`, `.clinerules/planner.md`, `.clinerules/coder.md`, `.clinerules/debugger.md`, `.clinerules/ask.md`).
+- **Zero-Tolerance Rule Tampering**: You are strictly prohibited from mutating, editing, adding, or deleting any instruction, persona, or framework layout file inside `.clinerules/` (`system_instructions.md`, `.clinerules`, `orchestrator.md`, `planner.md`, `coder.md`, `debugger.md`, `ask.md`).
 - Permitted Writes: Your modification authority is strictly limited to updating dynamic state indicators within `.clinerules/project_memory.md`, `.clinerules/error_memory.md`, and `.clinerules/codebase_map.md`.
 
 ## 5. Timestamping Standards
