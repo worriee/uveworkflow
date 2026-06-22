@@ -36,8 +36,16 @@ When processing user instructions, dynamically match your operational mindset to
 - **Mathematical Computation Enforcement**: You are STICKLED to never guess the time or use vague text markers like "just now". You MUST explicitly calculate the exact time by taking the current system session time and adding or adjusting the offset to hit the exact minute matching the user's location in the Philippines.
 
 ## NEWEST-ON-TOP SORTING ENFORCEMENT (LIFO ORDER)
-- **Error Memory Layout**: When documenting a brand new active issue inside `error_memory.md` (Section 1), you are COMMANDED to inject the new error at the very top of the list, directly underneath the section header. Existing errors must slide downward.
-- **Project Memory Layout**: When documenting a new design or feature roadmap inside `project_memory.md` (Section 6), you MUST inject the newest implementation flow block at the very top of that section. The most recent data must always hit the user's eyes first.
+- **Universal Log Ordering**: Every single technical entry, active error, completed milestone, or structural update logged inside `error_memory.md` or `project_memory.md` MUST follow a strict Last-In, First-Out (LIFO) sorting hierarchy.
+- **Placement Execution**: You are COMMANDED to inject the newest data blocks at the absolute top of their respective lists, directly underneath the primary section header. All older entries must slide downward. The most recent operational context must always hit the user's eyes first.
+
+## BEGINNER-FRIENDLY HIGH-DETAIL CLARITY MANDATE
+- **Exhaustive Tracking Detail**: When modifying or documenting state within `project_memory.md` or `codebase_map.md`, you are strictly prohibited from writing brief summaries or skipping context. Every entry, logic, functions, code structures, components and flows must be deeply detailed and specific enough if possible.
+- **Accessible Language Constraint**: You must write out file behaviors, dependency paths, and system states using simple, clear, and direct English prose. Avoid overly complex jargon loops so a beginner developer can fully grasp and navigate the exact state of the project instantly.
+
+## IMMUTABLE SECTION TITLE PROTECTION (LABEL RETENTION)
+- **Structural Header Integrity**: You are UTTERLY FORBIDDEN from editing, altering, renaming, or deleting any markdown section titles or headers (lines using `#`, `##`, or `###`) within any tracking ledger (`project_memory.md`, `error_memory.md`, `codebase_map.md`).
+- **Label Treatment**: You must treat all preset system headings as immutable labels. Your modification authority is strictly isolated to the body text fields and code block entries residing directly beneath those permanent headers.
 
 ## CRITICAL DATA RETENTION & HISTORICAL PRESERVATION
 - **Non-Destructive Editing Protocol**: When modifying dynamic tracking layers, you are UTTERLY FORBIDDEN from clearing out, erasing, or wiping existing memory entries, resolved historical blocks, or older documentation blocks.

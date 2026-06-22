@@ -1,25 +1,26 @@
 # Workspace Rules Template
 
-Make your VS Code AI agent smarter, faster, and highly token-efficient! It stops the AI from guessing your code structure or forgetting past progress. Saves time when moving to other AI agents without re-explaining everything so that it understands current context.
+Make your AI agent smarter, faster, and highly token-efficient! It stops the AI from guessing your code structure or forgetting past progress. Saves time when moving to other AI agents without re-explaining everything so that it understands current context.
 
 ---
 
-## Recent Updates: 07/06/2026
+## Recent Updates: 22/06/2026
 
-- **Rule Folder Isolation:** You are strictly forbidden from creating any new folders or files inside the `.roo/` directory. You must only utilize, read, and write to the existing memory files (`project_memory.md`, `error_memory.md`, and `codebase_map.md`).
-- **Context Memory Update:** Added a new section in `project_memory.md`.
-  
-  **Section 6: DOCUMENTED IMPLEMENTATION PLANS & FEATURE FLOWS**
-  You are strictly commanded to use this section to log full architectural design maps, planned execution outlines, or documented system feature flows when requested. You must maximize this section to prevent creating cluttering outside files.
+- updated logging capabalities in all memory files to be more beginner friendly when explaining project structure and context using simple terms.
+- updated timestamp with strict rule to check user current system time.
+- added a LIFO rule where when logging in any memory files the newest will always be on top.
+- updated heading sections in memory files (so memories are organized and retains the past existing memories of her... wait I meant past logs of the project like error logs and documentation logs so it will be useful for studying.)
 
 ---
 
-## You can use this template if you use these vscode extensions:
+## You can use this template for:
 
 - Cline [cline.bot]
 - Roo Code [roocode.com]
 - Zoo Code [Zoo Code Organization] (community forked roo after its shutdown in vscode extension migrating to Roomote)
 - Kilo Code [kilocode.ai] (do check the exclusive guide for this in installation guide below)
+
+*(or in any ai agent you're currently working with across platforms.)*
 
 ---
 
@@ -35,7 +36,7 @@ This template builds an **AI Memory Layer** inside your local project. It forces
 
 ## Folder Structure & How It Works
 
-Here is a visual map (based on updated roo code global rules directory) of how every file works together to manage your AI assistant:
+Here is a visual map (based on roo code rules directory) of how every file works together to manage your AI assistant:
 
 ```mermaid
 graph TD
@@ -129,7 +130,7 @@ You: "Read the rules and active parameters stored within the [template folder u 
 
 AI: I have read your...
 
-You: "-setup" OR "read existing memory files so you'll have the current context of the project"
+You: -setup
 
 ---
 
@@ -153,7 +154,7 @@ You: "-setup" OR "read existing memory files so you'll have the current context 
 <br>Don't let the AI make random markdown files on your root directory. It is strictly instructed to log all architectural roadmaps, system flows, and complex feature plans inside Section 6 of your `project_memory.md` file.
 
 **Q: Can I mix persona flags with memory flags in the same prompt?**
-<br>Yes! If you want the AI to analyze a bug and update your logs simultaneously, you can type something like `-d here is the error trace, please fix it and run -error`. The AI will adopt the Debugger mindset and update your tracking files at the same time.
+<br>Yes! If you want the AI to analyze a bug and update your logs simultaneously, you can type something like `-d here is the error trace, please fix it and run -error`. The AI will adopt the Debugger mindset and update your error memory file at the same time.
 
 **Q: Do I need to copy the configuration folder into every single project workspace?**
 <br>Yes. This configuration runs on a workspace level instead of global rules. This guarantees that your different projects don't leak context, history, or code descriptions into each other.
@@ -161,8 +162,8 @@ You: "-setup" OR "read existing memory files so you'll have the current context 
 **Q: What should I do if the AI keeps hallucinating old errors that I already fixed?**
 <br>Make sure to run the `-error` command regularly when debugging. The template forces the AI to look at historical resolved bugs inside `error_memory.md` so it remembers exactly how they were handled and won't try to reuse old broken logic.
 
-**Q: Can I use this setup with vanilla VS Code or other extensions like Copilot?**
-<br>This template is specifically tailored for AI agents that natively read local configurations via custom persona directories or instructions (like Cline, Roo Code, Zoo Code, and Kilo Code). It won't have the same automated behavior on standard extensions that don't look for workspace-level rule files.
+**Q: Can I use this setup with VS Code or other platforms like Antigravity or Opencode CLI?**
+<br>Yes it works even in different platforms as longs as you can make the ai agent look or read to this specific folder. It won't have the same automated behavior if your ai agent don't have the ability to look for workspace-level rule files.
 
 ---
 

@@ -1,4 +1,4 @@
-# Codebase Map & Architectural Architecture Guide
+# Codebase Map Guide
 
 ## 0. Last Synchronized Checkpoint
 

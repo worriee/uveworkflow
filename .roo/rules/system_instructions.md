@@ -35,6 +35,9 @@
 - **Recovery Priority**: When a context window reset happens, prioritize executing tool read commands on the `.roo/rules/.clinerules` configuration layout files immediately.
 - **LIFO (Last-In, First-Out) Entry Placement**: Every single time you execute an update via `-error`, `-context`, or `-setup`, you must place the new active entry at the absolute top of its respective category list. Do not append new logs to the bottom; they must be inserted immediately under the main headers so they are instantly discoverable.
 - **Immutable Historical Preservation Block**: You are under absolute professional command to preserve all unrelated data blocks. Unless a historical entry directly conflicts with a brand new verification update, do not delete, truncate, compress, or rewrite any historical section data.
+- **Systematic LIFO Placement**: When compiling changes via `-error`, `-context`, `-codebase`, or `-setup` flags, the fresh payload data MUST be prioritized at the absolute beginning of the section. Do not append additions to the bottom of list boundaries.
+- **High-Detail Beginner Clarity**: Every update pushed to `project_memory.md` and `codebase_map.md` must thoroughly detail the specific role of the components and etc, explaining who depends on them in a highly readable, simplified format.
+- **Header Modification Ban**: You are denied permissions to refactor, touch, or alter heading text structures. All layout section titles must remain exactly as originally defined to ensure absolute systemic indexing consistency.
 
 ## 4. Rule Immutability & Modification Restrictions
 
