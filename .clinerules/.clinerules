@@ -13,20 +13,20 @@
 - Strict Adherence: For regular prompts without these flags, assume the existing information in the memory files is unchanged and use it as your ground truth.
 
 ## CRITICAL: Enforced Context Loss Read Execution
-- Enforced Context Re-Reads: If you notice a loss of context window memory, a token expiration event, a session reset, or if the user appends any command flag (`-context`, `-error`, `-codebase`, `-setup`, `-clean`, `-o`, `-p`, `-c`, `-d`, `-a`, `-s`), you are strictly commanded to instantly halt execution and re-read this main file (`.clinerules/.clinerules`) followed by your memory layers (`project_memory.md`, `error_memory.md`, `codebase_map.md`).
+- Enforced Context Re-Reads: If you notice a loss of context window memory, a token expiration event, a session reset, or if the user appends any command flag (`-context`, `-error`, `-codebase`, `-setup`, `-clean`, `-o`, `-p`, `-c`, `-d`, `-a`, `-s`), you are strictly commanded to instantly halt execution and re-read this main file (`.clinerules/.clinerules`) followed by your memory layers (`.clinerules/project_memory.md`, `.clinerules/error_memory.md`, `.clinerules/codebase_map.md`).
 - Re-Enforce Ground Truth: Use these local guides to instantly rebuild your mental map of the codebase without asking the user to re-explain past progress.
 
 ## Persona Execution Mode Selection
-When processing user instructions, dynamically match your operational mindset to one of the templates stored in `.clinerules/` based on the user's manual single-letter command flag:
-1. If user includes `-o`: Switch to **Orchestrator** mode. Refer to `.clinerules/orchestrator.md` for breaking down large, complex projects and managing multi-step execution states.
-2. If user includes `-p`: Switch to **Planner** mode. Refer to `.clinerules/planner.md` to formulate structured technical roadmaps and wait for user approval before modifying code.
-3. If user includes `-c`: Switch to **Coder** mode. Refer to `.clinerules/coder.md` to write scalable, production-grade logic and follow codebase patterns.
-4. If user includes `-d`: Switch to **Debugger** mode. Refer to `.clinerules/debugger.md` to conduct systematic tracing, logging active debugging symptoms directly into `.clinerules/error_memory.md` to track root causes.
-5. If user includes `-a`: Switch to **Ask** mode. Refer to `.clinerules/ask.md` to query information or perform safe, read-only architectural reviews.
-6. If user includes `-s`: Switch to **Security Analyst** mode. Refer to `.clinerules/secure.md` to run threat analysis, calculate safety ratings, and log vulnerability maps into the project memory ledger.
+When processing user instructions, dynamically match your operational mindset to one of the templates stored in `.clinerules/.cline/skills/` based on the user's manual single-letter command flag:
+1. If user includes `-o`: Switch to **Orchestrator** mode. Refer to `.clinerules/.cline/skills/orchestrator/SKILL.md` for breaking down large, complex projects and managing multi-step execution states.
+2. If user includes `-p`: Switch to **Planner** mode. Refer to `.clinerules/.cline/skills/planner/SKILL.md` to formulate structured technical roadmaps and wait for user approval before modifying code.
+3. If user includes `-c`: Switch to **Coder** mode. Refer to `.clinerules/.cline/skills/coder/SKILL.md` to write scalable, production-grade logic and follow codebase patterns.
+4. If user includes `-d`: Switch to **Debugger** mode. Refer to `.clinerules/.cline/skills/debugger/SKILL.md` to conduct systematic tracing, logging active debugging symptoms directly into `.clinerules/error_memory.md` to track root causes.
+5. If user includes `-a`: Switch to **Ask** mode. Refer to `.clinerules/.cline/skills/ask/SKILL.md` to query information or perform safe, read-only architectural reviews.
+6. If user includes `-s`: Switch to **Security Analyst** mode. Refer to `.clinerules/.cline/skills/secure/SKILL.md` to run threat analysis, calculate safety ratings, and log vulnerability maps into the project memory ledger.
 
 ## Strict Rule Modification Constraints
-- Core Rule Mutation Ban: You are strictly prohibited from editing, modifying, or deleting core framework configurations, instructions, or rules files (`.clinerules/.clinerules`, `.clinerules/system_instructions.md`, `.clinerules/orchestrator.md`, `.clinerules/planner.md`, `.clinerules/coder.md`, `.clinerules/debugger.md`, `.clinerules/ask.md`). These rules are immutable.
+- Core Rule Mutation Ban: You are strictly prohibited from editing, modifying, or deleting core framework configurations, instructions, or rules files (`.clinerules/.clinerules`, `.clinerules/system_instructions.md`, `.clinerules/.cline/skills/orchestrator/SKILL.md`, `.clinerules/.cline/skills/planner/SKILL.md`, `.clinerules/.cline/skills/coder/SKILL.md`, `.clinerules/.cline/skills/debugger/SKILL.md`, `.clinerules/.cline/skills/ask/SKILL.md`, `.clinerules/.cline/skills/secure/SKILL.md`). These rules are immutable.
 - Authorized Scope: The only configuration files you are authorized to edit are the dynamic memory layers (`.clinerules/project_memory.md`, `.clinerules/error_memory.md`, `.clinerules/codebase_map.md`) to maintain persistent state.
 
 ## MANDATORY TIMESTAMP COMPUTATION RULE
@@ -34,15 +34,15 @@ When processing user instructions, dynamically match your operational mindset to
 - **Mathematical Computation Enforcement**: You are STICKLED to never guess the time or use vague text markers like "just now". You MUST explicitly calculate the exact time by taking the current system session time and adding or adjusting the offset to hit the exact minute matching the user's location in the Philippines.
 
 ## NEWEST-ON-TOP SORTING ENFORCEMENT (LIFO ORDER)
-- **Universal Log Ordering**: Every single technical entry, active error, completed milestone, or structural update logged inside `error_memory.md` or `project_memory.md` MUST follow a strict Last-In, First-Out (LIFO) sorting hierarchy.
+- **Universal Log Ordering**: Every single technical entry, active error, completed milestone, or structural update logged inside `.clinerules/error_memory.md` or `.clinerules/project_memory.md` MUST follow a strict Last-In, First-Out (LIFO) sorting hierarchy.
 - **Placement Execution**: You are COMMANDED to inject the newest data blocks at the absolute top of their respective lists, directly underneath the primary section header. All older entries must slide downward. The most recent operational context must always hit the user's eyes first.
 
 ## BEGINNER-FRIENDLY HIGH-DETAIL CLARITY MANDATE
-- **Exhaustive Tracking Detail**: When modifying or documenting state within `project_memory.md` or `codebase_map.md`, you are strictly prohibited from writing brief summaries or skipping context. Every entry, logic, functions, code structures, components and flows must be deeply detailed and specific enough if possible.
+- **Exhaustive Tracking Detail**: When modifying or documenting state within `.clinerules/project_memory.md` or `.clinerules/codebase_map.md`, you are strictly prohibited from writing brief summaries or skipping context. Every entry, logic, functions, code structures, components and flows must be deeply detailed and specific enough if possible.
 - **Accessible Language Constraint**: You must write out file behaviors, dependency paths, and system states using simple, clear, and direct English prose. Avoid overly complex jargon loops so a beginner developer can fully grasp and navigate the exact state of the project instantly.
 
 ## IMMUTABLE SECTION TITLE AND LOG PROTECTION (TOTAL RETENTION)
-- **Absolute Title Lock**: You are completely and strictly forbidden from editing, changing, renaming, or deleting any markdown section titles or header markers within any memory tracking files (`project_memory.md`, `error_memory.md`, `codebase_map.md`). This rule applies uniformly regardless of the heading depth level or the number of hash characters utilized (e.g., `#`, `##`, `###`, `####`). Every header is a fixed system label.
+- **Absolute Title Lock**: You are completely and strictly forbidden from editing, changing, renaming, or deleting any markdown section titles or header markers within any memory tracking files (`.clinerules/project_memory.md`, `.clinerules/error_memory.md`, `.clinerules/codebase_map.md`). This rule applies uniformly regardless of the heading depth level or the number of hash characters utilized (e.g., `#`, `##`, `###`, `####`). Every header is a fixed system label. You're also prohibited to remove any of the comment text that contains a "c: worrie". 
 - **Historical Content Preservation**: You are under strict command to never delete, clear, prune, or truncate existing log items or historical text entries within your memory files. New data must purely be prepended using LIFO rules; past records are unalterable developer logs.
 
 ## CRITICAL DATA RETENTION & HISTORICAL PRESERVATION

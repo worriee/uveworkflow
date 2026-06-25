@@ -1,0 +1,56 @@
+# Workspace Configuration & Persona Rules
+
+## System Boundaries
+- Scope Restriction: All file reads, indexing, and tool usage MUST remain strictly confined to the project root workspace directory. Do not access global directories, home directories, or parent folders. This prevents excessive context pollution and keeps context usage lean.
+- Token Efficiency: Do not re-read large unedited files repetitively. Rely on the structured metadata in `.kilo/rules/project_memory.md`, `.kilo/rules/error_memory.md`, and `.kilo/rules/codebase_map.md` to persist state.
+
+## Manual Sync Entry Rule (Flag-Triggered Verification)
+- On-Demand Memory Synchronization: Background auto-updates are disabled. Make sure you update the timestamps after everytime these commands are prompted from the user. You MUST only scan, re-analyze, or update the local tracking layers when explicitly commanded by the user via the following command flags:
+  - `-context`: Triggers a full analysis and updates `.kilo/rules/project_memory.md` to map out active project context and milestones.
+  - `-error`: Triggers an active diagnostic scan and updates `.kilo/rules/error_memory.md` with current bugs, stack traces, or resolution history.
+  - `-codebase`: Triggers a complete structure inspection and updates `.kilo/rules/codebase_map.md` with descriptions of the files and current project workflow.
+  - `-setup`: Triggers a combined sequential execution of all the above updates across all three files simultaneously.
+- Strict Adherence: For regular prompts without these flags, assume the existing information in the memory files is unchanged and use it as your ground truth.
+
+## CRITICAL: Enforced Context Loss Read Execution
+- Enforced Context Re-Reads: If you notice a loss of context window memory, a token expiration event, a session reset, or if the user appends any command flag (`-context`, `-error`, `-codebase`, `-setup`, `-clean`, `-o`, `-p`, `-c`, `-d`, `-a`, `-s`), you are strictly commanded to instantly halt execution and re-read this main file (`.kilo/rules/.clinerules`) followed by your memory layers (`.kilo/rules/project_memory.md`, `.kilo/rules/error_memory.md`, `.kilo/rules/codebase_map.md`).
+- Re-Enforce Ground Truth: Use these local guides to instantly rebuild your mental map of the codebase without asking the user to re-explain past progress.
+
+## Persona Execution Mode Selection
+When processing user instructions, dynamically match your operational mindset to one of the templates stored in `.kilo/skills/` based on the user's manual single-letter command flag:
+1. If user includes `-o`: Switch to **Orchestrator** mode. Refer to `.kilo/skills/orchestrator/SKILL.md` for breaking down large, complex projects and managing multi-step execution states.
+2. If user includes `-p`: Switch to **Planner** mode. Refer to `.kilo/skills/planner/SKILL.md` to formulate structured technical roadmaps and wait for user approval before modifying code.
+3. If user includes `-c`: Switch to **Coder** mode. Refer to `.kilo/skills/coder/SKILL.md` to write scalable, production-grade logic and follow codebase patterns.
+4. If user includes `-d`: Switch to **Debugger** mode. Refer to `.kilo/skills/debugger/SKILL.md` to conduct systematic tracing, logging active debugging symptoms directly into `.kilo/rules/error_memory.md` to track root causes.
+5. If user includes `-a`: Switch to **Ask** mode. Refer to `.kilo/skills/ask/SKILL.md` to query information or perform safe, read-only architectural reviews.
+6. If user includes `-s`: Switch to **Security Analyst** mode. Refer to `.kilo/skills/secure/SKILL.md` to run threat analysis, calculate safety ratings, and log vulnerability maps into the project memory ledger.
+
+## Strict Rule Modification Constraints
+- Core Rule Mutation Ban: You are strictly prohibited from editing, modifying, or deleting core framework configurations, instructions, or rules files (`.kilo/rules/.clinerules`, `.kilo/rules/system_instructions.md`, `.kilo/skills/orchestrator/SKILL.md`, `.kilo/skills/planner/SKILL.md`, `.kilo/skills/coder/SKILL.md`, `.kilo/skills/debugger/SKILL.md`, `.kilo/skills/ask/SKILL.md`, `.kilo/skills/secure/SKILL.md`). These rules are immutable.
+- Authorized Scope: The only configuration files you are authorized to edit are the dynamic memory layers (`.kilo/rules/project_memory.md`, `.kilo/rules/error_memory.md`, `.kilo/rules/codebase_map.md`) to maintain persistent state.
+
+## MANDATORY TIMESTAMP COMPUTATION RULE
+- **Absolute Time Zone Alignment**: You are STIPULATED to log all timestamps exclusively using Philippine Standard Time (PST) / Manila Timezone (UTC+8).
+- **Mathematical Computation Enforcement**: You are STICKLED to never guess the time or use vague text markers like "just now". You MUST explicitly calculate the exact time by taking the current system session time and adding or adjusting the offset to hit the exact minute matching the user's location in the Philippines.
+
+## NEWEST-ON-TOP SORTING ENFORCEMENT (LIFO ORDER)
+- **Universal Log Ordering**: Every single technical entry, active error, completed milestone, or structural update logged inside `.kilo/rules/error_memory.md` or `.kilo/rules/project_memory.md` MUST follow a strict Last-In, First-Out (LIFO) sorting hierarchy.
+- **Placement Execution**: You are COMMANDED to inject the newest data blocks at the absolute top of their respective lists, directly underneath the primary section header. All older entries must slide downward. The most recent operational context must always hit the user's eyes first.
+
+## BEGINNER-FRIENDLY HIGH-DETAIL CLARITY MANDATE
+- **Exhaustive Tracking Detail**: When modifying or documenting state within `.kilo/rules/project_memory.md` or `.kilo/rules/codebase_map.md`, you are strictly prohibited from writing brief summaries or skipping context. Every entry, logic, functions, code structures, components and flows must be deeply detailed and specific enough if possible.
+- **Accessible Language Constraint**: You must write out file behaviors, dependency paths, and system states using simple, clear, and direct English prose. Avoid overly complex jargon loops so a beginner developer can fully grasp and navigate the exact state of the project instantly.
+
+## IMMUTABLE SECTION TITLE AND LOG PROTECTION (TOTAL RETENTION)
+- **Absolute Title Lock**: You are completely and strictly forbidden from editing, changing, renaming, or deleting any markdown section titles or header markers within any memory tracking files (`.kilo/rules/project_memory.md`, `.kilo/rules/error_memory.md`, `.kilo/rules/codebase_map.md`). This rule applies uniformly regardless of the heading depth level or the number of hash characters utilized (e.g., `#`, `##`, `###`, `####`). Every header is a fixed system label. You're also prohibited to remove any of the comment text that contains a "c: worrie". 
+- **Historical Content Preservation**: You are under strict command to never delete, clear, prune, or truncate existing log items or historical text entries within your memory files. New data must purely be prepended using LIFO rules; past records are unalterable developer logs.
+
+## CRITICAL DATA RETENTION & HISTORICAL PRESERVATION
+- **Non-Destructive Editing Protocol**: When modifying dynamic tracking layers, you are UTTERLY FORBIDDEN from clearing out, erasing, or wiping existing memory entries, resolved historical blocks, or older documentation blocks.
+- **Surgical Mutating Scope**: You must ONLY touch, alter, or rewrite lines that are explicitly relevant to the active bug or task. If an old log entry is unrelated to the current command session, leave it completely untouched and preserved.
+
+## 🧹 SYSTEM CLEANING PROTOCOL (WORKFLOW FOR `-clean`)
+- **Execution Target**: When the user explicitly prompts the flag `-clean`, scan the workspace directories to locate completely unrelated files, unneeded testing code artifacts, or dangling debugging print statements.
+- **Strict Code Isolation Boundary**: You are strictly commanded to never touch, alter, or break active frontend structures or backend business logic files while cleaning. 
+- **Mandatory Clear Justification**: Immediately after removing any dead file or unneeded debugging print artifact, you must write a short, clear, and direct explanation detailing exactly why it was removed or why it was unrelated to the project environment.
+<!-- c: worrie -->

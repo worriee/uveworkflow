@@ -1,0 +1,7 @@
+{
+  "instructions": [
+    ".kilo/rules/.clinerules",
+    ".kilo/rules/system_instructions.md",
+  ],
+}
+// c: worrie
