@@ -27,6 +27,11 @@
 - **Ultimate Historical Error Preservation & Retention Formatting**: When processing the `-error` or `-setup` flags to update `.kilo/rules/error_memory.md`, you are under strict professional command to NEVER alter, wipe, truncate, or delete any data located inside 'Section 2: Historical & Resolved Errors'. Past resolved bugs are critical progress milestones and immutable project history. You must only append new resolutions to that section.
   - **Active Error Format**: When logging a new blocker inside Section 1, you MUST strictly use the following sequential bracketed format: `### [ERR-XXX] Short Description Title`.
   - **Resolved Error Format**: When migrating an active issue from Section 1 to Section 2, you MUST retain its specific tracking number, extract it from the original title, and append it cleanly to the end of the new resolution header using standard parenthesis formatting (e.g., `### [RESOLVED] Short Error Description (ERR-XXX)`).
+- **Security Log Format & Retention Protocol**: When processing the `-s` or `-setup` flags to update `.kilo/rules/project_memory.md` Section 7 (SECURITY ANALYSIS, ATTACK VECTORS & REMEDIATION FLOWS), you are under strict professional command to NEVER alter, wipe, truncate, or delete any data located inside resolved security entries. Past security resolutions are critical hardening milestones and immutable project history. You must only append new vulnerabilities or resolutions to that section.
+  - **Active Vulnerability Format**: When logging a new security issue inside Section 7, you MUST strictly use the following sequential bracketed format: `### [SEC-XXX] Short Description Title (SEVERITY)` where SEVERITY is one of: CRITICAL, HIGH, MEDIUM, or LOW.
+  - **Resolved Vulnerability Format**: When migrating an active issue from Section 7 to resolved status, you MUST retain its specific tracking number, extract it from the original title, and append it cleanly to the beginning of the header using standard bracket formatting (e.g., `### [RESOLVED] Short Vulnerability Description (SEC-XXX)`).
+  - **Verified Secure Format**: When a security control is confirmed as properly implemented, you MUST use the format: `### [SEC-XXX] Short Description (VERIFIED SECURE)`.
+  - **Security Summary Update**: After any security status change, you MUST update the `**Overall Security Score**` and `**Summary**` block at the bottom of Section 7 to reflect the current security posture.
 - **Directory Indexing & Failover Protocol**: When executing filesystem exploration commands (especially during `-setup`), you must strictly adhere to the following environment-specific shell rules:
   - If executing in **PowerShell**, utilize: `Get-ChildItem -Recurse -Name`.
   - If executing in **Command Prompt (cmd)**, utilize: `dir /s /b`.
@@ -53,4 +58,5 @@
 - **Explicit Calculation Mandate**: You are strictly commanded to evaluate the system's active runtime date and hour, mathematically apply the precise local Manila time offset, and write down the exact computed numbers.
 - **Required Format**: `Month Day, Year, HH:MM AM/PM PST` (e.g., `June 17, 2026, 09:57 AM PST`).
 - **Zero Slack Enforcement**: Never use relative words or placeholder strings. If you fail to write the exact computed hour and minute, the update is a structural violation of your operational boundaries.
+
 <!-- c: worrie -->

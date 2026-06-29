@@ -26,12 +26,13 @@ When processing user instructions, dynamically match your operational mindset to
 6. If user includes `-s`: Switch to **Security Analyst** mode. Refer to `.kilo/skills/secure/SKILL.md` to run threat analysis, calculate safety ratings, and log vulnerability maps into the project memory ledger.
 
 ## Strict Rule Modification Constraints
-- Core Rule Mutation Ban: You are strictly prohibited from editing, modifying, or deleting core framework configurations, instructions, or rules files (`.kilo/rules/.clinerules`, `.kilo/rules/system_instructions.md`, `.kilo/skills/orchestrator/SKILL.md`, `.kilo/skills/planner/SKILL.md`, `.kilo/skills/coder/SKILL.md`, `.kilo/skills/debugger/SKILL.md`, `.kilo/skills/ask/SKILL.md`, `.kilo/skills/secure/SKILL.md`). These rules are immutable.
-- Authorized Scope: The only configuration files you are authorized to edit are the dynamic memory layers (`.kilo/rules/project_memory.md`, `.kilo/rules/error_memory.md`, `.kilo/rules/codebase_map.md`) to maintain persistent state.
+- **Core Rule Mutation Ban**: You are strictly prohibited from editing, modifying, or deleting core framework configurations, instructions, or rules files (`.kilo/rules/.clinerules`, `.kilo/rules/system_instructions.md`, `.kilo/skills/orchestrator/SKILL.md`, `.kilo/skills/planner/SKILL.md`, `.kilo/skills/coder/SKILL.md`, `.kilo/skills/debugger/SKILL.md`, `.kilo/skills/ask/SKILL.md`, `.kilo/skills/secure/SKILL.md`). These rules are immutable.
+- **Authorized Scope**: The only configuration files you are authorized to edit are the dynamic memory layers (`.kilo/rules/project_memory.md`, `.kilo/rules/error_memory.md`, `.kilo/rules/codebase_map.md`) to maintain persistent state.
+- **File Creation Ban**: You are strictly prohibited from creating, generating, or instantiating any new files within the `.kilo/` directory. The only files permitted to exist in this directory are the pre-defined framework configurations and the three dynamic memory layers specified above. Any attempt to create new files here constitutes a scope violation.
 
 ## MANDATORY TIMESTAMP COMPUTATION RULE
 - **Absolute Time Zone Alignment**: You are STIPULATED to log all timestamps exclusively using Philippine Standard Time (PST) / Manila Timezone (UTC+8).
-- **Mathematical Computation Enforcement**: You are STICKLED to never guess the time or use vague text markers like "just now". You MUST explicitly calculate the exact time by taking the current system session time and adding or adjusting the offset to hit the exact minute matching the user's location in the Philippines.
+- **Mathematical Computation Enforcement**: You are STICKLED to never guess the time or use vague text markers like "just now". You MUST explicitly calculate the exact time by taking the user's current system time and adding or adjusting the offset to hit the exact minute matching the user's location.
 
 ## NEWEST-ON-TOP SORTING ENFORCEMENT (LIFO ORDER)
 - **Universal Log Ordering**: Every single technical entry, active error, completed milestone, or structural update logged inside `.kilo/rules/error_memory.md` or `.kilo/rules/project_memory.md` MUST follow a strict Last-In, First-Out (LIFO) sorting hierarchy.
@@ -49,7 +50,7 @@ When processing user instructions, dynamically match your operational mindset to
 - **Non-Destructive Editing Protocol**: When modifying dynamic tracking layers, you are UTTERLY FORBIDDEN from clearing out, erasing, or wiping existing memory entries, resolved historical blocks, or older documentation blocks.
 - **Surgical Mutating Scope**: You must ONLY touch, alter, or rewrite lines that are explicitly relevant to the active bug or task. If an old log entry is unrelated to the current command session, leave it completely untouched and preserved.
 
-## 🧹 SYSTEM CLEANING PROTOCOL (WORKFLOW FOR `-clean`)
+## SYSTEM CLEANING PROTOCOL (WORKFLOW FOR `-clean`)
 - **Execution Target**: When the user explicitly prompts the flag `-clean`, scan the workspace directories to locate completely unrelated files, unneeded testing code artifacts, or dangling debugging print statements.
 - **Strict Code Isolation Boundary**: You are strictly commanded to never touch, alter, or break active frontend structures or backend business logic files while cleaning. 
 - **Mandatory Clear Justification**: Immediately after removing any dead file or unneeded debugging print artifact, you must write a short, clear, and direct explanation detailing exactly why it was removed or why it was unrelated to the project environment.
