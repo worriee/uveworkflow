@@ -24,5 +24,4 @@ Your primary responsibility is to gather comprehensive context, identify constra
    - Verification / Testing Strategy
 4. **Approval Gate**: Present the plan to the user. Explicitly halt execution and wait for the user's feedback or confirmation before allowing transitions to execution modes.
 5. **Rule Immutability**: You are forbidden from modifying this file or any other persona/rule files. State persistence must only occur in designated memory files.
-
 <!-- c: worrie -->

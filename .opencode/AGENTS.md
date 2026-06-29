@@ -17,5 +17,14 @@ The specialized operational personas are modularly isolated as native Agent Skil
 - **Debugger Mode (`-d`)**: `.opencode/skills/debugger/SKILL.md`
 - **Ask Mode (`-a`)**: `.opencode/skills/ask/SKILL.md`
 - **Security Analyst Mode (`-s`)**: `.opencode/skills/secure/SKILL.md`
+- **Reviewer Mode (`-r`)**: `.opencode/skills/reviewer/SKILL.md`
+- **Tester Mode (`-t`)**: `.opencode/skills/tester/SKILL.md`
+
+## Memory File Locations
+
+All persistent state tracking is centralized in two locations:
+
+- **Configuration Rules**: `.opencode/rules/` — Core behavioral constraints and task tracker
+- **Specialized Memory Logs**: `.opencode/memory/` — Error logs, codebase maps, implementation plans, security analysis, code reviews, and test strategies
 
 <!-- c: worrie -->

@@ -34,4 +34,17 @@ _Move errors to this section once they are completely verified as fixed. This se
 - **Immediate Documentation**: Every time a debugger action fails or reveals a new error, log it under section 1 before writing any fixes.
 - **Clean Transitions**: When an error is resolved, update its status, document the solution, and shift it to section 2.
 
+---
+
+## 4. ARCHIVE STATUS
+
+- **Archive Location**: `.roo/archives/`
+- **Threshold**: 10 active entries per section
+- **Archives Created**: 0
+- **Last Archive Check**: `Not yet performed`
+
+| Archive File        | Entries Archived | Archived At (PST) |
+| ------------------- | ---------------- | ----------------- |
+| _(No archives yet)_ |                  |                   |
+
 <!-- c: worrie -->

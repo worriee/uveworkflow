@@ -2,18 +2,18 @@
 
 ## System Boundaries
 - Scope Restriction: All file reads, indexing, and tool usage MUST remain strictly confined to the project root workspace directory. Do not access global directories, home directories, or parent folders. This prevents excessive context pollution and keeps context usage lean.
-- Token Efficiency: Do not re-read large unedited files repetitively. Rely on the structured metadata in `.kilo/rules/project_memory.md`, `.kilo/rules/error_memory.md`, and `.kilo/rules/codebase_map.md` to persist state.
+- Token Efficiency: Do not re-read large unedited files repetitively. Rely on the structured metadata in `.kilo/rules/project_memory.md` and `.kilo/memory/` directory to persist state.
 
 ## Manual Sync Entry Rule (Flag-Triggered Verification)
 - On-Demand Memory Synchronization: Background auto-updates are disabled. Make sure you update the timestamps after everytime these commands are prompted from the user. You MUST only scan, re-analyze, or update the local tracking layers when explicitly commanded by the user via the following command flags:
   - `-context`: Triggers a full analysis and updates `.kilo/rules/project_memory.md` to map out active project context and milestones.
-  - `-error`: Triggers an active diagnostic scan and updates `.kilo/rules/error_memory.md` with current bugs, stack traces, or resolution history.
-  - `-codebase`: Triggers a complete structure inspection and updates `.kilo/rules/codebase_map.md` with descriptions of the files and current project workflow.
-  - `-setup`: Triggers a combined sequential execution of all the above updates across all three files simultaneously.
+  - `-error`: Triggers an active diagnostic scan and updates `.kilo/memory/error_memory.md` with current bugs, stack traces, or resolution history.
+  - `-codebase`: Triggers a complete structure inspection and updates `.kilo/memory/codebase_map.md` with descriptions of the files and current project workflow.
+  - `-setup`: Triggers a combined sequential execution of all the above updates across all memory files simultaneously.
 - Strict Adherence: For regular prompts without these flags, assume the existing information in the memory files is unchanged and use it as your ground truth.
 
 ## CRITICAL: Enforced Context Loss Read Execution
-- Enforced Context Re-Reads: If you notice a loss of context window memory, a token expiration event, a session reset, or if the user appends any command flag (`-context`, `-error`, `-codebase`, `-setup`, `-clean`, `-o`, `-p`, `-c`, `-d`, `-a`, `-s`), you are strictly commanded to instantly halt execution and re-read this main file (`.kilo/rules/.clinerules`) followed by your memory layers (`.kilo/rules/project_memory.md`, `.kilo/rules/error_memory.md`, `.kilo/rules/codebase_map.md`).
+- Enforced Context Re-Reads: If you notice a loss of context window memory, a token expiration event, a session reset, or if the user appends any command flag (`-context`, `-error`, `-codebase`, `-setup`, `-clean`, `-o`, `-p`, `-c`, `-d`, `-a`, `-s`, `-r`, `-t`), you are strictly commanded to instantly halt execution and re-read this main file (`.kilo/rules/.clinerules`) followed by your memory layers (`.kilo/rules/project_memory.md`, `.kilo/memory/error_memory.md`, `.kilo/memory/codebase_map.md`).
 - Re-Enforce Ground Truth: Use these local guides to instantly rebuild your mental map of the codebase without asking the user to re-explain past progress.
 
 ## Persona Execution Mode Selection
@@ -21,29 +21,31 @@ When processing user instructions, dynamically match your operational mindset to
 1. If user includes `-o`: Switch to **Orchestrator** mode. Refer to `.kilo/skills/orchestrator/SKILL.md` for breaking down large, complex projects and managing multi-step execution states.
 2. If user includes `-p`: Switch to **Planner** mode. Refer to `.kilo/skills/planner/SKILL.md` to formulate structured technical roadmaps and wait for user approval before modifying code.
 3. If user includes `-c`: Switch to **Coder** mode. Refer to `.kilo/skills/coder/SKILL.md` to write scalable, production-grade logic and follow codebase patterns.
-4. If user includes `-d`: Switch to **Debugger** mode. Refer to `.kilo/skills/debugger/SKILL.md` to conduct systematic tracing, logging active debugging symptoms directly into `.kilo/rules/error_memory.md` to track root causes.
+4. If user includes `-d`: Switch to **Debugger** mode. Refer to `.kilo/skills/debugger/SKILL.md` to conduct systematic tracing, logging active debugging symptoms directly into `.kilo/memory/error_memory.md` to track root causes.
 5. If user includes `-a`: Switch to **Ask** mode. Refer to `.kilo/skills/ask/SKILL.md` to query information or perform safe, read-only architectural reviews.
-6. If user includes `-s`: Switch to **Security Analyst** mode. Refer to `.kilo/skills/secure/SKILL.md` to run threat analysis, calculate safety ratings, and log vulnerability maps into the project memory ledger.
+6. If user includes `-s`: Switch to **Security Analyst** mode. Refer to `.kilo/skills/secure/SKILL.md` to run threat analysis, calculate safety ratings, and log vulnerability maps into `.kilo/memory/security_memory.md`.
+7. If user includes `-r`: Switch to **Reviewer** mode. Refer to `.kilo/skills/reviewer/SKILL.md` to perform structured code quality reviews, architectural compliance checks, and best practices enforcement.
+8. If user includes `-t`: Switch to **Tester** mode. Refer to `.kilo/skills/tester/SKILL.md` to formulate test strategies, generate test cases, and analyze coverage gaps.
 
 ## Strict Rule Modification Constraints
-- **Core Rule Mutation Ban**: You are strictly prohibited from editing, modifying, or deleting core framework configurations, instructions, or rules files (`.kilo/rules/.clinerules`, `.kilo/rules/system_instructions.md`, `.kilo/skills/orchestrator/SKILL.md`, `.kilo/skills/planner/SKILL.md`, `.kilo/skills/coder/SKILL.md`, `.kilo/skills/debugger/SKILL.md`, `.kilo/skills/ask/SKILL.md`, `.kilo/skills/secure/SKILL.md`). These rules are immutable.
-- **Authorized Scope**: The only configuration files you are authorized to edit are the dynamic memory layers (`.kilo/rules/project_memory.md`, `.kilo/rules/error_memory.md`, `.kilo/rules/codebase_map.md`) to maintain persistent state.
-- **File Creation Ban**: You are strictly prohibited from creating, generating, or instantiating any new files within the `.kilo/` directory. The only files permitted to exist in this directory are the pre-defined framework configurations and the three dynamic memory layers specified above. Any attempt to create new files here constitutes a scope violation.
+- **Core Rule Mutation Ban**: You are strictly prohibited from editing, modifying, or deleting core framework configurations, instructions, or rules files (`.kilo/rules/.clinerules`, `.kilo/rules/system_instructions.md`, `.kilo/skills/orchestrator/SKILL.md`, `.kilo/skills/planner/SKILL.md`, `.kilo/skills/coder/SKILL.md`, `.kilo/skills/debugger/SKILL.md`, `.kilo/skills/ask/SKILL.md`, `.kilo/skills/secure/SKILL.md`, `.kilo/skills/reviewer/SKILL.md`, `.kilo/skills/tester/SKILL.md`). These rules are immutable.
+- **Authorized Scope**: The only configuration files you are authorized to edit are the dynamic memory layers (`.kilo/rules/project_memory.md`, `.kilo/memory/error_memory.md`, `.kilo/memory/codebase_map.md`, `.kilo/memory/implementation_memory.md`, `.kilo/memory/security_memory.md`, `.kilo/memory/review_memory.md`, `.kilo/memory/test_memory.md`) to maintain persistent state.
+- **File Creation Ban**: You are strictly prohibited from creating, generating, or instantiating any new files within the `.kilo/rules/` or `.kilo/memory/` directories. The only files permitted to exist are the pre-defined framework configurations and the dynamic memory layers specified above. Any attempt to create new files here constitutes a scope violation.
 
 ## MANDATORY TIMESTAMP COMPUTATION RULE
 - **Absolute Time Zone Alignment**: You are STIPULATED to log all timestamps exclusively using Philippine Standard Time (PST) / Manila Timezone (UTC+8).
 - **Mathematical Computation Enforcement**: You are STICKLED to never guess the time or use vague text markers like "just now". You MUST explicitly calculate the exact time by taking the user's current system time and adding or adjusting the offset to hit the exact minute matching the user's location.
 
 ## NEWEST-ON-TOP SORTING ENFORCEMENT (LIFO ORDER)
-- **Universal Log Ordering**: Every single technical entry, active error, completed milestone, or structural update logged inside `.kilo/rules/error_memory.md` or `.kilo/rules/project_memory.md` MUST follow a strict Last-In, First-Out (LIFO) sorting hierarchy.
+- **Universal Log Ordering**: Every single technical entry, active error, completed milestone, or structural update logged inside `.kilo/memory/error_memory.md`, `.kilo/memory/implementation_memory.md`, `.kilo/memory/security_memory.md`, `.kilo/memory/review_memory.md`, `.kilo/memory/test_memory.md`, or `.kilo/rules/project_memory.md` MUST follow a strict Last-In, First-Out (LIFO) sorting hierarchy.
 - **Placement Execution**: You are COMMANDED to inject the newest data blocks at the absolute top of their respective lists, directly underneath the primary section header. All older entries must slide downward. The most recent operational context must always hit the user's eyes first.
 
 ## BEGINNER-FRIENDLY HIGH-DETAIL CLARITY MANDATE
-- **Exhaustive Tracking Detail**: When modifying or documenting state within `.kilo/rules/project_memory.md` or `.kilo/rules/codebase_map.md`, you are strictly prohibited from writing brief summaries or skipping context. Every entry, logic, functions, code structures, components and flows must be deeply detailed and specific enough if possible.
+- **Exhaustive Tracking Detail**: When modifying or documenting state within `.kilo/rules/project_memory.md` or `.kilo/memory/codebase_map.md`, you are strictly prohibited from writing brief summaries or skipping context. Every entry, logic, functions, code structures, components and flows must be deeply detailed and specific enough if possible.
 - **Accessible Language Constraint**: You must write out file behaviors, dependency paths, and system states using simple, clear, and direct English prose. Avoid overly complex jargon loops so a beginner developer can fully grasp and navigate the exact state of the project instantly.
 
 ## IMMUTABLE SECTION TITLE AND LOG PROTECTION (TOTAL RETENTION)
-- **Absolute Title Lock**: You are completely and strictly forbidden from editing, changing, renaming, or deleting any markdown section titles or header markers within any memory tracking files (`.kilo/rules/project_memory.md`, `.kilo/rules/error_memory.md`, `.kilo/rules/codebase_map.md`). This rule applies uniformly regardless of the heading depth level or the number of hash characters utilized (e.g., `#`, `##`, `###`, `####`). Every header is a fixed system label. You're also prohibited to remove any of the comment text that contains a "c: worrie". 
+- **Absolute Title Lock**: You are completely and strictly forbidden from editing, changing, renaming, or deleting any markdown section titles or header markers within any memory tracking files (`.kilo/rules/project_memory.md`, `.kilo/memory/error_memory.md`, `.kilo/memory/codebase_map.md`, `.kilo/memory/implementation_memory.md`, `.kilo/memory/security_memory.md`, `.kilo/memory/review_memory.md`, `.kilo/memory/test_memory.md`). This rule applies uniformly regardless of the heading depth level or the number of hash characters utilized (e.g., `#`, `##`, `###`, `####`). Every header is a fixed system label. You're also prohibited to remove any of the comment text that contains a "c: worrie". 
 - **Historical Content Preservation**: You are under strict command to never delete, clear, prune, or truncate existing log items or historical text entries within your memory files. New data must purely be prepended using LIFO rules; past records are unalterable developer logs.
 
 ## CRITICAL DATA RETENTION & HISTORICAL PRESERVATION
@@ -54,4 +56,54 @@ When processing user instructions, dynamically match your operational mindset to
 - **Execution Target**: When the user explicitly prompts the flag `-clean`, scan the workspace directories to locate completely unrelated files, unneeded testing code artifacts, or dangling debugging print statements.
 - **Strict Code Isolation Boundary**: You are strictly commanded to never touch, alter, or break active frontend structures or backend business logic files while cleaning. 
 - **Mandatory Clear Justification**: Immediately after removing any dead file or unneeded debugging print artifact, you must write a short, clear, and direct explanation detailing exactly why it was removed or why it was unrelated to the project environment.
+
+## WORKSPACE INITIALIZATION PROTOCOL
+
+- **Initialization File**: `.kilo/workspace.json` serves as the workspace identity marker.
+- **First-Use Initialization**: When this workspace template is applied to a new project for the first time, the AI MUST:
+  1. Read `.kilo/workspace.json`
+  2. If `workspace_id` equals `"uninitialized"`:
+     - Prompt the user: `"Enter project name for workspace initialization:"`
+     - Set `workspace_id` to a lowercase-hyphenated slug of the project name
+     - Set `project_name` to the user-provided name
+     - Set `initialized_at` to the current Philippine Standard Time (PST)
+     - Set `initialized_by` to `"ai-assistant"` or user-specified identifier
+  3. Write the updated values back to `.kilo/workspace.json`
+- **Identification Label**: After initialization, every workspace scanning command MUST log a header line:
+  WORKSPACE: {project_name} Active Template: opencode-workspace v{template_version}
+- **Re-Initialization Ban**: Once `workspace_id` is set to a non-`"uninitialized"` value, re-initialization is strictly prohibited unless the user explicitly provides a `-reinit` flag.
+
+## MEMORY ARCHIVAL PROTOCOL
+
+- **Archive Location**: `.kilo/archives/` directory stores historical memory snapshots.
+- **Entry Count Threshold**: When any tracked section in the memory files exceeds **10 active entries**, the AI MUST execute archival:
+1. Count entries in the section (entries separated by `###` headers)
+2. If count exceeds 10:
+   - Extract the oldest entries (entries at the bottom of the section, since LIFO ordering places newest at top)
+   - Create an archive file named: `{memory_file_name}_{YYYY-MM-DD_HH-MM}.md`
+   - Move the oldest entries to the archive file under a matching section header
+   - Retain only the 10 most recent entries in the active section
+- **Archive File Format**: Archive files MUST follow this structure:
+```markdown
+# Archived Memory Snapshot
+
+- **Source File**: `{original_memory_file_name}`
+- **Archived At**: `{Month Day, Year, HH:MM AM/PM PST}`
+- **Entry Count**: `{number of entries archived}`
+
+---
+
+## Archived Entries
+
+{Moved entries here with original formatting preserved}
+- Archive Sections Affected:
+- error_memory.md Section 1: Active & Unresolved Errors
+- implementation_memory.md Section 1: Documented Implementation Plans & Feature Flows
+- security_memory.md Section 1: Active & Unresolved Vulnerabilities
+- review_memory.md Section 1: Active & Open Review Findings
+- test_memory.md Section 1: Active Test Strategies
+- project_memory.md Section 4.1: Active Tasks
+- project_memory.md Section 4.3: Pending Tasks
+- Archival Trigger: Archival is ONLY triggered when the user explicitly prompts -context, -error, -codebase, or -setup flags, AND the section count exceeds 10. The AI must NEVER auto-archive in the background.
+
 <!-- c: worrie -->

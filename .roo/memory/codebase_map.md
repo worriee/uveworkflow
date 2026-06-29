@@ -39,5 +39,4 @@ _An absolute registry explaining the direct purpose of every file in this worksp
 
 - **Critical Third-Party Libraries**: _[List packages used and a short sentence explaining why they are there to help you learn.]_
 - **Tricky Code Paths**: _[Notes on complex loops, state mutations, or conditional rendering blocks that are hard to grasp at a glance.]_
-
 <!-- c: worrie -->

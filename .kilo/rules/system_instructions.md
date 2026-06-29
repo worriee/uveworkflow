@@ -3,7 +3,7 @@
 ## 1. Context Window Optimization & Token Management
 
 - Strict Project Localism: You are strictly banned from reading or searching files outside the project root directory. Do not scan systemic, global, or unrelated historical directories. This prevents context bloating and ensures complete isolation.
-- **Absolute Rule Folder Isolation**: You are strictly forbidden from creating any new folders or files inside the `.kilo/rules/` directory. You must only utilize, read, and write to the existing memory files (`project_memory.md`, `error_memory.md`, and `codebase_map.md`) inside this directory.
+- **Absolute Rule Folder Isolation**: You are strictly forbidden from creating any new folders or files inside the `.kilo/rules/` directory. You must only utilize, read, and write to the existing memory files (`project_memory.md`) in this directory and the memory files inside `.kilo/memory/` directory.
 - Selective File Reading: Only open and read files that are directly related to the current task or explicitly mentioned in code paths. Avoid bulk directory reads or parsing deep asset folders unless required.
 - Context Preservation: Avoid conversational filler or echoing long blocks of existing code. Keep answers dense, practical, and highly contextualized to save context window room.
 
@@ -15,21 +15,23 @@
 - **Debugger (`-d`)**: Use when user prompts `-d`, when errors appear, logs are shared, or test coverage fails.
 - **Ask (`-a`)**: Use when user prompts `-a`. Use for pure analysis, explanations, walkthroughs, or code reviews.
 - **Security Analyst (`-s`)**: Use when user prompts `-s`. Use exclusively for vulnerability scans, threat assessments, and security architecture reviews. Never apply edits to main source code components during this mode.
+- **Reviewer (`-r`)**: Use when user prompts `-r`, after code implementation is complete, or when quality gate validation is needed. Perform structured code reviews with severity-classified findings.
+- **Tester (`-t`)**: Use when user prompts `-t`, before feature completion, or when test coverage validation is needed. Design test strategies and analyze coverage gaps.
 
 ## 3. Manual Memory Sync & Trigger Rules
 
-- **Prohibited Background Mutating**: Do not alter, overwrite, or touch `.kilo/rules/project_memory.md`, `.kilo/rules/error_memory.md`, or `.kilo/rules/codebase_map.md` during feature development or bug patches unless the user explicitly included the specific trigger flags (`-context`, `-error`, `-codebase`, `-setup`).
+- **Prohibited Background Mutating**: Do not alter, overwrite, or touch `.kilo/rules/project_memory.md` or any files inside `.kilo/memory/` during feature development or bug patches unless the user explicitly included the specific trigger flags (`-context`, `-error`, `-codebase`, `-setup`).
 - **Command Flag Processing Execution**:
   - If `-context` is prompted: Run structural inspection and update `.kilo/rules/project_memory.md` together with its timestamp.
-  - If `-error` is prompted: Analyze debugging traces and update `.kilo/rules/error_memory.md` together with its timestamp.
-  - If `-codebase` is prompted: Log directory maps and file utilities inside `.kilo/rules/codebase_map.md` together with its timestamp. **Strict Exclusion Constraint**: You are strictly forbidden from documenting, explaining, or listing any files or folders ignored by the project's `.gitignore` file within the codebase map tracker.
+  - If `-error` is prompted: Analyze debugging traces and update `.kilo/memory/error_memory.md` together with its timestamp.
+  - If `-codebase` is prompted: Log directory maps and file utilities inside `.kilo/memory/codebase_map.md` together with its timestamp. **Strict Exclusion Constraint**: You are strictly forbidden from documenting, explaining, or listing any files or folders ignored by the project's `.gitignore` file within the codebase map tracker.
   - If `-setup` is prompted: You are strictly and ultimately commanded to sequentially execute all tracking commands (`-context`, `-codebase`, and `-error`) in a single pass. You must thoroughly synchronize all state documentation files simultaneously and accurately update every single one of their timestamp blocks to the exact current Philippine Standard Time (PST).
-- **Ultimate Historical Error Preservation & Retention Formatting**: When processing the `-error` or `-setup` flags to update `.kilo/rules/error_memory.md`, you are under strict professional command to NEVER alter, wipe, truncate, or delete any data located inside 'Section 2: Historical & Resolved Errors'. Past resolved bugs are critical progress milestones and immutable project history. You must only append new resolutions to that section.
+- **Ultimate Historical Error Preservation & Retention Formatting**: When processing the `-error` or `-setup` flags to update `.kilo/memory/error_memory.md`, you are under strict professional command to NEVER alter, wipe, truncate, or delete any data located inside 'Section 2: Historical & Resolved Errors'. Past resolved bugs are critical progress milestones and immutable project history. You must only append new resolutions to that section.
   - **Active Error Format**: When logging a new blocker inside Section 1, you MUST strictly use the following sequential bracketed format: `### [ERR-XXX] Short Description Title`.
   - **Resolved Error Format**: When migrating an active issue from Section 1 to Section 2, you MUST retain its specific tracking number, extract it from the original title, and append it cleanly to the end of the new resolution header using standard parenthesis formatting (e.g., `### [RESOLVED] Short Error Description (ERR-XXX)`).
-- **Security Log Format & Retention Protocol**: When processing the `-s` or `-setup` flags to update `.kilo/rules/project_memory.md` Section 7 (SECURITY ANALYSIS, ATTACK VECTORS & REMEDIATION FLOWS), you are under strict professional command to NEVER alter, wipe, truncate, or delete any data located inside resolved security entries. Past security resolutions are critical hardening milestones and immutable project history. You must only append new vulnerabilities or resolutions to that section.
-  - **Active Vulnerability Format**: When logging a new security issue inside Section 7, you MUST strictly use the following sequential bracketed format: `### [SEC-XXX] Short Description Title (SEVERITY)` where SEVERITY is one of: CRITICAL, HIGH, MEDIUM, or LOW.
-  - **Resolved Vulnerability Format**: When migrating an active issue from Section 7 to resolved status, you MUST retain its specific tracking number, extract it from the original title, and append it cleanly to the beginning of the header using standard bracket formatting (e.g., `### [RESOLVED] Short Vulnerability Description (SEC-XXX)`).
+- **Security Log Format & Retention Protocol**: When processing the `-s` or `-setup` flags to update `.kilo/memory/security_memory.md`, you are under strict professional command to NEVER alter, wipe, truncate, or delete any data located inside resolved security entries. Past security resolutions are critical hardening milestones and immutable project history. You must only append new vulnerabilities or resolutions to that section.
+  - **Active Vulnerability Format**: When logging a new security issue inside Section 1, you MUST strictly use the following sequential bracketed format: `### [SEC-XXX] Short Description Title (SEVERITY)` where SEVERITY is one of: CRITICAL, HIGH, MEDIUM, or LOW.
+  - **Resolved Vulnerability Format**: When migrating an active issue from Section 1 to resolved status, you MUST retain its specific tracking number, extract it from the original title, and append it cleanly to the beginning of the header using standard bracket formatting (e.g., `### [RESOLVED] Short Vulnerability Description (SEC-XXX)`).
   - **Verified Secure Format**: When a security control is confirmed as properly implemented, you MUST use the format: `### [SEC-XXX] Short Description (VERIFIED SECURE)`.
   - **Security Summary Update**: After any security status change, you MUST update the `**Overall Security Score**` and `**Summary**` block at the bottom of Section 7 to reflect the current security posture.
 - **Directory Indexing & Failover Protocol**: When executing filesystem exploration commands (especially during `-setup`), you must strictly adhere to the following environment-specific shell rules:
@@ -42,15 +44,23 @@
 - **LIFO (Last-In, First-Out) Entry Placement**: Every single time you execute an update via `-error`, `-context`, or `-setup`, you must place the new active entry at the absolute top of its respective category list. Do not append new logs to the bottom; they must be inserted immediately under the main headers so they are instantly discoverable.
 - **Immutable Historical Preservation Block**: You are under absolute professional command to preserve all unrelated data blocks. Unless a historical entry directly conflicts with a brand new verification update, do not delete, truncate, compress, or rewrite any historical section data.
 - **Systematic LIFO Placement**: When compiling changes via `-error`, `-context`, `-codebase`, or `-setup` flags, the fresh payload data MUST be prioritized at the absolute beginning of the section. Do not append additions to the bottom of list boundaries.
-- **High-Detail Beginner Clarity**: Every update pushed to `.kilo/rules/project_memory.md` and `.kilo/rules/codebase_map.md` must thoroughly detail the specific role of the components and etc, explaining who depends on them in a highly readable, simplified format.
+- **High-Detail Beginner Clarity**: Every update pushed to `.kilo/rules/project_memory.md` and `.kilo/memory/codebase_map.md` must thoroughly detail the specific role of the components and etc, explaining who depends on them in a highly readable, simplified format.
 - **Header Modification Ban**: You are denied permissions to refactor, touch, or alter heading text structures. All layout section titles must remain exactly as originally defined to ensure absolute systemic indexing consistency.
-- **Vulnerability Logging Protocol**: When running under `-s`, you must safely open `.kilo/rules/project_memory.md` and log attack patterns strictly within `## 7. SECURITY ANALYSIS, ATTACK VECTORS & REMEDIATION FLOWS` using a clear LIFO ordering format.
+- **Vulnerability Logging Protocol**: When running under `-s`, you must safely open `.kilo/memory/security_memory.md` and log attack patterns strictly within `## 1. Active & Unresolved Vulnerabilities` using a clear LIFO ordering format.
 - **Clean Command Constraint**: The moment `-clean` is triggered, isolate your actions to removing non-functional logic, forgotten log lines, or trace logs. Keep all real application structures untouched to ensure complete reliability.
+- **Workspace Initialization Mandate**: When processing any command flag, first check `.kilo/workspace.json`. If `workspace_id` equals `"uninitialized"`, prioritize initialization before executing the requested task. Log the initialization event in the command output.
+- **Archival Execution Protocol**: When processing `-context`, `-error`, `-codebase`, or `-setup` flags, before writing new entries to memory files, check if any section exceeds 10 entries. If threshold is exceeded:
+  1. Calculate oldest entries (bottom entries in LIFO order)
+  2. Generate archive filename with current PST timestamp
+  3. Create archive file in `.kilo/archives/` with preserved formatting
+  4. Remove archived entries from active section
+  5. Retain only 10 most recent entries
+  6. Log archival action in output: `[ARCHIVAL] Moved {count} entries from {section} to {archive_file}`
 
 ## 4. Rule Immutability & Modification Restrictions
 
-- **Zero-Tolerance Rule Tampering**: You are strictly prohibited from mutating, editing, adding, or deleting any instruction, persona, or framework layout file inside `.kilo/rules/` or `.kilo/skills/` (`system_instructions.md`, `.clinerules`, `.kilo/skills/orchestrator/SKILL.md`, `.kilo/skills/planner/SKILL.md`, `.kilo/skills/coder/SKILL.md`, `.kilo/skills/debugger/SKILL.md`, `.kilo/skills/ask/SKILL.md`, `.kilo/skills/secure/SKILL.md`).
-- Permitted Writes: Your modification authority is strictly limited to updating dynamic state indicators within `.kilo/rules/project_memory.md`, `.kilo/rules/error_memory.md`, and `.kilo/rules/codebase_map.md`.
+- **Zero-Tolerance Rule Tampering**: You are strictly prohibited from mutating, editing, adding, or deleting any instruction, persona, or framework layout file inside `.kilo/rules/` or `.kilo/skills/` (`system_instructions.md`, `.clinerules`, `.kilo/skills/orchestrator/SKILL.md`, `.kilo/skills/planner/SKILL.md`, `.kilo/skills/coder/SKILL.md`, `.kilo/skills/debugger/SKILL.md`, `.kilo/skills/ask/SKILL.md`, `.kilo/skills/secure/SKILL.md`, `.kilo/skills/reviewer/SKILL.md`, `.kilo/skills/tester/SKILL.md`).
+- Permitted Writes: Your modification authority is strictly limited to updating dynamic state indicators within `.kilo/rules/project_memory.md`, `.kilo/memory/error_memory.md`, `.kilo/memory/codebase_map.md`, `.kilo/memory/implementation_memory.md`, `.kilo/memory/security_memory.md`, `.kilo/memory/review_memory.md`, and `.kilo/memory/test_memory.md`.
 
 ## 5. Timestamping Standards
 

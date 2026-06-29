@@ -1,0 +1,20 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "workspace_id": "uninitialized",
+  "project_name": "uninitialized",
+  "template_version": "1.0.0",
+  "initialized_at": null,
+  "initialized_by": null,
+  "persona_count": 8,
+  "active_personas": [
+    "orchestrator",
+    "planner",
+    "coder",
+    "debugger",
+    "ask",
+    "secure",
+    "reviewer",
+    "tester"
+  ]
+}
+// c: worrie
