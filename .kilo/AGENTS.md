@@ -1,4 +1,4 @@
-# OpenCode Agent Workspace Configuration
+# Kilo Agent Workspace Configuration
 
 ## External Instruction Loading
 
