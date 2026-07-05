@@ -11,8 +11,6 @@
   <strong>Stop re-explaining your code to AI. Build persistent memory that survives context resets.</strong>
 </p>
 
-Make your AI agent smarter, faster, and highly token-efficient! It stops the AI from guessing your code structure or forgetting past progress. Saves time when moving to other AI agents.
-
 ---
 
 ## Quick Links
@@ -350,7 +348,7 @@ If you use **Kilo** or **OpenCode**, move these files out of the template folder
 | Tool     | Files to Move                   |
 | :------- | :------------------------------ |
 | OpenCode | `AGENTS.md` and `opencode.json` |
-| Kilo     | `kilo.json`                     |
+| Kilo     | `AGENTS.md` and `kilo.json`     |
 
 **Important:** These files must be in the same level as the template folder, not inside it.
 
