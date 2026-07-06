@@ -15,7 +15,7 @@
 - Strict Adherence: For regular prompts without these flags, assume the existing information in the memory files is unchanged and use it as your ground truth.
 
 ## CRITICAL: Enforced Context Loss Read Execution
-- Enforced Context Re-Reads: If you notice a loss of context window memory, a token expiration event, a session reset, or if the user appends any command flag (`-init`, `-context`, `-error`, `-codebase`, `-setup`, `-archive`, `-clean`, `-o`, `-p`, `-c`, `-d`, `-a`, `-s`, `-r`, `-t`), you are strictly commanded to instantly halt execution and re-read this main file (`.kilo/.clinerules`) followed by your memory layers (`.kilo/rules/project_memory.md`, `.kilo/memory/error_memory.md`, `.kilo/memory/codebase_map.md`).
+- Enforced Context Re-Reads: If you notice a loss of context window memory, a token expiration event, a session reset, or if the user appends any command flag (`-init`, `-context`, `-error`, `-codebase`, `-setup`, `-archive`, `-clean`, `-o`, `-p`, `-c`, `-d`, `-a`, `-s`, `-r`, `-t`), you are strictly commanded to instantly halt execution and re-read this main file (`.kilo/rules/.clinerules`) followed by your memory layers (`.kilo/rules/project_memory.md`, `.kilo/memory/error_memory.md`, `.kilo/memory/codebase_map.md`).
 - Re-Enforce Ground Truth: Use these local guides to instantly rebuild your mental map of the codebase without asking the user to re-explain past progress.
 
 ## Persona Execution Mode Selection
@@ -25,9 +25,9 @@ When processing user instructions, dynamically match your operational mindset to
 3. If user includes `-c`: Switch to **Coder** mode. Refer to `.kilo/skills/coder/SKILL.md` to write scalable, production-grade logic and follow codebase patterns.
 4. If user includes `-d`: Switch to **Debugger** mode. Refer to `.kilo/skills/debugger/SKILL.md` to conduct systematic tracing, logging active debugging symptoms directly into `.kilo/memory/error_memory.md` to track root causes.
 5. If user includes `-a`: Switch to **Ask** mode. Refer to `.kilo/skills/ask/SKILL.md` to query information or perform safe, read-only architectural reviews.
-6. If user includes `-s`: Switch to **Security Analyst** mode. Refer to `.kilo/skills/secure/SKILL.md` to run threat analysis, calculate safety ratings, and log vulnerability maps into `.kilo/memory/security_memory.md`.
-7. If user includes `-r`: Switch to **Reviewer** mode. Refer to `.kilo/skills/reviewer/SKILL.md` to perform structured code quality reviews, architectural compliance checks, and best practices enforcement.
-8. If user includes `-t`: Switch to **Tester** mode. Refer to `.kilo/skills/tester/SKILL.md` to formulate test strategies, generate test cases, and analyze coverage gaps.
+6. If user includes `-s`: Switch to **Security Analyst** mode. Refer to `.kilo/skills/secure/SKILL.md` to run threat analysis, calculate safety ratings, and log vulnerability maps into `.kilo/memory/security_memory.md`. When a vulnerability in Section 1 is patched, you MUST migrate it to Section 2 within the SAME response using `### [RESOLVED] Short Vulnerability Description (SEC-XXX)` and update the Overall Security Score in Section 3.
+7. If user includes `-r`: Switch to **Reviewer** mode. Refer to `.kilo/skills/reviewer/SKILL.md` to perform structured code quality reviews, architectural compliance checks, and best practices enforcement. When a review finding in Section 1 is remediated, you MUST migrate it to Section 2 within the SAME response using `### [RESOLVED] Short Review Description (REVIEW-XXX)`.
+8. If user includes `-t`: Switch to **Tester** mode. Refer to `.kilo/skills/tester/SKILL.md` to formulate test strategies, generate test cases, and analyze coverage gaps. You MUST enforce the ordered test pipeline (typecheck -> lint -> unit via Vitest -> E2E via Playwright -> coverage report). You MUST enforce coverage gates: critical business logic at 90%, utility functions at 80%, UI components at 70%. You MUST migrate resolved test strategies from Section 1 to Section 2 of `test_memory.md` within the SAME response using `### [RESOLVED] Short Test Description (TEST-XXX)`. Breaking the pipeline order, skipping stages, ignoring coverage gates, or failing to migrate immediately is a CRITICAL VIOLATION.
 
 ## Strict Rule Modification Constraints
 - **Core Rule Mutation Ban**: You are strictly prohibited from editing, modifying, or deleting core framework configurations, instructions, or rules files (`.kilo/rules/.clinerules`, `.kilo/rules/system_instructions.md`, `.kilo/skills/orchestrator/SKILL.md`, `.kilo/skills/planner/SKILL.md`, `.kilo/skills/coder/SKILL.md`, `.kilo/skills/debugger/SKILL.md`, `.kilo/skills/ask/SKILL.md`, `.kilo/skills/secure/SKILL.md`, `.kilo/skills/reviewer/SKILL.md`, `.kilo/skills/tester/SKILL.md`). These rules are immutable.
@@ -53,6 +53,20 @@ When processing user instructions, dynamically match your operational mindset to
 ## CRITICAL DATA RETENTION & HISTORICAL PRESERVATION
 - **Non-Destructive Editing Protocol**: When modifying dynamic tracking layers, you are UTTERLY FORBIDDEN from clearing out, erasing, or wiping existing memory entries, resolved historical blocks, or older documentation blocks.
 - **Surgical Mutating Scope**: You must ONLY touch, alter, or rewrite lines that are explicitly relevant to the active bug or task. If an old log entry is unrelated to the current command session, leave it completely untouched and preserved.
+
+## IMMEDIATE RESOLUTION MANDATE (TEST, REVIEW, SECURITY)
+
+- **Test Resolution**: When an active test strategy in Section 1 of `.kilo/memory/test_memory.md` has been implemented or verified, you MUST migrate it to Section 2 within the SAME response. The resolved entry MUST use `### [RESOLVED] Short Test Description (TEST-XXX)`, retaining the original TEST-XXX tracking number. Failure to migrate immediately is a CRITICAL VIOLATION.
+
+- **Review Resolution**: When an active review finding in Section 1 of `.kilo/memory/review_memory.md` has been remediated or confirmed resolved, you MUST migrate it to Section 2 within the SAME response. The resolved entry MUST use `### [RESOLVED] Short Review Description (REVIEW-XXX)`, retaining the original REVIEW-XXX tracking number. Failure to migrate immediately is a CRITICAL VIOLATION.
+
+- **Security Resolution**: When an active vulnerability in Section 1 of `.kilo/memory/security_memory.md` has been patched or confirmed resolved, you MUST migrate it to Section 2 within the SAME response. The resolved entry MUST use `### [RESOLVED] Short Vulnerability Description (SEC-XXX)`, retaining the original SEC-XXX tracking number. You MUST ALSO update the Overall Security Score in Section 3. Failure to migrate immediately is a CRITICAL VIOLATION.
+
+- **Tracking Number Retention**: Every resolved entry MUST preserve its original tracking number (TEST-XXX, REVIEW-XXX, SEC-XXX, ERR-XXX) in the resolved header using parenthesis formatting. Extracting the number from the original title and appending it to the resolved header is MANDATORY.
+
+- **Historical Preservation**: All resolved entries in Section 2 of `test_memory.md`, `review_memory.md`, and `security_memory.md` are IMMUTABLE historical records. You are UTTERLY FORBIDDEN from deleting, truncating, or rewriting any existing resolved entry. New resolved entries are prepended (LIFO) directly under the Section 2 header.
+
+- **Violation Classification**: Failure to migrate any of the above within the same response, or any deletion/truncation of historical resolved entries, is classified as a **CRITICAL VIOLATION**.
 
 ## SYSTEM CLEANING PROTOCOL (WORKFLOW FOR `-clean`)
 - **Execution Target**: When the user explicitly prompts the flag `-clean`, scan the workspace directories to locate completely unrelated files, unneeded testing code artifacts, or dangling debugging print statements.

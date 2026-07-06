@@ -1,4 +1,4 @@
-# Ultimate Vibe Experience (UVE Coding Strat) - A Workspace Template
+# UVE Coding Strat (Ultimate Vibe Experience) - Workspace Template
 
 <p align="center">
   <img src="https://img.shields.io/badge/Template-v1.0-blue?style=for-the-badge&labelColor=1a1a2e&color=0f3460" alt="Template Version"/>
@@ -15,213 +15,74 @@
 
 ## Quick Links
 
-[What is this?](#what-is-this-template-for) | [Where to Use?](#you-can-use-this-template-for) | [Problem We Solve](#the-problem-we-solve) | [How It Works](#how-it-works) | [Memory System](#memory-system) | [Folder Structure](#folder-structure-on-opencode-template) | [Prompt Triggers](#prompt-triggers-manual-commands) | [Installation](#installation-guide) | [FAQ](#faq) | [Usages](#own-usages)
+[What is this?](#what-is-this-template-for) | [Where to Use?](#you-can-use-this-template-for) | [Problem We Solve](#the-problem-we-solve) | [Memory System](#memory-system) | [Folder Structure](#folder-structure-on-opencode-template) | [Prompt Triggers](#prompt-triggers-manual-commands) | [Installation](#installation-guide) | [FAQ](#faq) | [Usages](#own-usages)
 
 ---
 
 ## Recent Updates
 
-- Added prompt trigger `-archive` for archiving memory logs.
-- Restructured memory system: separated specialized logs into dedicated `.roottemplate/memory/` folder with individual files for errors, security, reviews, tests, implementation flows, and codebase mapping.
-- Added **Reviewer persona** (`-r`) for structured code quality reviews with severity-classified findings and architectural compliance checks.
-- Added **Tester persona** (`-t`) for test strategy design, test case generation, and coverage gap analysis.
-- Implemented **Memory Archive Protocol**: when any tracked section exceeds 10 entries, oldest logs are archived to pre-created archive files in `.roottemplate/archives/` to prevent context bloat while preserving history.
-- Added **Workspace Initialization Protocol** with `workspace.json` that identifies which project is using the template and prevents re-initialization conflicts.
-- Optimized all four templates (Cline, Roo, Kilo, OpenCode) to use consistent folder structures and path references within their respective root directories.
-- Added **pre-created archive files** (`error_archive.md`, `implementation_archive.md`, `security_archive.md`, `review_archive.md`, `test_archive.md`) for organized, predictable archival without AI generating messy filenames.
-- Excluded `codebase_map.md` and `project_memory.md` from archival to preserve permanent project structure and task history.
+- improve tester, reviewer and security personas
+- improve logging capabilities of those three personas
+- reorganized memory format when logging resolved logs
+- fixed global rules files to re-enforce new improvements
 
 ---
 
 ## What is this Template For?
 
-By default, AI coding assistants can quickly fill up your context window by reading too many files or repeating large blocks of code. They can also forget what they did in a previous chat session.
+AI coding tools forget your project fast. They read too many files, fill up context, and lose track of what they built last session.
 
-This template builds an **AI Memory Layer** inside your local project. It forces the AI to follow strict project rules, adopt specialized roles (like Coder or Debugger), and track its own progress in small, lightweight markdown files.
+This template adds a **memory layer** to your project. It gives the AI strict rules, specialized roles, and lightweight markdown files to track its own progress.
 
-**Why Workspace instead of Global Directory?:** Global enforce a single memory layout across all projects. This causes critical context contamination, as memory files from prior projects leak into new ones upon initialization. Workspace rules isolate project documentation strictly within the local directory, ensuring that the AI's contextual understanding remains perfectly aligned with the current workspace.
+**Why workspace-level, not global?** Global rules mix all your projects together. Old project data leaks into new ones. Workspace rules keep each project isolated and clean.
 
 ---
 
 ## You can use this template for:
 
-- Cline Extension [cline.bot]
-- Roo Code Extension [roocode.com]
-- Zoo Code Extension [Zoo Code Organization] (a community forked roo after its shutdown in vscode extension migrating to Roomote)
-- Kilo Code Extension or CLI [kilocode.ai]
+- Cline [cline.bot]
+- Roo Code [roocode.com]
+- Zoo Code [Zoo Code Organization] (community fork, migrating to Roomote)
+- Kilo Code [kilocode.ai]
 - OpenCode CLI
 
-_(or in any ai agent you're currently working with across platforms as long as you'll able to make the ai read these files.)_
+_(works with any AI agent that can read workspace-level rule files)_
 
 ---
 
 ## The Problem We Solve
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     WITHOUT THIS TEMPLATE                       │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   Chat Session 1:  "Here's my codebase..."                      │
-│   Chat Session 2:  "Wait, what did we build again?"             │
-│   Chat Session 3:  "Can you explain the auth system?"           │
-│   Chat Session 4:  "The AI just rewrote my working code!"       │
-│                                                                 │
-│   Result: Context window fills up, AI hallucinates              │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-
-                            vs
-
-┌─────────────────────────────────────────────────────────────────┐
-│                     WITH UVE CODING STRAT                       │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   Chat Session 1:  -setup  -->  AI reads memory                 │
-│   Chat Session 2:  -d [bug] -->  AI recalls past errors         │
-│   Chat Session 3:  -c [task] -->  AI follows patterns           │
-│   Chat Session 4:  -r        -->  AI validates quality          │
-│                                                                 │
-│   Result: Persistent memory, 90% less token waste               │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
 ### Key Differences
 
-| Aspect                | Without Template              | With UVE Coding Strat       |
-| :-------------------- | :---------------------------- | :-------------------------- |
-| **Memory**            | Lost after context reset      | Persisted in markdown files |
-| **Token Usage**       | Reads entire repo each prompt | Only reads relevant memory  |
-| **AI Behavior**       | Generic, no specialization    | 8 specialized personas      |
-| **Session Recovery**  | Re-explain everything         | Type `-setup` to restore    |
-| **Project Isolation** | Global rules cause leaks      | Workspace-level isolation   |
-
----
-
-## How It Works
-
-The template creates a structured workflow where you control AI behavior through simple flag commands:
-
-```
-User Input
-    │
-    ▼
-┌─────────────────────────────────────────────────────────────┐
-│                      FLAG DETECTION                         │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   -o  ────>  Orchestrator   (manage complex tasks)          │
-│   -p  ────>  Planner        (create roadmaps)               │
-│   -c  ────>  Coder          (write production code)         │
-│   -d  ────>  Debugger       (trace errors)                  │
-│   -a  ────>  Ask            (read-only analysis)            │
-│   -s  ────>  Security       (threat modeling)               │
-│   -r  ────>  Reviewer       (code quality)                  │
-│   -t  ────>  Tester         (test strategies)               │
-│                                                             │
-│   -setup  ──>  Runs ALL memory syncs at once                │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-                        │
-                        ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   PERSONA ACTIVATION                        │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   AI loads specialized SKILL.md from:                       │
-│   .opencode/skills/{persona}/SKILL.md                       │
-│                                                             │
-│   Each persona has strict rules, output formats, scope      │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-                        │
-                        ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   MEMORY UPDATE (Optional)                  │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   If flag includes memory trigger:                          │
-│   -context  ──>  project_memory.md                          │
-│   -error    ──>  error_memory.md                            │
-│   -codebase ──>  codebase_map.md                            │
-│                                                             │
-│   New entries added at TOP (LIFO order)                     │
-│   Old entries preserved as immutable history                │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-                        │
-                        ▼
-                   AI Response
-```
+| Aspect                | Without Template            | With UVE Coding Strat      |
+| :-------------------- | :-------------------------- | :------------------------- |
+| **Memory**            | Lost after context reset    | Saved in markdown files    |
+| **Token Usage**       | Reads entire repo each time | Only reads relevant memory |
+| **AI Behavior**       | Generic, no specialization  | 8 specialized personas     |
+| **Session Recovery**  | Re-explain everything       | Type `-setup` to restore   |
+| **Project Isolation** | Global rules cause leaks    | Workspace-level isolation  |
 
 ---
 
 ## Memory System
 
-Your project's memory lives in lightweight markdown files that the AI reads on-demand:
+Your project stores memory in simple markdown files. The AI reads them when needed.
 
-```
-PROJECT MEMORY ARCHITECTURE
-═══════════════════════════════════════════════════════════════
+| File                       | Purpose                               |
+| :------------------------- | :------------------------------------ |
+| `project_memory.md`        | Task tracker (permanent)              |
+| `error_memory.md`          | Bug traces and fix history            |
+| `codebase_map.md`          | File index and tech stack (permanent) |
+| `implementation_memory.md` | Architecture and feature flows        |
+| `security_memory.md`       | Vulnerability tracking                |
+| `review_memory.md`         | Code review findings                  |
+| `test_memory.md`           | Test strategies and coverage          |
 
-                     ┌──────────────────────┐
-                     │  project_memory.md   │
-                     │ (Master Task Tracker)│
-                     │                      │
-                     │  Active milestones   │
-                     │  Completed work      │
-                     │  Pending items       │
-                     └──────────┬───────────┘
-                                │
-               ┌────────────────┼────────────────┐
-               │                │                │
-               ▼                ▼                ▼
-     ┌─────────────────┐ ┌─────────────────┐ ┌──────────────────┐
-     │ error_memory.md │ │ codebase_map.md │ │security_memory.md│
-     │                 │ │                 │ │                  │
-     │ [Newest Entry]  │ │ File index      │ │ Vulnerabilities  │
-     │ [Entry 2]       │ │ Tech stack      │ │ Threat models    │
-     │ ...             │ │ Logic paths     │ │ Risk scores      │
-     │ [Entry 10]      │ │                 │ │                  │
-     └────────┬────────┘ └─────────────────┘ └──────────────────┘
-              │
-              │  When section > 10 entries
-              ▼
-     ┌─────────────────┐
-     │ error_archive.md│
-     │                 │
-     │ [Oldest Entry]  │
-     │ [Oldest Entry 2]│
-     │ ...             │
-     │ [Oldest Entry N]│
-     └─────────────────┘
-
-LIFO ORDER: Newest entries always at the top
-ARCHIVAL: Oldest entries moved to archives/ when count exceeds 10
-```
-
-### Memory File Responsibilities
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│  FILE                    │  PURPOSE                             │
-├──────────────────────────┼──────────────────────────────────────┤
-│  project_memory.md       │  Master task tracker (permanent)     │
-│  error_memory.md         │  Bug traces + resolution history     │
-│  codebase_map.md         │  File index + tech stack (permanent) │
-│  implementation_memory.md│  Architecture + feature flows        │
-│  security_memory.md      │  Vulnerability tracking              │
-│  review_memory.md        │  Code review findings                │
-│  test_memory.md          │  Test strategies + coverage          │
-└─────────────────────────────────────────────────────────────────┘
-```
+When any section passes 10 entries, the oldest are moved to `archives/`.
 
 ---
 
 ## Folder Structure (on .opencode template)
-
-Here is a visual map of how every file works together to manage your AI assistant:
 
 ```text
 Your-Project-Root/
@@ -271,96 +132,77 @@ _All four templates (.clinerules, .roo, .kilo, .opencode) share the same interna
 
 ## Prompt Triggers (Manual Commands)
 
-Type these prompts depending on these situations!
+Use these flag commands:
 
-| Command / Flag | Type           | What it does / Purpose                                                                                                                                                         | Use Case                                                                                                                                                |
-| :------------- | :------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `-setup`       | Utility        | Dynamically inspects your whole workspace and updates all memory layers at once.                                                                                               | Runs -context, -error, -codebase, and -init triggers all at the same time. Use this on your very first prompt or whenever you start a new chat session! |
-| `-o`           | Persona        | **Orchestrator** - Managing massive, multi-step tasks and coordinating all personas simultaneously                                                                             | Prompting a general plan or massive implementation.                                                                                                     |
-| `-p`           | Persona        | **Planner** - Creates structured technical roadmaps and waits for approval before code changes                                                                                 | `-p [discuss your plan]`                                                                                                                                |
-| `-c`           | Persona        | **Coder** - Writes clean, production-grade logic following codebase patterns                                                                                                   | Use this to act on agreed proposed plan from agent.                                                                                                     |
-| `-d`           | Persona        | **Debugger** - Deep root-cause error analysis and systematic tracing                                                                                                           | `-d [clearly state your error such as sending error logs]`                                                                                              |
-| `-a`           | Persona        | **Ask** - Read-only code analysis and concept explanations                                                                                                                     | If you want to ask or clarify something without code modifications.                                                                                     |
-| `-s`           | Persona/Memory | **Security Analyst** - Aggressive threat modeling, exploit evaluations, and code safety rating (0-10)                                                                          | Use to check for data leaks, credential risks, or black-market vulnerabilities without modifying core code.                                             |
-| `-r`           | Persona/Memory | **Reviewer** - Structured code quality reviews with severity classifications (CRITICAL/HIGH/MEDIUM/LOW) and architectural compliance checks                                    | Use after code implementation to validate quality, identify performance bottlenecks, or enforce best practices before merging.                          |
-| `-t`           | Persona/Memory | **Tester** - Test strategy design, test case generation, and coverage gap analysis                                                                                             | Use before feature completion to plan unit/integration/E2E tests or analyze existing test coverage.                                                     |
-| `-clean`       | Utility        | **Clean Workspace** - Automated analysis and removal of unrelated junk files or redundant debugging traces                                                                     | Use to safely clean up diagnostic trash or non-functional file clutter while keeping active frontend/backend layers untouched.                          |
-| `-context`     | Memory         | Scans your current project structure and updates `project_memory.md` to record your active project workflow.                                                                   | Use when you update the context so the agent is aware of the current state. Also useful when migrating to other AI agents.                              |
-| `-error`       | Memory         | Analyzes active debugging traces and updates `error_memory.md` with current bugs, logs, and resolution steps. Records history of fixed errors to prevent hallucination.        | Every debugging session include `-error` in your prompt so it records resolved and current errors.                                                      |
-| `-codebase`    | Memory         | Looks over your code layout and updates `codebase_map.md` with simple descriptions of your active application workflow. Records tech stack and explains purpose of every file. | Best practices: use this prompt when you're about to deploy or finished building your project.                                                          |
-| `-init`        | Utility        | **Initialize Workspace** - Reads `workspace.json`, prompts for project name, and writes initialized values with timestamp                                                      | Use on first-time setup when applying this template to a new project.                                                                                   |
-| `-archive`     | Utility        | **Archive Memory** - Scans eligible memory files and archives oldest entries when sections exceed 10 entries to pre-created archive files                                      | Use when memory files get too large and you want to clean up active sections while preserving history.                                                  |
+| Command / Flag | Type           | What it does                                                | Use Case                                  |
+| :------------- | :------------- | :---------------------------------------------------------- | :---------------------------------------- |
+| `-setup`       | Utility        | Updates all memory files at once.                           | First prompt or new chat session.         |
+| `-o`           | Persona        | Orchestrator - manages complex tasks.                       | Multi-step plans or implementations.      |
+| `-p`           | Persona        | Planner - creates roadmaps, waits for approval.             | `-p describe your plan`                   |
+| `-c`           | Persona        | Coder - writes production code.                             | After agreeing on a plan.                 |
+| `-d`           | Persona        | Debugger - traces errors.                                   | `-d describe the error`                   |
+| `-a`           | Persona        | Ask - read-only analysis.                                   | Questions without code changes.           |
+| `-s`           | Persona/Memory | Security - threat modeling, safety rating (0-10).           | Check for data leaks or credential risks. |
+| `-r`           | Persona/Memory | Reviewer - code quality reviews (CRITICAL/HIGH/MEDIUM/LOW). | After code changes to check quality.      |
+| `-t`           | Persona/Memory | Tester - test strategies and coverage analysis.             | Before feature completion.                |
+| `-clean`       | Utility        | Removes junk files and debug traces.                        | Clean up after debugging.                 |
+| `-context`     | Memory         | Updates `project_memory.md` with current workflow.          | When project context changes.             |
+| `-error`       | Memory         | Updates `error_memory.md` with bugs and fixes.              | Every debugging session.                  |
+| `-codebase`    | Memory         | Updates `codebase_map.md` with file descriptions.           | Before deployment.                        |
+| `-init`        | Utility        | Initializes `workspace.json`.                               | First-time setup.                         |
+| `-archive`     | Utility        | Moves old entries to archive files.                         | When memory files get too large.          |
 
 ### Why Manual Triggers Instead of Auto-Updates?
 
-This template explicitly bans the AI from modifying its memory files in the background while it is generating code. You must type the flags manually to make it update its memory.
+The AI cannot update memory files on its own. You must type the flags manually.
 
-**Key Benefits:**
-
-- **Massive Token & Money Savings:** Automatic background updates force the AI to analyze, rewrite, and reread your entire repository structure on every single prompt. Manual syncing cuts out this massive token usage entirely since you will manage when to update the memory files.
-- **Full Control of Personas:** You manually trigger personas on how you want the AI to act based on your prompt.
-- **Prevents AI Hallucination:** If the AI rewrites its memory tracking layers during an active bug patch, it can get confused and mess up its instructions. Manual triggers give you total control over when the AI updates its project roadmap.
-- **Clean Session Recovery:** If your context window resets or expires, simply type `-setup` in a fresh chat. The AI will read its lightweight memory logs and rebuild its mental map of your code instantly without needing you to re-explain anything.
+- **Saves tokens and money.** Auto-updates read your entire repo on every message.
+- **You control personas.** You decide when the AI switches roles.
+- **Prevents hallucination.** The AI won't rewrite memory mid-task and get confused.
+- **Easy session recovery.** Type `-setup` in a new chat to restore context.
 
 ---
 
 ## Installation Guide
 
-### Prerequisites
-
-- Git installed on your machine
-- An AI coding assistant (Cline, Roo Code, Kilo Code, or OpenCode)
-
-### Step 1: Download the Template
-
-Open your terminal and clone the repository:
+### Step 1: Download
 
 ```bash
 git clone https://github.com/worriee/clinerulestemplate.git
 ```
 
-### Step 2: Choose Your Template Folder
+### Step 2: Pick Your Folder
 
-Pick the folder that matches your AI agent:
+| AI Tool             | Folder        |
+| :------------------ | :------------ |
+| Cline               | `.clinerules` |
+| Roo Code / Zoo Code | `.roo`        |
+| Kilo Code           | `.kilo`       |
+| OpenCode            | `.opencode`   |
 
-| AI Tool             | Folder to Copy |
-| :------------------ | :------------- |
-| Cline               | `.clinerules`  |
-| Roo Code / Zoo Code | `.roo`         |
-| Kilo Code           | `.kilo`        |
-| OpenCode            | `.opencode`    |
+### Step 3: Paste Into Your Project
 
-### Step 3: Copy to Your Project
-
-Copy the chosen folder into the **main folder** of your project (the same level as your `src/` or `app/` folder).
+Copy the folder into your project root (same level as `src/` or `app/`).
 
 ```
 your-project/
 ├── src/
 ├── package.json
-├── .clinerules/    <-- paste here
+├── .opencode/    <-- paste here
 ```
 
 ### Step 4: Move Root Files (Kilo and OpenCode Only)
-
-If you use **Kilo** or **OpenCode**, move these files out of the template folder to your project's main folder:
 
 | Tool     | Files to Move                   |
 | :------- | :------------------------------ |
 | OpenCode | `AGENTS.md` and `opencode.json` |
 | Kilo     | `AGENTS.md` and `kilo.json`     |
 
-**Important:** These files must be in the same level as the template folder, not inside it.
+These files must be in your project root, not inside the template folder.
 
-### Step 5: Start Using
+### Step 5: Start
 
-Open your AI tool and type:
-
-```
--setup
-```
-
-The AI will read the template and learn your project structure.
+Type `-setup` in your AI Agent. It will read the template and learn your project.
 
 ---
 

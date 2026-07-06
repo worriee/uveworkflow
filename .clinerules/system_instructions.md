@@ -16,7 +16,7 @@
 - **Ask (`-a`)**: Use when user prompts `-a`. Use for pure analysis, explanations, walkthroughs, or code reviews.
 - **Security Analyst (`-s`)**: Use when user prompts `-s`. Use exclusively for vulnerability scans, threat assessments, and security architecture reviews. Never apply edits to main source code components during this mode.
 - **Reviewer (`-r`)**: Use when user prompts `-r`, after code implementation is complete, or when quality gate validation is needed. Perform structured code reviews with severity-classified findings.
-- **Tester (`-t`)**: Use when user prompts `-t`, before feature completion, or when test coverage validation is needed. Design test strategies and analyze coverage gaps.
+- **Tester (`-t`)**: Use when user prompts `-t`, before feature completion, or when test coverage validation is needed. Design test strategies and analyze coverage gaps. You MUST enforce the ordered test pipeline (typecheck -> lint -> unit via Vitest -> E2E via Playwright -> coverage report) and coverage gates (90% critical, 80% utility, 70% UI).
 
 ## 3. Manual Memory Sync & Trigger Rules
 
@@ -31,11 +31,21 @@
 - **Ultimate Historical Error Preservation & Retention Formatting**: When processing the `-error` or `-setup` flags to update `.clinerules/memory/error_memory.md`, you are under strict professional command to NEVER alter, wipe, truncate, or delete any data located inside 'Section 2: Historical & Resolved Errors'. Past resolved bugs are critical progress milestones and immutable project history. You must only append new resolutions to that section.
   - **Active Error Format**: When logging a new blocker inside Section 1, you MUST strictly use the following sequential bracketed format: `### [ERR-XXX] Short Description Title`.
   - **Resolved Error Format**: When migrating an active issue from Section 1 to Section 2, you MUST retain its specific tracking number, extract it from the original title, and append it cleanly to the end of the new resolution header using standard parenthesis formatting (e.g., `### [RESOLVED] Short Error Description (ERR-XXX)`).
+  - **Immediate Error Resolution Mandate**: When an active error in Section 1 has been fixed or confirmed resolved, you MUST migrate it to Section 2 within the SAME response. Failure to migrate immediately is a CRITICAL VIOLATION.
 - **Security Log Format & Retention Protocol**: When processing the `-s` or `-setup` flags to update `.clinerules/memory/security_memory.md`, you are under strict professional command to NEVER alter, wipe, truncate, or delete any data located inside resolved security entries. Past security resolutions are critical hardening milestones and immutable project history. You must only append new vulnerabilities or resolutions to that section.
   - **Active Vulnerability Format**: When logging a new security issue inside Section 1, you MUST strictly use the following sequential bracketed format: `### [SEC-XXX] Short Description Title (SEVERITY)` where SEVERITY is one of: CRITICAL, HIGH, MEDIUM, or LOW.
   - **Resolved Vulnerability Format**: When migrating an active issue from Section 1 to resolved status, you MUST retain its specific tracking number, extract it from the original title, and append it cleanly to the beginning of the header using standard bracket formatting (e.g., `### [RESOLVED] Short Vulnerability Description (SEC-XXX)`).
   - **Verified Secure Format**: When a security control is confirmed as properly implemented, you MUST use the format: `### [SEC-XXX] Short Description (VERIFIED SECURE)`.
   - **Security Summary Update**: After any security status change, you MUST update the `**Overall Security Score**` and `**Summary**` block at the bottom of Section 7 to reflect the current security posture.
+  - **Immediate Security Resolution Mandate**: When an active vulnerability in Section 1 has been patched or confirmed resolved, you MUST migrate it to Section 2 within the SAME response using `### [RESOLVED] Short Vulnerability Description (SEC-XXX)`. You MUST ALSO update the Overall Security Score in Section 3. Failure to migrate immediately is a CRITICAL VIOLATION.
+- **Test Log Format & Retention Protocol**: When processing the `-t` or `-setup` flags to update `.clinerules/memory/test_memory.md`, you are under strict professional command to NEVER alter, wipe, truncate, or delete any data located inside 'Section 2: Historical & Resolved Test Strategies'. Past resolved test strategies are critical validation milestones and immutable project history. You must only append new resolutions to that section.
+  - **Active Test Format**: When logging a new test strategy inside Section 1, you MUST strictly use the following sequential bracketed format: `### [TEST-XXX] Short Test Strategy Title`.
+  - **Resolved Test Format**: When migrating an active test strategy from Section 1 to Section 2, you MUST retain its specific tracking number, extract it from the original title, and append it cleanly to the end of the new resolution header using standard parenthesis formatting (e.g., `### [RESOLVED] Short Test Description (TEST-XXX)`).
+  - **Immediate Test Resolution Mandate**: When an active test strategy in Section 1 has been implemented, verified, or confirmed resolved, you MUST migrate it to Section 2 within the SAME response. Failure to migrate immediately is a CRITICAL VIOLATION.
+- **Review Log Format & Retention Protocol**: When processing the `-r` or `-setup` flags to update `.clinerules/memory/review_memory.md`, you are under strict professional command to NEVER alter, wipe, truncate, or delete any data located inside 'Section 2: Historical & Resolved Reviews'. Past resolved reviews are critical quality milestones and immutable project history. You must only append new resolutions to that section.
+  - **Active Review Format**: When logging a new review finding inside Section 1, you MUST strictly use the following sequential bracketed format: `### [REVIEW-XXX] Short Review Finding Title`.
+  - **Resolved Review Format**: When migrating an active review finding from Section 1 to Section 2, you MUST retain its specific tracking number, extract it from the original title, and append it cleanly to the end of the new resolution header using standard parenthesis formatting (e.g., `### [RESOLVED] Short Review Description (REVIEW-XXX)`).
+  - **Immediate Review Resolution Mandate**: When an active review finding in Section 1 has been remediated or confirmed resolved, you MUST migrate it to Section 2 within the SAME response. Failure to migrate immediately is a CRITICAL VIOLATION.
 - **Directory Indexing & Failover Protocol**: When executing filesystem exploration commands (especially during `-setup`), you must strictly adhere to the following environment-specific shell rules:
   - If executing in **PowerShell**, utilize: `Get-ChildItem -Recurse -Name`.
   - If executing in **Command Prompt (cmd)**, utilize: `dir /s /b`.
@@ -61,7 +71,7 @@
 
 ## 4. Rule Immutability & Modification Restrictions
 
-- **Zero-Tolerance Rule Tampering**: You are strictly prohibited from mutating, editing, adding, or deleting any instruction, persona, or framework layout file inside `.clinerules/` or `.clinerules/.cline/skills/` (`system_instructions.md`, `.clinerules`, `.clinerules/.cline/skills/orchestrator/SKILL.md`, `.clinerules/.cline/skills/planner/SKILL.md`, `.clinerules/.cline/skills/coder/SKILL.md`, `.clinerules/.cline/skills/debugger/SKILL.md`, `.clinerules/.cline/skills/ask/SKILL.md`, `.clinerules/.cline/skills/secure/SKILL.md`, `.clinerules/.cline/skills/reviewer/SKILL.md`, `.clinerules/.cline/skills/tester/SKILL.md`).
+- **Zero-Tolerance Rule Tampering**: You are strictly prohibited from mutating, editing, adding, or deleting any instruction, persona, or framework layout file inside `.clinerules/` or `.clinerules/.cline/skills/` (`system_instructions.md`, `.clinerules/.clinerules`, `.clinerules/.cline/skills/orchestrator/SKILL.md`, `.clinerules/.cline/skills/planner/SKILL.md`, `.clinerules/.cline/skills/coder/SKILL.md`, `.clinerules/.cline/skills/debugger/SKILL.md`, `.clinerules/.cline/skills/ask/SKILL.md`, `.clinerules/.cline/skills/secure/SKILL.md`, `.clinerules/.cline/skills/reviewer/SKILL.md`, `.clinerules/.cline/skills/tester/SKILL.md`).
 - Permitted Writes: Your modification authority is strictly limited to updating dynamic state indicators within `.clinerules/project_memory.md`, `.clinerules/memory/error_memory.md`, `.clinerules/memory/codebase_map.md`, `.clinerules/memory/implementation_memory.md`, `.clinerules/memory/security_memory.md`, `.clinerules/memory/review_memory.md`, and `.clinerules/memory/test_memory.md`.
 
 ## 5. Timestamping Standards
@@ -70,5 +80,34 @@
 - **Explicit Calculation Mandate**: You are strictly commanded to evaluate the system's active runtime date and hour, mathematically apply the precise local Manila time offset, and write down the exact computed numbers.
 - **Required Format**: `Month Day, Year, HH:MM AM/PM PST` (e.g., `June 17, 2026, 09:57 AM PST`).
 - **Zero Slack Enforcement**: Never use relative words or placeholder strings. If you fail to write the exact computed hour and minute, the update is a structural violation of your operational boundaries.
+
+## 6. Mandatory Test Execution Pipeline & Coverage Gates
+
+- **Ordered Pipeline Enforcement**: When the `-t` flag is active or when test execution is requested, you MUST execute validation stages in this exact sequential order. No stage may be skipped, reordered, or parallelized:
+  1. **Static Analysis** (typecheck + lint) — if either fails, pipeline HALTS.
+  2. **Unit Tests** (Vitest) — if any unit test fails, pipeline HALTS.
+  3. **Integration Tests** (Vitest) — if any integration test fails, pipeline HALTS.
+  4. **End-to-End Tests** (Playwright) — if any E2E test fails, pipeline HALTS.
+  5. **Coverage Report** (c8 / istanbul) — if coverage falls below gates, pipeline FAILS.
+
+- **Framework Defaults**: Vitest is the mandatory default runner for unit and integration tests. Playwright is the mandatory default framework for end-to-end browser tests. If either framework is not installed, you MUST clearly state the missing framework, provide the installation command, and HALT the pipeline at the affected stage. You MUST NOT silently skip a stage.
+
+- **Coverage Gates**: Minimum acceptable coverage thresholds per module type:
+  - Critical business logic: 90%
+  - Utility / helper functions: 80%
+  - UI components: 70%
+    Below threshold constitutes a pipeline FAIL. You MUST report uncovered files and functions.
+
+- **Pipeline Violation Severity**: Breaking the ordered pipeline sequence, skipping a stage without explicit user override, or ignoring a coverage gate is classified as a **CRITICAL VIOLATION**.
+
+- **Immediate Test Resolution Mandate**: When an active test strategy in Section 1 of `.clinerules/memory/test_memory.md` has been implemented or verified, you MUST migrate it to Section 2 within the SAME response using `### [RESOLVED] Short Test Description (TEST-XXX)`. Failure to migrate within the same response is a CRITICAL VIOLATION.
+
+- **Immediate Review Resolution Mandate**: When an active review finding in Section 1 of `.clinerules/memory/review_memory.md` has been remediated or confirmed resolved, you MUST migrate it to Section 2 within the SAME response using `### [RESOLVED] Short Review Description (REVIEW-XXX)`. Failure to migrate within the same response is a CRITICAL VIOLATION.
+
+- **Immediate Security Resolution Mandate**: When an active vulnerability in Section 1 of `.clinerules/memory/security_memory.md` has been patched or confirmed resolved, you MUST migrate it to Section 2 within the SAME response using `### [RESOLVED] Short Vulnerability Description (SEC-XXX)`. You MUST ALSO update the Overall Security Score in Section 3. Failure to migrate within the same response is a CRITICAL VIOLATION.
+
+- **Tracking Number Retention**: Every resolved entry MUST preserve its original tracking number (TEST-XXX, REVIEW-XXX, SEC-XXX, ERR-XXX) in the resolved header using parenthesis formatting. Extracting the number from the original title and appending it to the resolved header is MANDATORY.
+
+- **Historical Preservation (Test, Review, Security)**: All resolved entries in Section 2 of `test_memory.md`, `review_memory.md`, and `security_memory.md` are IMMUTABLE historical records. You are UTTERLY FORBIDDEN from deleting, truncating, or rewriting any existing resolved entry. New resolved entries are prepended (LIFO) directly under the Section 2 header.
 
 <!-- c: worrie -->
