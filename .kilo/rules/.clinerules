@@ -20,7 +20,7 @@
 
 ## Persona Execution Mode Selection
 When processing user instructions, dynamically match your operational mindset to one of the templates stored in `.kilo/skills/` based on the user's manual single-letter command flag:
-1. If user includes `-o`: Switch to **Orchestrator** mode. Refer to `.kilo/skills/orchestrator/SKILL.md` for breaking down large, complex projects and managing multi-step execution states.
+1. If user includes `-o`: Switch to **Orchestrator** mode. Refer to `.kilo/skills/orchestrator/SKILL.md` to execute the mandatory 11-stage workflow pipeline (PLAN > CODE > TEST > DEBUG > SECURE > DEBUG > TEST > CLEAN > REVIEW > DOCUMENT > ASK). You MUST enforce industry-level thinking, suggest modern tools with permission, explain every step in student-friendly language, and ask user approval before every stage transition.
 2. If user includes `-p`: Switch to **Planner** mode. Refer to `.kilo/skills/planner/SKILL.md` to formulate structured technical roadmaps and wait for user approval before modifying code.
 3. If user includes `-c`: Switch to **Coder** mode. Refer to `.kilo/skills/coder/SKILL.md` to write scalable, production-grade logic and follow codebase patterns.
 4. If user includes `-d`: Switch to **Debugger** mode. Refer to `.kilo/skills/debugger/SKILL.md` to conduct systematic tracing, logging active debugging symptoms directly into `.kilo/memory/error_memory.md` to track root causes.
@@ -36,7 +36,7 @@ When processing user instructions, dynamically match your operational mindset to
 
 ## MANDATORY TIMESTAMP COMPUTATION RULE
 - **Absolute Time Zone Alignment**: You are STIPULATED to log all timestamps exclusively using Philippine Standard Time (PST) / Manila Timezone (UTC+8).
-- **Mathematical Computation Enforcement**: You are STICKLED to never guess the time or use vague text markers like "just now". You MUST explicitly calculate the exact time by taking the user's current system time and adding or adjusting the offset to hit the exact minute matching the user's location.
+- **System Time Command Enforcement**: You are STRICTLY FORBIDDEN from guessing, estimating, or mathematically computing timestamps. You MUST execute the terminal command `Get-Date -Format "MMMM dd, yyyy, hh:mm tt PST"` in PowerShell to retrieve the exact current system timestamp. Any deviation from using this command is a direct violation of this operational boundary.
 
 ## NEWEST-ON-TOP SORTING ENFORCEMENT (LIFO ORDER)
 - **Universal Log Ordering**: Every single technical entry, active error, completed milestone, or structural update logged inside `.kilo/memory/error_memory.md`, `.kilo/memory/implementation_memory.md`, `.kilo/memory/security_memory.md`, `.kilo/memory/review_memory.md`, `.kilo/memory/test_memory.md`, or `.kilo/rules/project_memory.md` MUST follow a strict Last-In, First-Out (LIFO) sorting hierarchy.
@@ -76,18 +76,18 @@ When processing user instructions, dynamically match your operational mindset to
 ## WORKSPACE INITIALIZATION PROTOCOL
 
 - **Initialization File**: `.kilo/workspace.json` serves as the workspace identity marker.
-- **First-Use Initialization**: When this workspace template is applied to a new project for the first time, the AI MUST:
+- **One-Time Initialization**: When the `-init` or `-setup` flag is triggered, the AI MUST:
   1. Read `.kilo/workspace.json`
   2. If `workspace_id` equals `"uninitialized"`:
      - Prompt the user: `"Enter project name for workspace initialization:"`
-     - Set `workspace_id` to a lowercase-hyphenated slug of the project name
-     - Set `project_name` to the user-provided name
-     - Set `initialized_at` to the current Philippine Standard Time (PST)
-     - Set `initialized_by` to `"ai-assistant"` or user-specified identifier
+     - Set `workspace_id` to a lowercase-hyphenated slug of the user-provided project name (e.g., `"My Cool Project"` → `"my-cool-project"`)
+     - Set `project_name` to the exact user-provided name
+     - Set `initialized_at` to the current PST timestamp via `Get-Date -Format "MMMM dd, yyyy, hh:mm tt PST"`
+     - Set `initialized_by` to the exact AI model ID currently powering this session (extract from system prompt, e.g., `opencode/mimo-v2-free`)
   3. Write the updated values back to `.kilo/workspace.json`
-- **Identification Label**: After initialization, every workspace scanning command MUST log a header line:
-  WORKSPACE: {project_name} Active Template: opencode-workspace v{template_version}
-- **Re-Initialization Ban**: Once `workspace_id` is set to a non-`"uninitialized"` value, re-initialization is strictly prohibited unless the user explicitly provides a `-reinit` flag.
+  4. Log: `WORKSPACE INITIALIZED: {project_name} | ID: {workspace_id} | By: {initialized_by} | At: {initialized_at}`
+- **Already Initialized Guard**: If `workspace_id` is NOT `"uninitialized"`, the AI MUST HALT initialization immediately, log `WORKSPACE ALREADY INITIALIZED: {project_name}`, and proceed with the requested task without modifying `workspace.json`.
+- **Absolute Edit Restriction**: The AI is STRICTLY FORBIDDEN from editing `workspace.json` after the initial initialization under any circumstance. No re-initialization, no field updates, no corrections. The file becomes immutable once populated.
 
 ## MEMORY ARCHIVAL PROTOCOL
 

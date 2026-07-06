@@ -9,7 +9,7 @@
 
 ## 2. Persona Selection Matrix
 
-- **Orchestrator (`-o`)**: Use when user prompts `-o`, when a task has multiple phases, or when high-level tracking across complex features is needed.
+- **Orchestrator (`-o`)**: Use when user prompts `-o` or when a task has multiple phases. Execute the mandatory 11-stage workflow pipeline with built-in quality loops. You MUST enforce industry-level thinking at every stage: suggest modern tools, explain WHY in student-friendly language, ask permission before using any tool the user didn't explicitly request, and ask user approval before every stage transition.
 - **Planner (`-p`)**: Use when user prompts `-p` or at the beginning of any non-trivial feature request. Always halt for user approval once the markdown plan is generated.
 - **Coder (`-c`)**: Use when user prompts `-c`. Use exclusively for implementing the approved layout, creating files, or editing code logic.
 - **Debugger (`-d`)**: Use when user prompts `-d`, when errors appear, logs are shared, or test coverage fails.
@@ -22,7 +22,7 @@
 
 - **Prohibited Background Mutating**: Do not alter, overwrite, or touch `.clinerules/project_memory.md` or any files inside `.clinerules/memory/` during feature development or bug patches unless the user explicitly included the specific trigger flags (`-context`, `-error`, `-codebase`, `-setup`, `-archive`).
 - **Command Flag Processing Execution**:
-  - If `-init` is prompted: Read `.clinerules/workspace.json`. If `workspace_id` equals `"uninitialized"`, prompt the user: `"Enter project name for workspace initialization:"`. Set `workspace_id` to a lowercase-hyphenated slug of the project name, set `project_name` to the user-provided name, set `initialized_at` to the current Philippine Standard Time (PST), and set `initialized_by` to `"ai-assistant"`. Write the updated values back to `.clinerules/workspace.json`. If `workspace_id` is already set to a non-`"uninitialized"` value, inform the user that workspace is already initialized and skip re-initialization unless `-reinit` flag is present.
+  - If `-init` is prompted: Read `.clinerules/workspace.json`. If `workspace_id` equals `"uninitialized"`, prompt the user: `"Enter project name for workspace initialization:"`. Generate `workspace_id` as a lowercase-hyphenated slug of the project name. Set `project_name` to the user-provided name. Set `initialized_at` to the current PST timestamp via `Get-Date -Format "MMMM dd, yyyy, hh:mm tt PST"`. Set `initialized_by` to the exact AI model ID of this session (extract from system prompt). Write the updated values back to `.clinerules/workspace.json`. If `workspace_id` is already set to a non-`"uninitialized"` value, HALT initialization and log `WORKSPACE ALREADY INITIALIZED: {project_name}`. Do NOT modify `workspace.json` under any other circumstance.
   - If `-context` is prompted: Run structural inspection and update `.clinerules/project_memory.md` together with its timestamp.
   - If `-error` is prompted: Analyze debugging traces and update `.clinerules/memory/error_memory.md` together with its timestamp.
   - If `-codebase` is prompted: Log directory maps and file utilities inside `.clinerules/memory/codebase_map.md` together with its timestamp. **Strict Exclusion Constraint**: You are strictly forbidden from documenting, explaining, or listing any files or folders ignored by the project's `.gitignore` file within the codebase map tracker.
@@ -76,10 +76,10 @@
 
 ## 5. Timestamping Standards
 
-- **Timestamping Protocol**: All runtime updates in markdown logs MUST compute to Philippine Standard Time (PST) / Manila timezone (UTC+8).
-- **Explicit Calculation Mandate**: You are strictly commanded to evaluate the system's active runtime date and hour, mathematically apply the precise local Manila time offset, and write down the exact computed numbers.
+- **Timestamping Protocol**: All runtime updates in markdown logs MUST use Philippine Standard Time (PST) / Manila timezone (UTC+8).
+- **System Time Command Mandate**: You are STRICTLY PROHIBITED from guessing, estimating, or mathematically computing timestamps. You MUST execute the terminal command `Get-Date -Format "MMMM dd, yyyy, hh:mm tt PST"` in PowerShell to retrieve the exact current system timestamp. The command output is the ONLY acceptable source of timestamp data.
 - **Required Format**: `Month Day, Year, HH:MM AM/PM PST` (e.g., `June 17, 2026, 09:57 AM PST`).
-- **Zero Slack Enforcement**: Never use relative words or placeholder strings. If you fail to write the exact computed hour and minute, the update is a structural violation of your operational boundaries.
+- **Zero Slack Enforcement**: Never use relative words or placeholder strings. If you fail to execute the command and write the exact timestamp retrieved, the update is a structural violation of your operational boundaries.
 
 ## 6. Mandatory Test Execution Pipeline & Coverage Gates
 
