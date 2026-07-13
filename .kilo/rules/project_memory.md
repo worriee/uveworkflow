@@ -6,48 +6,75 @@
 
 ## 1. Project Overview
 
-_Provide a high-level description of what this project is, its primary tech stack, core goals, and active constraints._
+### Project Identity
 
-## 2. Current Architecture & Tech Stack
+- **Project Name**: _[Name of this project]_
+- **Primary Goal**: _One-sentence purpose of this application_
+- **Target Users / Audience**: _Who uses this software_
+- **Current Phase**: _Prototype / Alpha / Beta / Production / Maintenance_
+- **Active Branch**: _main / dev / feature-xxx_
 
-- **Languages**:
-- **Frameworks/Libraries**:
-- **Database/Storage**:
-- **Key Modules/Directories**:
+### Key Constraints
 
----
-
-## 3. Core Features & Business Logic
-
-_Document the foundational rules, workflows, or operational flows unique to this workspace._
-
-## 4. Current State & Active Focus
-
-### Active Tasks
-
-- Log from here in LIFO format
+_List budget, timeline, platform restrictions, team size, or technical limitations currently in effect._
 
 ---
 
-### Completed Milestones
+## 2. Active Milestones & Roadmap
 
-- Log from here in LIFO format
+_Track high-level releases, versions, or major feature milestones the project is working toward._
+
+### [MS-001] Milestone Title
+
+- **Target Version/Release**: _v1.0, v2.0, etc._
+- **Due Date**: _[Target completion date]_
+- **Key Deliverables**: _What must be finished for this milestone_
+- **Dependencies**: _What prerequisites must be done first_
+- **Status**: IN_PROGRESS | COMPLETED | BLOCKED
+- **Notes**: _Any additional context_
+
+_Log new milestones here in LIFO format (newest on top)._
 
 ---
 
-### Pending Tasks
+## 3. Current Sprint & Active Tasks
 
-- Log from here in LIFO format
-
----
-
-## 5. Architectural Decisions & Constraints
-
-\_Keep a running history of critical architectural choices, patterns to follow, or constraints to prevent AI hallucination or regression.
+- [Describe the active task here]
+- [Describe the active task here]
 
 ---
 
-## 6. MEMORY FILE REGISTRY
+## 4. Completed Milestones
+
+- [Describe the completed milestone here]
+- [Describe the completed milestone here]
+
+---
+
+## 5. Pending Tasks & Backlog
+
+- [Describe the pending task here]
+- [Describe the pending task here]
+
+---
+
+## 6. Architectural Decisions & Constraints
+
+_Keep a running history of critical architectural choices, patterns to follow, or constraints to prevent AI hallucination or regression._
+
+### [DEC-001] Decision Title
+
+- **Context**: _Why this decision was needed (problem, requirement, constraint)_
+- **Choice Made**: _What was chosen and implemented_
+- **Alternatives Considered**: _What was rejected and why_
+- **Impact**: _What files, modules, or layers this decision affects_
+- **Date Logged**: _[Month Day, Year, HH:MM AM/PM PST]_
+
+_Log new decisions here in LIFO format (newest on top)._
+
+---
+
+## 7. MEMORY FILE REGISTRY
 
 All specialized memory logs are stored in `.kilo/memory/` directory:
 
@@ -70,7 +97,7 @@ _Note: `codebase_map.md` and `project_memory.md` are excluded from archival._
 
 ---
 
-## 7. ARCHIVE STATUS
+## 8. ARCHIVE STATUS
 
 - **Archive Location**: `.kilo/archives/`
 - **Threshold**: 10 active entries per section (LIFO ordering)

@@ -4,6 +4,17 @@
 - Scope Restriction: All file reads, indexing, and tool usage MUST remain strictly confined to the project root workspace directory. Do not access global directories, home directories, or parent folders. This prevents excessive context pollution and keeps context usage lean.
 - Token Efficiency: Do not re-read large unedited files repetitively. Rely on the structured metadata in `.opencode/rules/project_memory.md`, `.opencode/memory/` and `.opencode/archives/` directory to persist state.
 
+## Subtask Delegation & Context Preservation Protocol
+- **Mandatory Subdelegation**: You are STRICTLY COMMANDED to delegate any file read exceeding 50 lines, any codebase-wide search, any multi-file edit (3+ files), any debugging trace analysis, or any test pipeline stage to a subagent or task agent. The main session context is reserved exclusively for coordination, decision-making, and receiving structured results.
+- **Context Bloat Prevention**: Raw data retrieval, bulk file scanning, recursive directory indexing, and any operation that generates more than 100 lines of output MUST be executed through a subagent. The subagent returns only a concise structured summary to the main session.
+- **Subagent Boundary Rules**:
+  1. **File Reads Over 50 Lines**: Spawn a subagent to read and summarize the file. Only bring back the key structure, exports, and relevant function signatures.
+  2. **Codebase Searches**: Any grep, glob, or recursive file scan must be executed by a subagent. Return only matched file paths and line summaries.
+  3. **Multi-File Edits**: When modifying 3 or more files, delegate each file's edit to a separate subagent. The main session tracks the coordination plan and verifies results.
+  4. **Debugging Traces**: Route full error traces and log analysis to a subagent. The subagent returns the root cause hypothesis and suggested fix — not raw logs.
+  5. **Test Pipeline Stages**: Each pipeline stage (typecheck, lint, unit, integration, E2E, coverage) must be delegated to its own subagent when invoked via `-t`.
+- **Violation Consequence**: Executing any of the above operations directly in the main session context without subdelegation constitutes a CRITICAL VIOLATION. It bloats the context window, wastes tokens, and degrades session performance.
+
 ## Manual Sync Entry Rule (Flag-Triggered Verification)
 - On-Demand Memory Synchronization: Background auto-updates are disabled. Make sure you update the timestamps after everytime these commands are prompted from the user. You MUST only scan, re-analyze, or update the local tracking layers when explicitly commanded by the user via the following command flags:
   - `-init`: Triggers workspace initialization by reading `.opencode/workspace.json`, prompting the user for a project name, and writing the initialized values. Use this on first-time setup or when re-initializing a new project.

@@ -1,7 +1,7 @@
 # TTV (Track The Vibe) - Workspace Template
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Template-v1.0-blue?style=for-the-badge&labelColor=1a1a2e&color=0f3460" alt="Template Version"/>
+  <img src="https://img.shields.io/badge/Template-v3.5-blue?style=for-the-badge&labelColor=1a1a2e&color=0f3460" alt="Template Version"/>
   <img src="https://img.shields.io/badge/For-CLINE%20%7C%20ROO%20%7C%20ZOO%20%7C%20KILO%20%7C%20OPENCODE-green?style=for-the-badge&labelColor=1a1a2e&color=16213e" alt="Platform Support"/>
   <img src="https://img.shields.io/badge/AI%20Personas-8-orange?style=for-the-badge&labelColor=1a1a2e&color=e94560" alt="AI Personas"/>
   <img src="https://img.shields.io/badge/Memory%20Layers-6-purple?style=for-the-badge&labelColor=1a1a2e&color=533483" alt="Memory Layers"/>
@@ -24,16 +24,11 @@
 
 ## Recent Updates
 
+- Redesigned **codebase_map.md** with Frontend/Backend/Data & Platform sections with tracking IDs (FN-FE, FN-BE, DB, SVC, DEP, OPS)
+- Restructured **project_memory.md** as AI-only context file — removed overlapping architecture/features, added milestone tracking, compact dash-only logging for space efficiency
+- Added **subtask delegation enforcement** (`-d` / `.clinerules`) — mandatory subagent use for file reads >50 lines, codebase searches, multi-file edits, debugging traces, and test pipelines
+- Added **subagent context protection** in system_instructions.md — subagents return only structured summaries, raw output stays out of main context
 - Redesigned **Orchestrator** (`-o`) with 11-stage quality pipeline and built-in loops.
-- Added **industry-level thinking**: AI suggests modern tools, explains WHY, asks permission.
-- Added **student-friendly mentoring**: simple explanations, academic connections, analogies.
-- Fixed **path references** across all four templates to match correct folder structures.
-- Synced **enhanced memory files** with strict resolution mandates across all templates.
-- Added **test pipeline enforcement** (`-t`) with Vitest, Playwright, and coverage gates.
-- Updated **global rules** to enforce orchestrator workflow and ask-before-acting behavior.
-- Improve timestamp logging capabilities
-- Improve workspace initialization
-- Improve -clean utility
 
 ---
 
