@@ -1,4 +1,4 @@
-# TTV (Track The Vibe) - Workspace Template
+# Ultimate Vibe Experience (UVE Coding Strat)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Template-v3.5-blue?style=for-the-badge&labelColor=1a1a2e&color=0f3460" alt="Template Version"/>
@@ -8,17 +8,17 @@
 </p>
 
 <p align="center">
-  <strong>Run a whole team of industry-like personas that never forgets your codebase every session.</strong>
+  <strong>An AI-powered workflow that keeps your vibe consistent across every session.</strong>
 </p>
 <p align="center">
-  <strong>You lead. You learn.</strong>
+  <strong>You build. We track.</strong>
 </p>
 
 ---
 
 ## Quick Links
 
-[What is this?](#what-is-this-template-for) | [Where to Use?](#you-can-use-this-template-for) | [Problem We Solve](#the-problem-we-solve) | [Memory System](#memory-system) | [Folder Structure](#folder-structure-on-opencode-template) | [Prompt Triggers](#prompt-triggers-manual-commands) | [Installation](#installation-guide) | [FAQ](#faq) | [Usages](#own-usages)
+[What is this?](#what-is-this-for) | [Where to Use?](#you-can-use-this-template-for) | [Problem We Solve](#the-problem-we-solve) | [Memory System](#memory-system) | [Folder Structure](#folder-structure-on-opencode-template) | [Prompt Triggers](#prompt-triggers-manual-commands) | [Installation](#installation-guide) | [FAQ](#faq) | [Usages](#own-usages)
 
 ---
 
@@ -32,25 +32,13 @@
 
 ---
 
-## What is this Template For?
+## What is this for?
 
 AI coding tools forget your project fast. They read too many files, fill up context, and lose track of what they built last session.
 
 This template adds a **memory layer** to your project. It gives the AI strict rules, specialized roles, and lightweight markdown files to track its own progress.
 
 **Why workspace-level, not global?** Global rules mix all your projects together. Old project data leaks into new ones. Workspace rules keep each project isolated and clean.
-
----
-
-## You can use this template for:
-
-- Cline [cline.bot]
-- Roo Code [roocode.com]
-- Zoo Code [Zoo Code Organization] (community fork, migrating to Roomote)
-- Kilo Code [kilocode.ai]
-- OpenCode CLI
-
-_(works with any AI agent that can read workspace-level rule files)_
 
 ---
 
@@ -83,26 +71,6 @@ Your project stores memory in simple markdown files. The AI reads them when need
 | `test_memory.md`           | Test strategies and coverage          |
 
 When any section passes 10 entries, the oldest are moved to `archives/`.
-
----
-
-## Orchestrator Workflow
-
-| Step | Stage        | What Happens                                            |
-| :--: | :----------- | :------------------------------------------------------ |
-|  1   | **PLAN**     | Suggests modern tools, explains WHY, asks your approval |
-|  2   | **CODE**     | Implements after you approve each tool choice           |
-|  3   | **TEST**     | Runs typecheck, lint, Vitest, Playwright, coverage      |
-|  4   | **DEBUG**    | Fixes failures, explains bugs in simple terms           |
-|  5   | **SECURE**   | Checks OWASP Top 10, suggests security tools            |
-|  6   | **DEBUG**    | Second pass for hidden or newly introduced issues       |
-|  7   | **TEST**     | Second pass to verify all fixes are clean               |
-|  8   | **CLEAN**    | Removes debug artifacts, suggests ESLint/Prettier       |
-|  9   | **REVIEW**   | Quality check with severity ratings                     |
-|  10  | **DOCUMENT** | Writes summary for your project docs or thesis          |
-|  11  | **ASK**      | "Fix findings? New task? Questions?"                    |
-
-Loops back if tests fail or security issues are found. The AI never moves to the next step without your approval.
 
 ---
 
@@ -158,23 +126,23 @@ _All four templates (.clinerules, .roo, .kilo, .opencode) share the same interna
 
 Use these flag commands:
 
-| Command / Flag | Type            | What it does                                                | Use Case                                                                                                                              |
-| :------------- | :-------------- | :---------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------ |
-| `-setup`       | Utility         | Updates all memory files at once.                           | First prompt or new chat session.                                                                                                     |
-| `-o`           | Persona/Utility | Orchestrator - manages complex tasks.                       | Multi-step plans or implementations. Use when you prompt big tasks. Click [here](#orchestrator-workflow) to see orchestrator workflow |
-| `-p`           | Persona         | Planner - creates roadmaps, waits for approval.             | `-p describe your plan`                                                                                                               |
-| `-c`           | Persona         | Coder - writes production code.                             | After agreeing on a plan.                                                                                                             |
-| `-d`           | Persona         | Debugger - traces errors.                                   | `-d describe the error`                                                                                                               |
-| `-a`           | Persona         | Ask - read-only analysis.                                   | Questions without code changes.                                                                                                       |
-| `-s`           | Persona/Memory  | Security - threat modeling, safety rating (0-10).           | Check for data leaks or credential risks.                                                                                             |
-| `-r`           | Persona/Memory  | Reviewer - code quality reviews (CRITICAL/HIGH/MEDIUM/LOW). | After code changes to check quality.                                                                                                  |
-| `-t`           | Persona/Memory  | Tester - test strategies and coverage analysis.             | Before feature completion.                                                                                                            |
-| `-clean`       | Utility         | Removes junk files and debug traces.                        | Clean up after debugging.                                                                                                             |
-| `-context`     | Memory          | Updates `project_memory.md` with current workflow.          | When project context changes.                                                                                                         |
-| `-error`       | Memory          | Updates `error_memory.md` with bugs and fixes.              | Every debugging session.                                                                                                              |
-| `-codebase`    | Memory          | Updates `codebase_map.md` with file descriptions.           | Before deployment.                                                                                                                    |
-| `-init`        | Utility         | Initializes `workspace.json`.                               | First-time setup.                                                                                                                     |
-| `-archive`     | Utility         | Moves old entries to archive files.                         | When memory files get too large.                                                                                                      |
+| Command / Flag | Type            | What it does                                                | Use Case                                                                                                                                     |
+| :------------- | :-------------- | :---------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-setup`       | Utility         | Updates all memory files at once.                           | First prompt or new chat session.                                                                                                            |
+| `-o`           | Persona/Utility | Orchestrator - manages complex tasks.                       | Multi-step plans or implementations. Use when you prompt big tasks. Click [here](<#orchestrator-workflow-(-o)>) to see orchestrator workflow |
+| `-p`           | Persona         | Planner - creates roadmaps, waits for approval.             | `-p describe your plan`                                                                                                                      |
+| `-c`           | Persona         | Coder - writes production code.                             | After agreeing on a plan.                                                                                                                    |
+| `-d`           | Persona         | Debugger - traces errors.                                   | `-d describe the error`                                                                                                                      |
+| `-a`           | Persona         | Ask - read-only analysis.                                   | Questions without code changes.                                                                                                              |
+| `-s`           | Persona/Memory  | Security - threat modeling, safety rating (0-10).           | Check for data leaks or credential risks.                                                                                                    |
+| `-r`           | Persona/Memory  | Reviewer - code quality reviews (CRITICAL/HIGH/MEDIUM/LOW). | After code changes to check quality.                                                                                                         |
+| `-t`           | Persona/Memory  | Tester - test strategies and coverage analysis.             | Before feature completion.                                                                                                                   |
+| `-clean`       | Utility         | Removes junk files and debug traces.                        | Do clean up after debugging or testing.                                                                                                      |
+| `-context`     | Memory          | Updates `project_memory.md` with current workflow.          | When project context changes.                                                                                                                |
+| `-error`       | Memory          | Updates `error_memory.md` with bugs and fixes.              | Every debugging session.                                                                                                                     |
+| `-codebase`    | Memory          | Updates `codebase_map.md` with file descriptions.           | Before deployment.                                                                                                                           |
+| `-init`        | Utility         | Initializes `workspace.json`.                               | First-time setup.                                                                                                                            |
+| `-archive`     | Utility         | Moves old entries to archive files.                         | When memory files get too large.                                                                                                             |
 
 ### Why Manual Triggers Instead of Auto-Updates?
 
@@ -187,12 +155,32 @@ The AI cannot update memory files on its own. You must type the flags manually.
 
 ---
 
+## Orchestrator Workflow (-o)
+
+| Step | Stage        | What Happens                                            |
+| :--: | :----------- | :------------------------------------------------------ |
+|  1   | **PLAN**     | Suggests modern tools, explains WHY, asks your approval |
+|  2   | **CODE**     | Implements after you approve each tool choice           |
+|  3   | **TEST**     | Runs typecheck, lint, Vitest, Playwright, coverage      |
+|  4   | **DEBUG**    | Fixes failures, explains bugs in simple terms           |
+|  5   | **SECURE**   | Checks OWASP Top 10, suggests security tools            |
+|  6   | **DEBUG**    | Second pass for hidden or newly introduced issues       |
+|  7   | **TEST**     | Second pass to verify all fixes are clean               |
+|  8   | **CLEAN**    | Removes debug artifacts, suggests ESLint/Prettier       |
+|  9   | **REVIEW**   | Quality check with severity ratings                     |
+|  10  | **DOCUMENT** | Writes summary for your project docs or thesis          |
+|  11  | **ASK**      | "Fix findings? New task? Questions?"                    |
+
+Loops back if tests fail or security issues are found. The AI never moves to the next step without your **approval**.
+
+---
+
 ## Installation Guide
 
 ### Step 1: Download
 
 ```bash
-git clone https://github.com/worriee/clinerulestemplate.git
+git clone https://github.com/worriee/uveworkflow.git
 ```
 
 ### Step 2: Pick Your Folder
@@ -203,6 +191,8 @@ git clone https://github.com/worriee/clinerulestemplate.git
 | Roo Code / Zoo Code | `.roo`        |
 | Kilo Code           | `.kilo`       |
 | OpenCode            | `.opencode`   |
+
+_\*this will work in any platforms if you can make the agent read these folders_
 
 ### Step 3: Paste Into Your Project
 
