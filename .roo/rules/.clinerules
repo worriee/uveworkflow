@@ -5,15 +5,11 @@
 - Token Efficiency: Do not re-read large unedited files repetitively. Rely on the structured metadata in `.roo/rules/project_memory.md`, `.roo/memory/` and `.roo/archives/` directory to persist state.
 
 ## Subtask Delegation & Context Preservation Protocol
-- **Mandatory Subdelegation**: You are STRICTLY COMMANDED to delegate any file read exceeding 50 lines, any codebase-wide search, any multi-file edit (3+ files), any debugging trace analysis, or any test pipeline stage to a subagent or task agent. The main session context is reserved exclusively for coordination, decision-making, and receiving structured results.
-- **Context Bloat Prevention**: Raw data retrieval, bulk file scanning, recursive directory indexing, and any operation that generates more than 100 lines of output MUST be executed through a subagent. The subagent returns only a concise structured summary to the main session.
-- **Subagent Boundary Rules**:
-  1. **File Reads Over 50 Lines**: Spawn a subagent to read and summarize the file. Only bring back the key structure, exports, and relevant function signatures.
-  2. **Codebase Searches**: Any grep, glob, or recursive file scan must be executed by a subagent. Return only matched file paths and line summaries.
-  3. **Multi-File Edits**: When modifying 3 or more files, delegate each file's edit to a separate subagent. The main session tracks the coordination plan and verifies results.
-  4. **Debugging Traces**: Route full error traces and log analysis to a subagent. The subagent returns the root cause hypothesis and suggested fix — not raw logs.
-  5. **Test Pipeline Stages**: Each pipeline stage (typecheck, lint, unit, integration, E2E, coverage) must be delegated to its own subagent when invoked via `-t`.
-- **Violation Consequence**: Executing any of the above operations directly in the main session context without subdelegation constitutes a CRITICAL VIOLATION. It bloats the context window, wastes tokens, and degrades session performance.
+- **Persona-Based Delegation Enforcement**: Delegation behavior is determined by the active persona flag:
+  - **EXEMPT from delegation** (main context only): `-p` (Planner) and `-a` (Ask). These modes require full project awareness for analysis and planning, so all operations execute directly in the main session context.
+  - **STRICT DELEGATION REQUIRED**: `-c` (Coder), `-d` (Debugger), `-s` (Security), `-r` (Reviewer), `-t` (Tester), `-o` (Orchestrator), `-setup`, `-codebase`, `-error`, `-init`, `-archive`, and `-clean`. All eligible operations must be delegated to subagents — the main context is reserved exclusively for coordination, decision-making, and receiving structured results.
+- **Subagent Return Contract**: When delegation is enforced, subagents must return only concise structured results (summaries, file paths, root causes, fix plans). Raw tool output, full file dumps, and verbose logs must remain within the subagent scope and never pollute the main session context.
+- **Violation Consequence**: Executing any operations directly in the main session context without subdelegation when delegation is enforced constitutes a CRITICAL VIOLATION. It bloats the context window, wastes tokens, and degrades session performance.
 
 ## Manual Sync Entry Rule (Flag-Triggered Verification)
 - On-Demand Memory Synchronization: Background auto-updates are disabled. Make sure you update the timestamps after everytime these commands are prompted from the user. You MUST only scan, re-analyze, or update the local tracking layers when explicitly commanded by the user via the following command flags:
