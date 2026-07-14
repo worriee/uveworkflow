@@ -24,10 +24,10 @@
 
 ## Recent Updates
 
-- Redesigned **codebase_map.md** with Frontend/Backend/Data & Platform sections with tracking IDs (FN-FE, FN-BE, DB, SVC, DEP, OPS)
-- Restructured **project_memory.md** as AI-only context file — removed overlapping architecture/features, added milestone tracking, compact dash-only logging for space efficiency
-- Added **subtask delegation enforcement** (`-d` / `.clinerules`) — mandatory subagent use for file reads >50 lines, codebase searches, multi-file edits, debugging traces, and test pipelines
-- Added **subagent context protection** in system_instructions.md — subagents return only structured summaries, raw output stays out of main context
+- Redesigned **codebase_map.md** with Frontend/Backend/Data & Platform layers — tracking IDs for functions, files, databases, services, deployment
+- Restructured **project_memory.md** as AI-only context — milestones, decision log, compact dash-only logging
+- Added **persona-based subagent delegation** — `-p`/`-a` are main context only, other flags enforce strict subagent use
+- Enforced **subagent return contract** — structured summaries only, raw output stays out of main context
 - Redesigned **Orchestrator** (`-o`) with 11-stage quality pipeline and built-in loops.
 
 ---
