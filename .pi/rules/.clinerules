@@ -1,0 +1,158 @@
+# Workspace Configuration & Persona Rules
+
+## System Boundaries
+- Scope Restriction: All file reads, indexing, and tool usage MUST remain strictly confined to the project root workspace directory. Do not access global directories, home directories, or parent folders. This prevents excessive context pollution and keeps context usage lean.
+- Token Efficiency: Do not re-read large unedited files repetitively. Rely on the structured metadata in `.pi/rules/project_memory.md`, `.pi/memory/` and `.pi/archives/` directory to persist state.
+
+## Subtask Delegation & Context Preservation Protocol
+- **Persona-Based Delegation Enforcement**: Delegation behavior is determined by the active persona flag:
+  - **EXEMPT from delegation** (main context only): `-p` (Planner) and `-a` (Ask). These modes require full project awareness for analysis and planning, so all operations execute directly in the main session context.
+  - **STRICT DELEGATION REQUIRED**: `-c` (Coder), `-d` (Debugger), `-s` (Security), `-r` (Reviewer), `-t` (Tester), `-o` (Orchestrator), `-setup`, `-codebase`, `-error`, `-init`, `-archive`, and `-clean`. All eligible operations must be delegated to subagents — the main context is reserved exclusively for coordination, decision-making, and receiving structured results.
+- **Subagent Return Contract**: When delegation is enforced, subagents must return only concise structured results (summaries, file paths, root causes, fix plans). Raw tool output, full file dumps, and verbose logs must remain within the subagent scope and never pollute the main session context.
+- **Violation Consequence**: Executing any operations directly in the main session context without subdelegation when delegation is enforced constitutes a CRITICAL VIOLATION. It bloats the context window, wastes tokens, and degrades session performance.
+
+## Manual Sync Entry Rule (Flag-Triggered Verification)
+- On-Demand Memory Synchronization: Background auto-updates are disabled. Make sure you update the timestamps after everytime these commands are prompted from the user. You MUST only scan, re-analyze, or update the local tracking layers when explicitly commanded by the user via the following command flags:
+  - `-init`: Triggers workspace initialization by reading `.pi/workspace.json`, prompting the user for a project name, and writing the initialized values. Use this on first-time setup or when re-initializing a new project.
+  - `-context`: Triggers a full analysis and updates `.pi/rules/project_memory.md` to map out active project context and milestones.
+  - `-error`: Triggers an active diagnostic scan and updates `.pi/memory/error_memory.md` with current bugs, stack traces, or resolution history.
+  - `-codebase`: Triggers a complete structure inspection and updates `.pi/memory/codebase_map.md` with descriptions of the files and current project workflow.
+  - `-setup`: Triggers a combined sequential execution of all the above updates across all memory files simultaneously.
+  - `-archive`: Triggers a scan of all eligible memory files and archives oldest entries when sections exceed 10 entries. Archives to pre-created archive files in `.pi/archives/`.
+- Strict Adherence: For regular prompts without these flags, assume the existing information in the memory files is unchanged and use it as your ground truth.
+
+## CRITICAL: Enforced Context Loss Read Execution
+- Enforced Context Re-Reads: If you notice a loss of context window memory, a token expiration event, a session reset, or if the user appends any command flag (`-init`, `-context`, `-error`, `-codebase`, `-setup`, `-archive`, `-clean`, `-o`, `-p`, `-c`, `-d`, `-a`, `-s`, `-r`, `-t`), you are strictly commanded to instantly halt execution and re-read this main file (`.pi/rules/.clinerules`) followed by your memory layers (`.pi/rules/project_memory.md`, `.pi/memory/error_memory.md`, `.pi/memory/codebase_map.md`).
+- Re-Enforce Ground Truth: Use these local guides to instantly rebuild your mental map of the codebase without asking the user to re-explain past progress.
+
+## Persona Execution Mode Selection
+When processing user instructions, dynamically match your operational mindset to one of the templates stored in `.pi/skills/` based on the user's manual single-letter command flag:
+1. If user includes `-o`: Switch to **Orchestrator** mode. Refer to `.pi/skills/orchestrator/SKILL.md` to execute the mandatory 11-stage workflow pipeline (PLAN > CODE > TEST > DEBUG > SECURE > DEBUG > TEST > CLEAN > REVIEW > DOCUMENT > ASK). You MUST enforce industry-level thinking, suggest modern tools with permission, explain every step in student-friendly language, and ask user approval before every stage transition.
+2. If user includes `-p`: Switch to **Planner** mode. Refer to `.pi/skills/planner/SKILL.md` to formulate structured technical roadmaps and wait for user approval before modifying code.
+3. If user includes `-c`: Switch to **Coder** mode. Refer to `.pi/skills/coder/SKILL.md` to write scalable, production-grade logic and follow codebase patterns.
+4. If user includes `-d`: Switch to **Debugger** mode. Refer to `.pi/skills/debugger/SKILL.md` to conduct systematic tracing, logging active debugging symptoms directly into `.pi/memory/error_memory.md` to track root causes.
+5. If user includes `-a`: Switch to **Ask** mode. Refer to `.pi/skills/ask/SKILL.md` to query information or perform safe, read-only architectural reviews.
+6. If user includes `-s`: Switch to **Security Analyst** mode. Refer to `.pi/skills/secure/SKILL.md` to run threat analysis, calculate safety ratings, and log vulnerability maps into `.pi/memory/security_memory.md`. When a vulnerability in Section 1 is patched, you MUST migrate it to Section 2 within the SAME response using `### [RESOLVED] Short Vulnerability Description (SEC-XXX)` and update the Overall Security Score in Section 3.
+7. If user includes `-r`: Switch to **Reviewer** mode. Refer to `.pi/skills/reviewer/SKILL.md` to perform structured code quality reviews, architectural compliance checks, and best practices enforcement. When a review finding in Section 1 is remediated, you MUST migrate it to Section 2 within the SAME response using `### [RESOLVED] Short Review Description (REVIEW-XXX)`.
+8. If user includes `-t`: Switch to **Tester** mode. Refer to `.pi/skills/tester/SKILL.md` to formulate test strategies, generate test cases, and analyze coverage gaps. You MUST enforce the ordered test pipeline (typecheck -> lint -> unit via Vitest -> E2E via Playwright -> coverage report). You MUST enforce coverage gates: critical business logic at 90%, utility functions at 80%, UI components at 70%. You MUST migrate resolved test strategies from Section 1 to Section 2 of `test_memory.md` within the SAME response using `### [RESOLVED] Short Test Description (TEST-XXX)`. Breaking the pipeline order, skipping stages, ignoring coverage gates, or failing to migrate immediately is a CRITICAL VIOLATION.
+
+## Strict Rule Modification Constraints
+- **Core Rule Mutation Ban**: You are strictly prohibited from editing, modifying, or deleting core framework configurations, instructions, or rules files (`.pi/rules/.clinerules`, `.pi/rules/system_instructions.md`, `.pi/skills/orchestrator/SKILL.md`, `.pi/skills/planner/SKILL.md`, `.pi/skills/coder/SKILL.md`, `.pi/skills/debugger/SKILL.md`, `.pi/skills/ask/SKILL.md`, `.pi/skills/secure/SKILL.md`, `.pi/skills/reviewer/SKILL.md`, `.pi/skills/tester/SKILL.md`). These rules are immutable.
+- **Authorized Scope**: The only configuration files you are authorized to edit are the dynamic memory layers (`.pi/rules/project_memory.md`, `.pi/memory/error_memory.md`, `.pi/memory/codebase_map.md`, `.pi/memory/implementation_memory.md`, `.pi/memory/security_memory.md`, `.pi/memory/review_memory.md`, `.pi/memory/test_memory.md`) to maintain persistent state.
+- **File Creation Ban**: You are strictly prohibited from creating, generating, or instantiating any new files within the `.pi/rules/` or `.pi/memory/` directories. The only files permitted to exist are the pre-defined framework configurations and the dynamic memory layers specified above. Any attempt to create new files here constitutes a scope violation.
+
+## MANDATORY TIMESTAMP COMPUTATION RULE
+- **Absolute Time Zone Alignment**: You are STIPULATED to log all timestamps exclusively using Philippine Standard Time (PST) / Manila Timezone (UTC+8).
+- **System Time Command Enforcement**: You are STRICTLY FORBIDDEN from guessing, estimating, or mathematically computing timestamps. You MUST execute the terminal command `Get-Date -Format "MMMM dd, yyyy, hh:mm tt PST"` in PowerShell to retrieve the exact current system timestamp. Any deviation from using this command is a direct violation of this operational boundary.
+
+## NEWEST-ON-TOP SORTING ENFORCEMENT (LIFO ORDER)
+- **Universal Log Ordering**: Every single technical entry, active error, completed milestone, or structural update logged inside `.pi/memory/error_memory.md`, `.pi/memory/implementation_memory.md`, `.pi/memory/security_memory.md`, `.pi/memory/review_memory.md`, `.pi/memory/test_memory.md`, or `.pi/rules/project_memory.md` MUST follow a strict Last-In, First-Out (LIFO) sorting hierarchy.
+- **Placement Execution**: You are COMMANDED to inject the newest data blocks at the absolute top of their respective lists, directly underneath the primary section header. All older entries must slide downward. The most recent operational context must always hit the user's eyes first.
+
+## BEGINNER-FRIENDLY HIGH-DETAIL CLARITY MANDATE
+- **Exhaustive Tracking Detail**: When modifying or documenting state within `.pi/rules/project_memory.md` or `.pi/memory/codebase_map.md`, you are strictly prohibited from writing brief summaries or skipping context. Every entry, logic, functions, code structures, components and flows must be deeply detailed and specific enough if possible.
+- **Accessible Language Constraint**: You must write out file behaviors, dependency paths, and system states using simple, clear, and direct English prose. Avoid overly complex jargon loops so a beginner developer can fully grasp and navigate the exact state of the project instantly.
+
+## IMMUTABLE SECTION TITLE AND LOG PROTECTION (TOTAL RETENTION)
+- **Absolute Title Lock**: You are completely and strictly forbidden from editing, changing, renaming, or deleting any markdown section titles or header markers within any memory tracking files (`.pi/rules/project_memory.md`, `.pi/memory/error_memory.md`, `.pi/memory/codebase_map.md`, `.pi/memory/implementation_memory.md`, `.pi/memory/security_memory.md`, `.pi/memory/review_memory.md`, `.pi/memory/test_memory.md`). This rule applies uniformly regardless of the heading depth level or the number of hash characters utilized (e.g., `#`, `##`, `###`, `####`). Every header is a fixed system label. You're also prohibited to remove any of the comment text that contains a "c: worrie". 
+- **Historical Content Preservation**: You are under strict command to never delete, clear, prune, or truncate existing log items or historical text entries within your memory files. New data must purely be prepended using LIFO rules; past records are unalterable developer logs.
+
+## CRITICAL DATA RETENTION & HISTORICAL PRESERVATION
+- **Non-Destructive Editing Protocol**: When modifying dynamic tracking layers, you are UTTERLY FORBIDDEN from clearing out, erasing, or wiping existing memory entries, resolved historical blocks, or older documentation blocks.
+- **Surgical Mutating Scope**: You must ONLY touch, alter, or rewrite lines that are explicitly relevant to the active bug or task. If an old log entry is unrelated to the current command session, leave it completely untouched and preserved.
+
+## IMMEDIATE RESOLUTION MANDATE (TEST, REVIEW, SECURITY)
+
+- **Test Resolution**: When an active test strategy in Section 1 of `.pi/memory/test_memory.md` has been implemented or verified, you MUST migrate it to Section 2 within the SAME response. The resolved entry MUST use `### [RESOLVED] Short Test Description (TEST-XXX)`, retaining the original TEST-XXX tracking number. Failure to migrate immediately is a CRITICAL VIOLATION.
+
+- **Review Resolution**: When an active review finding in Section 1 of `.pi/memory/review_memory.md` has been remediated or confirmed resolved, you MUST migrate it to Section 2 within the SAME response. The resolved entry MUST use `### [RESOLVED] Short Review Description (REVIEW-XXX)`, retaining the original REVIEW-XXX tracking number. Failure to migrate immediately is a CRITICAL VIOLATION.
+
+- **Security Resolution**: When an active vulnerability in Section 1 of `.pi/memory/security_memory.md` has been patched or confirmed resolved, you MUST migrate it to Section 2 within the SAME response. The resolved entry MUST use `### [RESOLVED] Short Vulnerability Description (SEC-XXX)`, retaining the original SEC-XXX tracking number. You MUST ALSO update the Overall Security Score in Section 3. Failure to migrate immediately is a CRITICAL VIOLATION.
+
+- **Tracking Number Retention**: Every resolved entry MUST preserve its original tracking number (TEST-XXX, REVIEW-XXX, SEC-XXX, ERR-XXX) in the resolved header using parenthesis formatting. Extracting the number from the original title and appending it to the resolved header is MANDATORY.
+
+- **Historical Preservation**: All resolved entries in Section 2 of `test_memory.md`, `review_memory.md`, and `security_memory.md` are IMMUTABLE historical records. You are UTTERLY FORBIDDEN from deleting, truncating, or rewriting any existing resolved entry. New resolved entries are prepended (LIFO) directly under the Section 2 header.
+
+- **Violation Classification**: Failure to migrate any of the above within the same response, or any deletion/truncation of historical resolved entries, is classified as a **CRITICAL VIOLATION**.
+
+## SYSTEM CLEANING PROTOCOL (WORKFLOW FOR `-clean`)
+
+- **Execution Target**: When the user explicitly prompts the flag `-clean`, the AI MUST scan the entire project workspace to locate and remove the following categories of artifacts:
+  1. **Debugging Traces**: `console.log()`, `console.error()`, `console.warn()`, `console.debug()`, `console.info()`, `debugger` statements, `alert()` calls, `print()` debug calls, `TODO`/`FIXME`/`HACK` comments left by AI during development, and any temporary `debug_*` or `test_*` helper functions created solely for diagnostic purposes.
+  2. **Testing Artifacts**: Leftover test files (e.g., `*.test.js`, `*.spec.js`, `*.test.ts`, `*.spec.ts`) that were generated by the AI during debugging sessions and are NOT part of the project's official test suite. Also includes temporary mock data files, stub responses, and fixture files created for ad-hoc testing.
+  3. **Dead Code**: Unreachable code blocks, commented-out function calls, unused variable declarations, and orphaned import statements that no longer resolve to any active module.
+  4. **Junk Files**: Empty files, `.bak` files, `.tmp` files, `.log` files, duplicated config files, and any file that serves no functional purpose in the application.
+
+- **Strict Code Isolation Boundary**: The AI is UTTERLY FORBIDDEN from touching, altering, deleting, or breaking any of the following during a `-clean` operation:
+  1. **Active source code files** — any file that is imported, exported, or referenced by the application's entry point or routing system.
+  2. **Configuration files** — `package.json`, `tsconfig.json`, `vite.config.*`, `next.config.*`, `.env`, `.eslintrc.*`, `tailwind.config.*`, or any file that controls build, lint, or runtime behavior.
+  3. **Dependency declarations** — never remove packages from `package.json` or delete `node_modules` entries.
+  4. **Routing and entry files** — `index.js`, `main.js`, `App.js`, `_app.js`, `layout.tsx`, or any file that bootstraps the application.
+  5. **Database schemas, migrations, and API route handlers** — these are production-critical and must never be touched.
+  6. **Template memory and rules files** — the `.opencode/`, `.clinerules/`, `.kilo/`, `.roo/`, `.pi/` directories and their contents are completely off-limits.
+  7. **Git history and version control** — never stage, commit, or push changes as part of `-clean`. Only present the proposed removals for user approval.
+
+- **Mandatory Pre-Clean Scan**: Before removing ANY file or line, the AI MUST:
+  1. List every item it intends to remove with full file path and line number.
+  2. Classify each item by category (debugging trace, testing artifact, dead code, junk file).
+  3. Present the full list to the user and WAIT for explicit approval before executing any deletion.
+
+- **Mandatory Post-Clean Justification**: After each removal, the AI MUST write a one-line justification explaining exactly why the item was safe to remove (e.g., "Removed `console.log('debug')` at `src/utils/helper.ts:42` — unused debug output, no functional impact").
+
+- **Absolute Safety Mandate**: If the AI is uncertain whether a file or code block is safe to remove, it MUST NOT remove it. Instead, it MUST flag the item as `REVIEW NEEDED` and ask the user to decide. False positives are always preferred over breaking the application.
+
+## WORKSPACE INITIALIZATION PROTOCOL
+
+- **Initialization File**: `.pi/workspace.json` serves as the workspace identity marker.
+- **One-Time Initialization**: When the `-init` or `-setup` flag is triggered, the AI MUST:
+  1. Read `.pi/workspace.json`
+  2. If `workspace_id` equals `"uninitialized"`:
+     - Prompt the user: `"Enter project name for workspace initialization:"`
+     - Set `workspace_id` to a lowercase-hyphenated slug of the user-provided project name (e.g., `"My Cool Project"` → `"my-cool-project"`)
+     - Set `project_name` to the exact user-provided name
+     - Set `initialized_at` to the current PST timestamp via `Get-Date -Format "MMMM dd, yyyy, hh:mm tt PST"`
+     - Set `initialized_by` to the exact AI model ID currently powering this session (extract from system prompt, e.g., `opencode/mimo-v2-free`)
+  3. Write the updated values back to `.pi/workspace.json`
+  4. Log: `WORKSPACE INITIALIZED: {project_name} | ID: {workspace_id} | By: {initialized_by} | At: {initialized_at}`
+- **Already Initialized Guard**: If `workspace_id` is NOT `"uninitialized"`, the AI MUST HALT initialization immediately, log `WORKSPACE ALREADY INITIALIZED: {project_name}`, and proceed with the requested task without modifying `workspace.json`.
+- **Absolute Edit Restriction**: The AI is STRICTLY FORBIDDEN from editing `workspace.json` after the initial initialization under any circumstance. No re-initialization, no field updates, no corrections. The file becomes immutable once populated.
+
+## MEMORY ARCHIVAL PROTOCOL
+
+- **Archive Location**: `.pi/archives/` directory stores historical memory snapshots using pre-defined archive files.
+- **Archive-Eligible Files**: Only the following memory files are subject to archival:
+  - `error_memory.md` → archives to `error_archive.md`
+  - `implementation_memory.md` → archives to `implementation_archive.md`
+  - `security_memory.md` → archives to `security_archive.md`
+  - `review_memory.md` → archives to `review_archive.md`
+  - `test_memory.md` → archives to `test_archive.md`
+- **Excluded From Archiving**: `codebase_map.md` and `project_memory.md` are permanently excluded from archival. Their entries remain indefinitely.
+- **Entry Count Threshold**: When any tracked section in an eligible memory file exceeds **10 active entries**, the AI MUST execute archival:
+1. Count entries in the section (entries separated by `###` headers)
+2. If count exceeds 10:
+   - Extract the oldest entries (entries at the bottom of the section, since LIFO ordering places newest at top)
+   - Append the oldest entries to the corresponding pre-created archive file under a matching section header
+   - Retain only the 10 most recent entries in the active section
+3. Never create new archive files — always append to the existing pre-defined archive files.
+- **Archive File Format**: Archive files follow this structure:
+```markdown
+# {Memory Type} Archive
+
+- **Source File**: `{original_memory_file_name}`
+- **Last Archived At**: `{Month Day, Year, HH:MM AM/PM PST}`
+- **Total Entries Archived**: `{cumulative count}`
+
+---
+
+## Archived Entries
+
+{Appended entries here with original formatting preserved}
+- Archive Sections Affected:
+- error_memory.md Section 1: Active & Unresolved Errors
+- implementation_memory.md Section 1: Documented Implementation Plans & Feature Flows
+- security_memory.md Section 1: Active & Unresolved Vulnerabilities
+- review_memory.md Section 1: Active & Open Review Findings
+- test_memory.md Section 1: Active Test Strategies
+- Archival Trigger: Archival is ONLY triggered when the user explicitly prompts the `-archive` flag, AND the section count exceeds 10. The AI must NEVER auto-archive in the background.
+
+<!-- c: worrie -->
