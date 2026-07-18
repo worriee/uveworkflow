@@ -4,7 +4,66 @@
 
 - **Last AI Analysis Timestamp**: [Month Day, Year, HH:MM AM/PM PST]
 
-## 1. Frontend Layer
+## 1. Visual Codebase Overview
+
+_Draw the entire project directory tree and explain each folder and file in one simple sentence. This is your bird's-eye view of the project._
+
+### Directory Tree
+
+```
+project-name/
+├── src/                          _Main application code_
+│   ├── components/               _Reusable UI building blocks_
+│   ├── pages/                    _Route definitions for each page_
+│   ├── utils/                    _Helper functions used across the app_
+│   └── index.js                  _Application entry point (where it all starts)_
+├── server/                       _Backend logic and APIs_
+│   ├── controllers/              _Handles what happens for each request_
+│   ├── routes/                   _URL paths mapped to controllers_
+│   └── config/                   _Server settings and database connection_
+├── database/                     _Data layer_
+│   ├── models/                   _What the data looks like (schemas)_
+│   └── migrations/               _History of data structure changes_
+├── public/                       _Static files served directly_
+│   ├── images/                   _Pictures and icons_
+│   └── favicon.ico               _Browser tab icon_
+├── tests/                        _Automated tests_
+│   ├── unit/                     _Tests for individual functions_
+│   └── e2e/                      _Tests for full user workflows_
+├── package.json                  _Project name, dependencies, and scripts_
+├── .env                          _Secret keys and environment settings_
+└── README.md                     _Project description and documentation_
+```
+
+> **Note:** This is a sample tree. Delete or modify these entries to match your actual project structure when running `-codebase`.
+
+### Folder & File Descriptions
+
+| Path | What It Does |
+|------|-------------|
+| `src/` | _Main application code — where most of your feature logic lives_ |
+| `src/components/` | _Reusable UI building blocks — buttons, cards, modals, etc._ |
+| `src/pages/` | _Route definitions — each file represents a different page/screen_ |
+| `src/utils/` | _Helper functions — small tools used across multiple files_ |
+| `src/index.js` | _Application entry point — where the app first starts running_ |
+| `server/` | _Backend logic — handles requests from the frontend_ |
+| `server/controllers/` | _Request handlers — decides what to do when someone hits a URL_ |
+| `server/routes/` | _URL paths — maps each URL to its controller_ |
+| `server/config/` | _Server settings — database connections, port numbers, etc._ |
+| `database/` | _Data layer — where your data lives and how it's shaped_ |
+| `database/models/` | _Data schemas — defines what fields each record has_ |
+| `database/migrations/` | _Data version history — tracks changes to your database structure_ |
+| `public/` | _Static files — served directly to the browser without processing_ |
+| `tests/` | _Automated tests — code that checks if your app works correctly_ |
+| `tests/unit/` | _Unit tests — tests each function in isolation_ |
+| `tests/e2e/` | _End-to-end tests — simulates real user behavior from start to finish_ |
+| `package.json` | _Project metadata — name, dependencies list, and runnable scripts_ |
+| `.env` | _Secret configuration — API keys and settings (never commit this file!)_ |
+| `README.md` | _Documentation — describes what the project does and how to use it_ |
+
+---
+
+## 2. Frontend Layer
 
 ### 1A. Logic, Functions & Code Structures
 
@@ -36,7 +95,7 @@ _Every frontend file and how it connects to the logics/functions documented in 1
 
 ---
 
-## 2. Backend Layer
+## 3. Backend Layer
 
 ### 2A. Logic, Functions & Code Structures
 
@@ -68,7 +127,7 @@ _Every backend file and how it connects to the logics/functions documented in 2A
 
 ---
 
-## 3. Data & Platform Layer
+## 4. Data & Platform Layer
 
 ### 3A. Database Schema & Data Models
 
@@ -144,7 +203,7 @@ _Documents Docker, CI/CD pipelines, monitoring, logging, and orchestration._
 
 ---
 
-## 4. Learning Notes & Dependency Mapping
+## 5. Learning Notes & Dependency Mapping
 
 - **Critical Third-Party Libraries**: _[List packages used and a short sentence explaining why they are there to help you learn.]_
 - **Tricky Code Paths**: _[Notes on complex loops, state mutations, or conditional rendering blocks that are hard to grasp at a glance.]_
