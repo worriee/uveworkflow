@@ -1,13 +1,13 @@
 # Ultimate Vibe Experience (UVE Coding Strat)
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Template-v4.0-blue?style=for-the-badge&labelColor=1a1a2e&color=0f3460" alt="Template Version"/>
-  <img src="https://img.shields.io/badge/AI%20Personas-8-orange?style=for-the-badge&labelColor=1a1a2e&color=e94560" alt="AI Personas"/>
-  <img src="https://img.shields.io/badge/Memory%20Layers-6-purple?style=for-the-badge&labelColor=1a1a2e&color=533483" alt="Memory Layers"/>
+  <img src="https://badgen.net/badge/Template%20Version/V4.0/blue" height="30" alt="Template V4.0"/>
+  <img src="https://badgen.net/badge/AI%20Personas/8/red" height="30" alt="AI Personas 8"/>
+  <img src="https://badgen.net/badge/Memory%20Layers/7/purple" height="30" alt ="Memory Layers 7"/>
 </p>
 
 <p align="center">
-  <strong>An AI-powered workflow that keeps your vibe consistent across every session.</strong>
+  <strong>A workflow template that keeps your vibe consistent across every session.</strong>
 </p>
 <p align="center">
   <strong>You build. We track.</strong>
@@ -17,7 +17,7 @@
 
 ## Quick Links
 
-[What is this?](#what-is-this-for) | [Where to Use?](#you-can-use-this-template-for) | [Problem We Solve](#the-problem-we-solve) | [Memory System](#memory-system) | [Folder Structure](#folder-structure-on-opencode-template) | [Prompt Triggers](#prompt-triggers-manual-commands) | [Installation](#installation-guide) | [FAQ](#faq) | [Usages](#own-usages)
+[What is this?](#what-is-this-for) | [Problem We Solve](#the-problem-we-solve) | [Memory Layers](#memory-layers) | [Folder Structure](#folder-structure-on-opencode-template) | [Persona Triggers](#prompt-triggers-manual-commands) | [Installation](#installation-guide) | [FAQ](#faq) | [Usages](#own-usages)
 
 ---
 
@@ -54,7 +54,7 @@ This template adds a **memory layer** to your project. It gives the AI strict ru
 
 ---
 
-## Memory System
+## Memory Layers
 
 Your project stores memory in simple markdown files. The AI reads them when needed.
 
@@ -116,7 +116,7 @@ Your-Project-Root/
     └── opencode.json                   OpenCode configuration pointing to instruction files.
 ```
 
-_All four templates (.clinerules, .roo, .kilo, .opencode) share the same internal structure but use their respective root folder names for path references._
+_All templates share the same internal structure but use their respective root folder names for path references._
 
 ---
 
@@ -189,6 +189,7 @@ git clone https://github.com/worriee/uveworkflow.git
 | Roo Code / Zoo Code | `.roo`        |
 | Kilo Code           | `.kilo`       |
 | OpenCode            | `.opencode`   |
+| Pi                  | `.pi`         |
 
 _\*this will work in any platforms if you can make the agent read these folders_
 
@@ -203,18 +204,31 @@ your-project/
 ├── .opencode/    <-- paste here
 ```
 
-### Step 4: Move Root Files (Kilo and OpenCode Only)
+### Step 4: Move Root Files
 
 | Tool     | Files to Move                   |
 | :------- | :------------------------------ |
 | OpenCode | `AGENTS.md` and `opencode.json` |
 | Kilo     | `AGENTS.md` and `kilo.json`     |
+| Pi       | `AGENTS.md`                     |
+
+```
+your-project/
+├── src/
+├── package.json
+├── .opencode/
+├── AGENTS.md     <-- move here
+├── opencode.json <-- move here
+```
 
 These files must be in your project root, not inside the template folder.
 
 ### Step 5: Start
 
 Type `-setup` in your AI Agent. It will read the template and learn your project.
+
+> incase `-setup` won't work prompt this instead:\
+> @AGENTS.md read your rules and follow them strictly.
 
 ---
 
