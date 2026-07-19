@@ -276,6 +276,4 @@ Type `-setup` in your AI Agent. It will read the template and learn your project
     <img src="assets/usage3.png" width="200"/>
     <img src="assets/usage4.png" width="200"/>
     <img src="assets/usage5.png" width="200"/>
-    <img src="assets/usage6.png" width="200"/>
-    <img src="assets/usage7.png" width="200"/>
 </p>
