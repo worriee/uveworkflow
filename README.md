@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Template-v4.0-blue?style=for-the-badge&labelColor=1a1a2e&color=0f3460" alt="Template Version"/>
-  <img src="https://img.shields.io/badge/For-CLINE%20%7C%20ROO%20%7C%20ZOO%20%7C%20KILO%20%7C%20OPENCODE-green?style=for-the-badge&labelColor=1a1a2e&color=16213e" alt="Platform Support"/>
+  <img src="https://img.shields.io/badge/For-CLINE%20%7C%20ROO%20%7C%20ZOO%20%7C%20KILO%20%7C%20OPENCODE%20%7C%20PI-green?style=for-the-badge&labelColor=1a1a2e&color=16213e" alt="Platform Support"/>
   <img src="https://img.shields.io/badge/AI%20Personas-8-orange?style=for-the-badge&labelColor=1a1a2e&color=e94560" alt="AI Personas"/>
   <img src="https://img.shields.io/badge/Memory%20Layers-6-purple?style=for-the-badge&labelColor=1a1a2e&color=533483" alt="Memory Layers"/>
 </p>
@@ -271,9 +271,9 @@ Type `-setup` in your AI Agent. It will read the template and learn your project
 ## Own Usages
 
 <p align="center">
-    <img src="assets/usage1.png" width="200"/>
-    <img src="assets/usage2.png" width="200"/>
-    <img src="assets/usage3.png" width="200"/>
-    <img src="assets/usage4.png" width="200"/>
-    <img src="assets/usage5.png" width="200"/>
+    <p><img src="assets/usage1.png" width="200"/></p>
+    <p><img src="assets/usage2.png" width="200"/></p>
+    <p><img src="assets/usage3.png" width="200"/></p>
+    <p><img src="assets/usage4.png" width="200"/></p>
+    <p><img src="assets/usage5.png" width="200"/></p>
 </p>
