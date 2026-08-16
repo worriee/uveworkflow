@@ -7,7 +7,7 @@
 ## Subtask Delegation & Context Preservation Protocol
 - **Persona-Based Delegation Enforcement**: Delegation behavior is determined by the active persona flag:
   - **EXEMPT from delegation** (main context only): `-p` (Planner) and `-a` (Ask). These modes require full project awareness for analysis and planning, so all operations execute directly in the main session context.
-  - **STRICT DELEGATION REQUIRED**: `-c` (Coder), `-d` (Debugger), `-s` (Security), `-r` (Reviewer), `-t` (Tester), `-o` (Orchestrator), `-setup`, `-codebase`, `-error`, `-init`, `-archive`, and `-clean`. All eligible operations must be delegated to subagents — the main context is reserved exclusively for coordination, decision-making, and receiving structured results.
+  - **STRICT DELEGATION REQUIRED**: `-c` (Coder), `-d` (Debugger), `-s` (Security), `-r` (Reviewer), `-t` (Tester), `-o` (Orchestrator), `-setup`, `-codebase`, `-error`, `-init`, `-archive`, `-obsidian`, and `-clean`. All eligible operations must be delegated to subagents — the main context is reserved exclusively for coordination, decision-making, and receiving structured results.
 - **Subagent Return Contract**: When delegation is enforced, subagents must return only concise structured results (summaries, file paths, root causes, fix plans). Raw tool output, full file dumps, and verbose logs must remain within the subagent scope and never pollute the main session context.
 - **Violation Consequence**: Executing any operations directly in the main session context without subdelegation when delegation is enforced constitutes a CRITICAL VIOLATION. It bloats the context window, wastes tokens, and degrades session performance.
 
@@ -19,10 +19,25 @@
   - `-codebase`: Triggers a complete structure inspection and updates `.roo/memory/codebase_map.md` with descriptions of the files and current project workflow.
   - `-setup`: Triggers a combined sequential execution of all the above updates across all memory files simultaneously.
   - `-archive`: Triggers a scan of all eligible memory files and archives oldest entries when sections exceed 10 entries. Archives to pre-created archive files in `.roo/archives/`.
+  - `-obsidian`: Triggers Mandatory Obsidian Vault Synchronization — mirrors the active template root (rules, memory, archives, skills, config) 1:1 into `<vault>/<project_name>/` inside the user's Obsidian vault. Resolves and persists the vault path in `.roo/rules/project_memory.md`.
 - Strict Adherence: For regular prompts without these flags, assume the existing information in the memory files is unchanged and use it as your ground truth.
 
+## OBSIDIAN SYNC FLAG (`-obsidian`)
+
+- Trigger: When the user prompts `-obsidian`, the AI MUST execute the Mandatory Obsidian Vault Synchronization Protocol below. This is a MANDATORY utility operation — no skips, no partial copies, no improvisation, no silent failures.
+- Hard Precondition: The AI MUST read `.roo/workspace.json` FIRST. If `workspace_id` or `project_name` equals `"uninitialized"`, the AI MUST HALT the operation immediately, refuse to copy anything, and instruct the user to run `-init` FIRST. Proceeding with an uninitialized workspace is a CRITICAL VIOLATION.
+- Vault Path Resolution: The AI MUST NOT guess, assume, estimate, or fabricate the Obsidian vault path. Resolution order is STRICT and sequential:
+  1. Read the stored vault path entry from `.roo/rules/project_memory.md` (the `Obsidian Vault Path` entry).
+  2. If no stored entry exists, the AI MUST ASK the user for the absolute vault path and WAIT for explicit confirmation before any copy operation.
+  3. The confirmed path MUST be persisted into `.roo/rules/project_memory.md` as a newest-on-top LIFO entry for future runs.
+- Copy Target: The AI MUST create `<vault>/<project_name>/` where `<project_name>` is the EXACT `project_name` value from `.roo/workspace.json`, used verbatim — spaces and special characters preserved, never slugified.
+- Copy Scope: The AI MUST mirror the active template root folder 1:1 into `<vault>/<project_name>/`, INCLUDING `rules/`, `memory/`, `archives/`, `skills/`, `workspace.json`, `AGENTS.md`, and configuration files. The following are STRICTLY EXCLUDED and MUST NOT be copied: `node_modules/` and `.git/`.
+- Overwrite Policy: Existing vault files MUST be overwritten unconditionally. The latest log version always wins. The AI MUST NOT skip, rename, merge, or deduplicate files.
+- Verification: After copying, the AI MUST list every copied file back to the user and confirm completion before ending the operation.
+- Strict Delegation: The `-obsidian` flag is a STRICT DELEGATION trigger — all copy operations execute in a subagent; the main context receives only the structured summary.
+
 ## CRITICAL: Enforced Context Loss Read Execution
-- Enforced Context Re-Reads: If you notice a loss of context window memory, a token expiration event, a session reset, or if the user appends any command flag (`-init`, `-context`, `-error`, `-codebase`, `-setup`, `-archive`, `-clean`, `-o`, `-p`, `-c`, `-d`, `-a`, `-s`, `-r`, `-t`), you are strictly commanded to instantly halt execution and re-read this main file (`.roo/rules/.clinerules`) followed by your memory layers (`.roo/rules/project_memory.md`, `.roo/memory/error_memory.md`, `.roo/memory/codebase_map.md`).
+- Enforced Context Re-Reads: If you notice a loss of context window memory, a token expiration event, a session reset, or if the user appends any command flag (`-init`, `-context`, `-error`, `-codebase`, `-setup`, `-archive`, `-obsidian`, `-clean`, `-o`, `-p`, `-c`, `-d`, `-a`, `-s`, `-r`, `-t`), you are strictly commanded to instantly halt execution and re-read this main file (`.roo/rules/.clinerules`) followed by your memory layers (`.roo/rules/project_memory.md`, `.roo/memory/error_memory.md`, `.roo/memory/codebase_map.md`).
 - Re-Enforce Ground Truth: Use these local guides to instantly rebuild your mental map of the codebase without asking the user to re-explain past progress.
 
 ## Persona Execution Mode Selection
