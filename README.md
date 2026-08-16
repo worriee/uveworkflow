@@ -1,7 +1,7 @@
 # Ultimate Vibe Experience (UVE Coding Strat)
 
 <p align="center">
-  <img src="https://badgen.net/badge/Template%20Version/V4.0/blue" height="30" alt="Template V4.0"/>
+  <img src="https://badgen.net/badge/Template%20Version/V4.5/blue" height="30" alt="Template V4.5"/>
   <img src="https://badgen.net/badge/AI%20Personas/8/red" height="30" alt="AI Personas 8"/>
   <img src="https://badgen.net/badge/Memory%20Layers/7/purple" height="30" alt ="Memory Layers 7"/>
 </p>
@@ -24,6 +24,16 @@
 ## Recent Updates
 
 - Added `-obsidian` flag prompt. This prompt immediately copies all the memory logs from your current project to your obsidian vault (it asks the path to your obsidian vautl). For more details check the [persona triggers](#prompt-triggers-manual-commands) in the last item.
+- Added `-update` flag prompt. Updates this workspace templates to the latest version. Caution: It doesnt detect new updates and this is manual if no new updates then nothing changes.
+- **MUST READ IF U ARE FROM OLD VERSION IF YOU'RE NEW THEN IGNORE:** If you are from old version of this template (4.0 and below) please go to this path `[anytemplate]/rules/.clinerules` then **copy** the entire section of update flag prompt from **line 40-52**. After that **paste** it to your ai agent then **include `-update` in your prompt**. Like this format:
+
+```
+[PASTED LINES]
+
+-update
+```
+
+After that your workspace template is updated... well done! You only do this once then run `-update` in the future.
 
 ---
 
@@ -139,6 +149,7 @@ Use these flag commands:
 | `-init`        | Utility         | Initializes `workspace.json`.                                                                                               | First-time setup.                                                                                                                        |
 | `-archive`     | Utility         | Moves old entries to archive files.                                                                                         | When memory files get too large.                                                                                                         |
 | `-obsidian`    | Utility         | Mirrors the whole template (rules, memory, archives, skills, config) into your Obsidian vault as `<vault>/<project_name>/`. | Keep your workflow logs synced into Obsidian notes that comes with clean graph view.                                                     |
+| `-update`      | Utility         | Fetches this current repository for newest updates of the templates while preserving logs and workspace identity.           | Keep your workflow templates current with the upstream repo.                                                                             |
 
 ### Why Manual Triggers Instead of Auto-Updates?
 
