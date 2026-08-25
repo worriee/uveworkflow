@@ -1,111 +1,83 @@
 # Project Memory & Context Tracker
 
-## 0. Last Synchronized Checkpoint
+## 0. Last Checkpoint
 
-- **Last AI Analysis Timestamp**: [Month Day, Year, HH:MM AM/PM PST]
+- **Last Sync**: [Month Day, Year, HH:MM AM/PM PST]
 
 ## 1. Project Overview
 
-### Project Identity
-
-- **Project Name**: _[Name of this project]_
-- **Primary Goal**: _One-sentence purpose of this application_
-- **Target Users / Audience**: _Who uses this software_
-- **Current Phase**: _Prototype / Alpha / Beta / Production / Maintenance_
+- **Project Name**: _[Name]_
+- **Primary Goal**: _One-sentence purpose_
+- **Target Users**: _Who uses this_
+- **Current Phase**: _Prototype / Alpha / Beta / Production_
 - **Active Branch**: _main / dev / feature-xxx_
 
 ### Key Constraints
 
-_List budget, timeline, platform restrictions, team size, or technical limitations currently in effect._
+_Budget, timeline, platform restrictions, team size, technical limitations._
 
 ---
 
-## 2. Active Milestones & Roadmap
-
-_Track high-level releases, versions, or major feature milestones the project is working toward._
+## 2. Active Milestones
 
 ### [MS-001] Milestone Title
 
-- **Target Version/Release**: _v1.0, v2.0, etc._
-- **Due Date**: _[Target completion date]_
-- **Key Deliverables**: _What must be finished for this milestone_
-- **Dependencies**: _What prerequisites must be done first_
+- **Target**: _v1.0, v2.0, etc._
+- **Due**: _[Date]_
+- **Deliverables**: _What must finish_
+- **Dependencies**: _Prerequisites_
 - **Status**: IN_PROGRESS | COMPLETED | BLOCKED
-- **Notes**: _Any additional context_
+- **Notes**: _Context_
 
-_Log new milestones here in LIFO format (newest on top)._
+_LIFO format (newest on top)._
 
 ---
 
-## 3. Current Sprint & Active Tasks
+## 3. Current Sprint
 
-- [Describe the active task here]
-- [Describe the active task here]
+- [Active task]
+- [Active task]
 
 ---
 
 ## 4. Completed Milestones
 
-- [Describe the completed milestone here]
-- [Describe the completed milestone here]
+- [Completed milestone]
+- [Completed milestone]
 
 ---
 
-## 5. Pending Tasks & Backlog
+## 5. Backlog
 
-- [Describe the pending task here]
-- [Describe the pending task here]
+- [Pending task]
+- [Pending task]
 
 ---
 
-## 6. Architectural Decisions & Constraints
-
-_Keep a running history of critical architectural choices, patterns to follow, or constraints to prevent AI hallucination or regression._
+## 6. Architectural Decisions
 
 ### [DEC-001] Decision Title
 
-- **Context**: _Why this decision was needed (problem, requirement, constraint)_
-- **Choice Made**: _What was chosen and implemented_
-- **Alternatives Considered**: _What was rejected and why_
-- **Impact**: _What files, modules, or layers this decision affects_
-- **Date Logged**: _[Month Day, Year, HH:MM AM/PM PST]_
+- **Context**: _Why needed_
+- **Choice**: _What was chosen_
+- **Alternatives**: _What was rejected_
+- **Impact**: _Files/modules affected_
+- **Date**: _[Month Day, Year, HH:MM AM/PM PST]_
 
-_Log new decisions here in LIFO format (newest on top)._
-
----
-
-## 7. MEMORY FILE REGISTRY
-
-All specialized memory logs are stored in `.pi/memory/` directory:
-
-- **Error Memory**: `.pi/memory/error_memory.md` — Active bugs, stack traces, resolution history
-- **Codebase Map**: `.pi/memory/codebase_map.md` — Directory structure, file purposes, dependency mapping
-- **Implementation Memory**: `.pi/memory/implementation_memory.md` — Architectural design maps, feature flows, execution roadmaps
-- **Security Memory**: `.pi/memory/security_memory.md` — Vulnerability tracking, threat modeling, remediation plans
-- **Review Memory**: `.pi/memory/review_memory.md` — Code review findings, quality assessments
-- **Test Memory**: `.pi/memory/test_memory.md` — Test strategies, coverage analysis, test case documentation
-
-**Archive Files** (pre-created, receive overflow from memory files):
-
-- **Error Archive**: `.pi/archives/error_archive.md`
-- **Implementation Archive**: `.pi/archives/implementation_archive.md`
-- **Security Archive**: `.pi/archives/security_archive.md`
-- **Review Archive**: `.pi/archives/review_archive.md`
-- **Test Archive**: `.pi/archives/test_archive.md`
-
-_Note: `codebase_map.md` and `project_memory.md` are excluded from archival._
+_LIFO format._
 
 ---
 
-## 8. ARCHIVE STATUS
+## 7. Memory Files
 
-- **Archive Location**: `.pi/archives/`
-- **Threshold**: 10 active entries per section (LIFO ordering)
-- **Archives Created**: 0
-- **Last Archive Check**: `Not yet performed`
+All in `memory/`. Archives in `archives/`. `codebase_map.md` + `project_memory.md` excluded from archival.
 
-| Archive File        | Source Memory | Entries Archived | Archived At (PST) |
-| ------------------- | ------------- | ---------------- | ----------------- |
-| _(No archives yet)_ |               |                  |                   |
+---
+
+## 8. Archive Status
+
+- **Location**: `archives/`
+- **Threshold**: 10 entries per section (LIFO)
+- **Last Check**: `Not yet performed`
 
 <!-- c: worrie -->

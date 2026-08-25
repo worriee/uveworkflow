@@ -1,57 +1,46 @@
-# Code Review Log Memory
+# Code Review Memory
 
-## 0. Last Synchronized Checkpoint
+## 0. Last Checkpoint
 
-- **Last AI Analysis Timestamp**: [Month Day, Year, HH:MM AM/PM PST]
+- **Last Sync**: [Month Day, Year, HH:MM AM/PM PST]
 
-## 1. Active & Open Review Findings
+## 1. Active Findings
 
 ### [REVIEW-001] Short Description
 
-- **File/Path**: `path/to/file.ext:line_number`
+- **File/Path**: `path/to/file.ext:line`
 - **Severity**: CRITICAL | HIGH | MEDIUM | LOW
 - **Category**: Security | Performance | Maintainability | Correctness | Testability
-- **Finding**: [Detailed explanation of the issue]
-- **Recommendation**: [Specific remediation steps or code suggestion]
+- **Finding**: _Issue explanation_
+- **Recommendation**: _Remediation steps_
 - **Status**: OPEN | IN_PROGRESS | RESOLVED
-- **Reviewed At**: [Month Day, Year, HH:MM AM/PM PST]
+- **Reviewed**: [Month Day, Year, HH:MM AM/PM PST]
 
 ---
 
-## 2. Historical & Resolved Reviews
+## 2. Resolved Findings
 
-_Move reviews to this section once they are completely verified as resolved. This serves as historical memory to prevent the AI from re-introducing the same issues._
+> On fix → migrate Section 1 to Section 2 SAME using `### [RESOLVED] Desc (REVIEW-XXX)`. Headers immutable. LIFO prepend only.
 
-> STRICT RULE: When a review finding in Section 1 is remediated, the AI MUST migrate it to this section within the SAME response using `### [RESOLVED] Short Review Description (REVIEW-XXX)`. All headers in this file are IMMUTABLE. Existing resolved entries MUST NOT be deleted, truncated, or rewritten. New resolved entries are prepended (LIFO) directly under the Section 2 header. The original REVIEW-XXX tracking number MUST be preserved in the resolved header. Failure to migrate immediately is a CRITICAL VIOLATION.
+### [RESOLVED] Short Description (REVIEW-XXX)
 
-### [RESOLVED] Short Review Description (REVIEW-XXX)
-
-- **The Issue**: [Brief summary of what was found]
-- **The Resolution**: [How it was addressed]
-- **Prevention Strategy**: [What guideline should be followed to avoid recurrence]
+- **Issue**: _What was found_
+- **Resolution**: _How addressed_
+- **Prevention**: _Guideline to avoid recurrence_
 
 ---
 
-## 3. Review Summary Metrics
+## 3. Review Metrics
 
-- **Total Reviews Conducted**: 0
-- **Critical Findings**: 0
-- **High Findings**: 0
-- **Medium Findings**: 0
-- **Low Findings**: 0
-- **Last Review Date**: `Not yet performed`
+- **Total**: 0 | **Critical**: 0 | **High**: 0 | **Medium**: 0 | **Low**: 0
+- **Last Review**: `Not yet performed`
 
 ---
 
-## 4. ARCHIVE STATUS
+## 4. Archive Status
 
-- **Archive File**: `.pi/archives/review_archive.md`
-- **Threshold**: 10 active entries per section
-- **Total Archived**: 0
-- **Last Archive Check**: `Not yet performed`
-
-| Entries Archived | Archived At (PST) |
-| ---------------- | ----------------- |
-| 0                | —                 |
+- **File**: `archives/review_archive.md`
+- **Threshold**: 10 entries
+- **Archived**: 0
 
 <!-- c: worrie -->

@@ -1,7 +1,7 @@
 # Ultimate Vibe Experience (UVE Coding Strat)
 
 <p align="center">
-  <img src="https://badgen.net/badge/Template%20Version/V4.5/blue" height="30" alt="Template V4.5"/>
+  <img src="https://badgen.net/badge/Template%20Version/V5.0/blue" height="30" alt="Template V5.0"/>
   <img src="https://badgen.net/badge/AI%20Personas/8/red" height="30" alt="AI Personas 8"/>
   <img src="https://badgen.net/badge/Memory%20Layers/7/purple" height="30" alt ="Memory Layers 7"/>
 </p>
@@ -23,9 +23,69 @@
 
 ## Recent Updates
 
-- Added `-obsidian` flag prompt. This prompt immediately copies all the memory logs from your current project to your obsidian vault (it asks the path to your obsidian vautl). For more details check the [persona triggers](#prompt-triggers-manual-commands) in the last item.
-- Added `-update` flag prompt. Updates this workspace templates to the latest version. Caution: It doesnt detect new updates and this is manual if no new updates then nothing changes.
-- **MUST READ IF U ARE FROM OLD VERSION IF YOU'RE NEW THEN IGNORE:** If you are from old version of this template (4.0 and below) please go to this path `[anytemplate]/rules/.clinerules` then **copy** the entire section of update flag prompt from **line 40-52**. After that **paste** it to your ai agent then **include `-update` in your prompt**. Like this format:
+1. **Template Compression (v5.0):** Full template compressed for token savings. Same rules, shorter words.
+
+### Rules & Skills
+
+| File                     | Before     | After      | Saved   |
+| ------------------------ | ---------- | ---------- | ------- |
+| `.clinerules`            | 26.9KB     | 9.1KB      | 66%     |
+| `system_instructions.md` | 24.3KB     | 6.0KB      | 75%     |
+| `orchestrator/SKILL.md`  | 10.6KB     | 3.2KB      | 69%     |
+| `tester/SKILL.md`        | 7.3KB      | 2.9KB      | 60%     |
+| 6 other skills           | 21.4KB     | 6.7KB      | 69%     |
+| **Subtotal**             | **84.5KB** | **27.9KB** | **66%** |
+
+### Memory & Archives
+
+| File                       | Before     | After      | Saved   |
+| -------------------------- | ---------- | ---------- | ------- |
+| `codebase_map.md`          | 8.9KB      | 5.2KB      | 42%     |
+| `project_memory.md`        | 3.8KB      | 1.5KB      | 61%     |
+| `test_memory.md`           | 2.8KB      | 1.2KB      | 57%     |
+| `security_memory.md`       | 2.2KB      | 1.1KB      | 50%     |
+| `review_memory.md`         | 2.1KB      | 1.0KB      | 52%     |
+| `error_memory.md`          | 1.9KB      | 0.9KB      | 53%     |
+| `implementation_memory.md` | 1.4KB      | 0.7KB      | 50%     |
+| 5 archive files            | 1.0KB      | 0.5KB      | 50%     |
+| **Subtotal**               | **24.2KB** | **11.3KB** | **53%** |
+
+### Total Impact (per template)
+
+| Category          | Before      | After      | Saved   | Tokens Saved |
+| ----------------- | ----------- | ---------- | ------- | ------------ |
+| Rules + Skills    | 84.5KB      | 27.9KB     | 66%     | ~14,100      |
+| Memory + Archives | 24.2KB      | 11.3KB     | 53%     | ~3,200       |
+| **Grand Total**   | **108.7KB** | **39.2KB** | **64%** | **~17,300**  |
+
+> Every context reload, every flag trigger, every `-setup` run reads these files. **64% less tokens burned per read.**
+
+### What Changed
+
+- Notation legend (MUST/BAN/CRIT/CMD/SAME) replaces verbose phrases
+- Cross-file dedup (system_instructions references .clinerules)
+- Resolution mandates consolidated (4 blocks → 1)
+- SKILL.md personas trimmed to role + rules only
+- Memory file preambles shortened, duplicate rules removed
+- Archive status blocks compressed
+- Timestamp fallback (PowerShell/Bash/Node.js)
+- Tool discovery with web search for test frameworks
+
+### What Stayed
+
+- All rules, flows, and behavioral constraints unchanged
+- Section header names preserved (fixed system labels)
+- Entry formats preserved (`### [ERR-001]`, `### [RESOLVED]`, etc.)
+- LIFO sorting rules intact
+- Archive threshold (10 entries) unchanged
+
+---
+
+2. Added `-obsidian` and `-update` flag prompt. For more details check the [persona triggers](#prompt-triggers-manual-commands) in the last row.
+
+---
+
+3. **MUST READ IF U ARE FROM OLD VERSION IF YOU'RE NEW THEN IGNORE:** If you are from old version of this template (4.0 and below) please go to this path `[anytemplate]/rules/.clinerules` then **copy** the entire section of update flag prompt from **line 40-52**. After that **paste** it to your ai agent then **include `-update` in your prompt**. Like this format:
 
 ```
 [PASTED LINES]

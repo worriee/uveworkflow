@@ -1,13 +1,13 @@
 # Error Archive
 
-- **Source File**: `error_memory.md`
-- **Last Archived At**: `Not yet performed`
-- **Total Entries Archived**: 0
+- **Source**: `error_memory.md`
+- **Last Archived**: `Not yet performed`
+- **Total**: 0
 
 ---
 
 ## Archived Entries
 
-_(No entries archived yet)_
+_(Empty)_
 
 <!-- c: worrie -->
