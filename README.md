@@ -97,6 +97,10 @@ After that your workspace template is updated... well done! You only do this onc
 
 ---
 
+4. **`project_memory.md` restructured:** Replaced milestone/sprint/backlog tracker with compaction-style layout (inspired by opencode compaction). Sections now: Recent Changes (git diff visual with +/− marks, new file tree, push counts), Objective, Important Details (vault path), Completed, Blocked, Next Move, Relevant Files. Updated all connected references in `.clinerules` (flag definitions) and `orchestrator/SKILL.md`.
+
+---
+
 ## What is this for?
 
 AI coding tools forget your project fast. They read too many files, fill up context, and lose track of what they built last session.
@@ -147,7 +151,7 @@ Your-Project-Root/
     ├── rules/                          Core behavioral rules and task tracking.
     │   ├── .clinerules                 Primary recovery ground truth during context loss.
     │   ├── system_instructions.md      System operational limitations, token management.
-    │   └── project_memory.md           Master task tracker for milestones and pending items.
+    │   └── project_memory.md           Task tracker: objective, recent git changes, completed/blocked/next move.
     ├── memory/                         Specialized memory logs separated by concern.
     │   ├── error_memory.md             LIFO-sorted tracking for active and resolved bugs.
     │   ├── codebase_map.md             File directory index, tech stack, and logic paths.
@@ -203,7 +207,7 @@ Use these flag commands:
 | `-r`           | Persona/Memory  | Reviewer - code quality reviews (CRITICAL/HIGH/MEDIUM/LOW).                                                                 | After code changes to check quality.                                                                                                     |
 | `-t`           | Persona/Memory  | Tester - test strategies and coverage analysis.                                                                             | Before feature completion.                                                                                                               |
 | `-clean`       | Utility         | Removes junk files and debug traces.                                                                                        | Do clean up after debugging or testing.                                                                                                  |
-| `-context`     | Memory          | Updates `project_memory.md` with current workflow.                                                                          | When project context changes.                                                                                                            |
+| `-context`     | Memory          | Scans git (status/diff/unpushed) → fills Section 1. Updates `project_memory.md`.                                            | When project context changes.                                                                                                            |
 | `-error`       | Memory          | Updates `error_memory.md` with bugs and fixes.                                                                              | Every debugging session.                                                                                                                 |
 | `-codebase`    | Memory          | Updates `codebase_map.md` with file descriptions.                                                                           | Before deployment.                                                                                                                       |
 | `-init`        | Utility         | Initializes `workspace.json`.                                                                                               | First-time setup.                                                                                                                        |
@@ -334,7 +338,7 @@ Type `-setup` in your AI Agent. It will read the template and learn your project
 <br>Yes it works even in different platforms as long as you can make the AI agent look or read to this specific folder. It won't have the same automated behavior if your AI agent doesn't have the ability to look for workspace-level rule files.
 
 **Q: What is the difference between `project_memory.md` and the files in the `memory/` folder?**
-<br>`project_memory.md` is your task tracker — it only holds active tasks, completed milestones, and pending items. All specialized logs (errors, security vulnerabilities, code reviews, test strategies, implementation flows, and codebase maps) live in separate files inside the `memory/` folder to keep concerns isolated and prevent any single file from becoming too large.
+<br>`project_memory.md` holds objective, recent git changes (diffs, new files, unpushed commits), completed work, blockers, next move, and relevant files. All specialized logs (errors, security vulnerabilities, code reviews, test strategies, implementation flows, and codebase maps) live in separate files inside the `memory/` folder to keep concerns isolated.
 
 **Q: How do the Reviewer (`-r`) and Tester (`-t`) personas work with the memory system?**
 <br>When you use `-r` or `-t`, the AI adopts the respective persona and performs its analysis. If you also include `-setup` or explicitly request logging, the findings are saved to `.opencode/memory/review_memory.md` or `.opencode/memory/test_memory.md` using the strict LIFO format with severity classifications and structured output templates.

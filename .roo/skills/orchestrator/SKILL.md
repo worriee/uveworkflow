@@ -53,7 +53,7 @@ Execute complex objectives through strict sequential pipeline with quality loops
 
 ### 10. DOCUMENT
 - Summary to `implementation_memory.md`. Clean chat summary (project report format).
-- Update `project_memory.md` milestones.
+- Update `project_memory.md` Completed / Next Move.
 
 ### 11. ASK
 - Present summary. Ask: fix findings? another task? questions?
