@@ -1,7 +1,7 @@
 # Ultimate Vibe Experience (UVE Coding Strat)
 
 <p align="center">
-  <img src="https://badgen.net/badge/Template%20Version/V5.0/blue" height="30" alt="Template V5.0"/>
+  <img src="https://badgen.net/badge/Template%20Version/V5.0/blue" height="30" alt="Template V5.5"/>
   <img src="https://badgen.net/badge/AI%20Personas/8/red" height="30" alt="AI Personas 8"/>
   <img src="https://badgen.net/badge/Memory%20Layers/7/purple" height="30" alt ="Memory Layers 7"/>
 </p>
@@ -23,7 +23,9 @@
 
 ## Recent Updates
 
-1. **Template Compression (v5.0):** Full template compressed for token savings. Same rules, shorter words.
+1. **Obsidian Sync v5.5 — smarter + zero-hassle:** `-obsidian` now syncs only your active template (`template_name` auto-detected from `AGENTS.md`/`CLAUDE.md` on `-init`, with smart fallback when multiple rules files are found) and auto-writes **`LINKS.md`** — a ready-made Obsidian index with `[[wiki links]]` to every `memory/`, `rules/`, `archives/`, and `skills/` file. Open your vault and get instant graph-view navigation to every log — no hunting, no clutter. Version bumped to **5.5**.
+
+2. **Template Compression (v5.0):** Full template compressed for token savings. Same rules, shorter words.
 
 ### Rules & Skills
 
@@ -81,11 +83,11 @@
 
 ---
 
-2. Added `-obsidian` and `-update` flag prompt. For more details check the [persona triggers](#prompt-triggers-manual-commands) in the last row.
+3. Added `-obsidian` and `-update` flag prompt. For more details check the [persona triggers](#prompt-triggers-manual-commands) in the last row.
 
 ---
 
-3. **MUST READ IF U ARE FROM OLD VERSION IF YOU'RE NEW THEN IGNORE:** If you are from old version of this template (4.0 and below) please go to this path `[anytemplate]/rules/.clinerules` then **copy** the entire section of update flag prompt from **line 40-52**. After that **paste** it to your ai agent then **include `-update` in your prompt**. Like this format:
+4. **MUST READ IF U ARE FROM OLD VERSION IF YOU'RE NEW THEN IGNORE:** If you are from old version of this template (4.0 and below) please go to this path `[anytemplate]/rules/.clinerules` then **copy** the entire section of update flag prompt from **line 40-52**. After that **paste** it to your ai agent then **include `-update` in your prompt**. Like this format:
 
 ```
 [PASTED LINES]
@@ -97,7 +99,7 @@ After that your workspace template is updated... well done! You only do this onc
 
 ---
 
-4. **`project_memory.md` restructured:** Replaced milestone/sprint/backlog tracker with compaction-style layout (inspired by opencode compaction). Sections now: Recent Changes (git diff visual with +/− marks, new file tree, push counts), Objective, Important Details (vault path), Completed, Blocked, Next Move, Relevant Files. Updated all connected references in `.clinerules` (flag definitions) and `orchestrator/SKILL.md`.
+5. **`project_memory.md` restructured:** Replaced milestone/sprint/backlog tracker with compaction-style layout (inspired by opencode compaction). Sections now: Recent Changes (git diff visual with +/− marks, new file tree, push counts), Objective, Important Details (vault path), Completed, Blocked, Next Move, Relevant Files. Updated all connected references in `.clinerules` (flag definitions) and `orchestrator/SKILL.md`.
 
 ---
 
@@ -195,25 +197,25 @@ _All templates share the same internal structure but use their respective root f
 
 Use these flag commands:
 
-| Command / Flag | Type            | What it does                                                                                                                | Use Case                                                                                                                                 |
-| :------------- | :-------------- | :-------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
-| `-setup`       | Utility         | Updates all memory files at once.                                                                                           | First prompt or new chat session.                                                                                                        |
-| `-o`           | Persona/Utility | Orchestrator - manages complex tasks.                                                                                       | Multi-step plans or implementations. Use when you prompt big tasks. Click [here](#orchestrator-workflow--o) to see orchestrator workflow |
-| `-p`           | Persona         | Planner - creates roadmaps, waits for approval.                                                                             | `-p describe your plan`                                                                                                                  |
-| `-c`           | Persona         | Coder - writes production code.                                                                                             | After agreeing on a plan.                                                                                                                |
-| `-d`           | Persona         | Debugger - traces errors.                                                                                                   | `-d describe the error`                                                                                                                  |
-| `-a`           | Persona         | Ask - read-only analysis.                                                                                                   | Questions without code changes.                                                                                                          |
-| `-s`           | Persona/Memory  | Security - threat modeling, safety rating (0-10).                                                                           | Check for data leaks or credential risks.                                                                                                |
-| `-r`           | Persona/Memory  | Reviewer - code quality reviews (CRITICAL/HIGH/MEDIUM/LOW).                                                                 | After code changes to check quality.                                                                                                     |
-| `-t`           | Persona/Memory  | Tester - test strategies and coverage analysis.                                                                             | Before feature completion.                                                                                                               |
-| `-clean`       | Utility         | Removes junk files and debug traces.                                                                                        | Do clean up after debugging or testing.                                                                                                  |
-| `-context`     | Memory          | Scans git (status/diff/unpushed) → fills Section 1. Updates `project_memory.md`.                                            | When project context changes.                                                                                                            |
-| `-error`       | Memory          | Updates `error_memory.md` with bugs and fixes.                                                                              | Every debugging session.                                                                                                                 |
-| `-codebase`    | Memory          | Updates `codebase_map.md` with file descriptions.                                                                           | Before deployment.                                                                                                                       |
-| `-init`        | Utility         | Initializes `workspace.json`.                                                                                               | First-time setup.                                                                                                                        |
-| `-archive`     | Utility         | Moves old entries to archive files.                                                                                         | When memory files get too large.                                                                                                         |
-| `-obsidian`    | Utility         | Mirrors the whole template (rules, memory, archives, skills, config) into your Obsidian vault as `<vault>/<project_name>/`. | Keep your workflow logs synced into Obsidian notes that comes with clean graph view.                                                     |
-| `-update`      | Utility         | Fetches this current repository for newest updates of the templates while preserving logs and workspace identity.           | Keep your workflow templates current with the upstream repo.                                                                             |
+| Command / Flag | Type            | What it does                                                                                                      | Use Case                                                                                                                                 |
+| :------------- | :-------------- | :---------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
+| `-setup`       | Utility         | Updates all memory files at once.                                                                                 | First prompt or new chat session.                                                                                                        |
+| `-o`           | Persona/Utility | Orchestrator - manages complex tasks.                                                                             | Multi-step plans or implementations. Use when you prompt big tasks. Click [here](#orchestrator-workflow--o) to see orchestrator workflow |
+| `-p`           | Persona         | Planner - creates roadmaps, waits for approval.                                                                   | `-p describe your plan`                                                                                                                  |
+| `-c`           | Persona         | Coder - writes production code.                                                                                   | After agreeing on a plan.                                                                                                                |
+| `-d`           | Persona         | Debugger - traces errors.                                                                                         | `-d describe the error`                                                                                                                  |
+| `-a`           | Persona         | Ask - read-only analysis.                                                                                         | Questions without code changes.                                                                                                          |
+| `-s`           | Persona/Memory  | Security - threat modeling, safety rating (0-10).                                                                 | Check for data leaks or credential risks.                                                                                                |
+| `-r`           | Persona/Memory  | Reviewer - code quality reviews (CRITICAL/HIGH/MEDIUM/LOW).                                                       | After code changes to check quality.                                                                                                     |
+| `-t`           | Persona/Memory  | Tester - test strategies and coverage analysis.                                                                   | Before feature completion.                                                                                                               |
+| `-clean`       | Utility         | Removes junk files and debug traces.                                                                              | Do clean up after debugging or testing.                                                                                                  |
+| `-context`     | Memory          | Scans git (status/diff/unpushed) → fills Section 1. Updates `project_memory.md`.                                  | When project context changes.                                                                                                            |
+| `-error`       | Memory          | Updates `error_memory.md` with bugs and fixes.                                                                    | Every debugging session.                                                                                                                 |
+| `-codebase`    | Memory          | Updates `codebase_map.md` with file descriptions.                                                                 | Before deployment.                                                                                                                       |
+| `-init`        | Utility         | Initializes `workspace.json`.                                                                                     | First-time setup.                                                                                                                        |
+| `-archive`     | Utility         | Moves old entries to archive files.                                                                               | When memory files get too large.                                                                                                         |
+| `-obsidian`    | Utility         | Mirrors `<template_name>/` → `<vault>/<project_name>/<template_name>/`.                                           | Sync workflow logs to Obsidian.                                                                                                          |
+| `-update`      | Utility         | Fetches this current repository for newest updates of the templates while preserving logs and workspace identity. | Keep your workflow templates current with the upstream repo.                                                                             |
 
 ### Why Manual Triggers Instead of Auto-Updates?
 

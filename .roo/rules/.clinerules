@@ -22,21 +22,22 @@
 
 ## Manual Sync Entry Rule (Flag-Triggered)
 - Auto-updates disabled. Update timestamps on every flagged prompt. Scan/analyze/update local tracking ONLY when user commands via flags:
-  - `-init`: Read `workspace.json`. If uninitialized → prompt name, set fields, write back. First-time or re-init only.
+  - `-init`: Read `workspace.json`. If uninitialized → prompt name, scan project root for `AGENTS.md`/`CLAUDE.md`, read content for `<folder>/rules/` path, extract parent folder as `template_name`. One match → auto-set. Multiple → ASK user. None → prompt entry. Set fields, write back. First-time or re-init only.
   - `-context`: Scan git (status/diff/unpushed) → fill Section 1. Update `project_memory.md` timestamp.
   - `-error`: Scan debugging traces + update `error_memory.md` with timestamp.
   - `-codebase`: Inspect structure + update `codebase_map.md` with timestamp. BAN document gitignored files.
   - `-setup`: Sequential exec of `-init`, `-context`, `-codebase`, `-error`. Sync all timestamps.
   - `-archive`: Scan 5 eligible files. Archive oldest when section >10 entries. Log `[ARCHIVAL]`.
-  - `-obsidian`: Mirror template root 1:1 into `<vault>/<project_name>/`. Resolve vault path from `project_memory.md` (§1 Recent Changes) or ASK user. BAN guess path. Excludes: `node_modules/`, `.git/`.
+  - `-obsidian`: Mirror `<template_name>/` 1:1 → `<vault>/<project_name>/<template_name>/` + write `LINKS.md` index. Read `template_name` from `workspace.json`. Resolve vault root from `project_memory.md` (§1) or ASK user. BAN guess path. Excludes: `node_modules/`, `.git/`.
   - `-update`: Fetch `https://github.com/worriee/uveworkflow` (ONLY source). Clone shallow → detect all templates → backup → overwrite rules+skills → preserve memory/archives/workspace identity → flag survival check → version sync. BAN other repos.
 - Strict Adherence: No flags = assume existing memory unchanged.
 
 ## OBSIDIAN SYNC (`-obsidian`)
 - Trigger: `-obsidian` → Mandatory Obsidian Vault Sync. No skips, no partial copies.
 - Precondition: Read `workspace.json` FIRST. If uninitialized → HALT, demand `-init`. BAN proceed uninitialized.
-- Vault Path: MUST NOT guess. Order: 1) Read from `project_memory.md` (§1 Recent Changes) 2) If missing → ASK, persist (LIFO) 3) Use exact `project_name` (spaces preserved).
-- Scope: Mirror root 1:1: `rules/`, `memory/`, `archives/`, `skills/`, `workspace.json`, `AGENTS.md`, configs. BAN copy `node_modules/`, `.git/`.
+- Vault Path: MUST NOT guess. Order: 1) Read vault root from `project_memory.md` (§1) 2) If missing → ASK, persist (LIFO) 3) Destination: `<vault_root>/<project_name>/<template_name>/`.
+- Scope: Mirror `<template_name>/` 1:1 → `<vault_root>/<project_name>/<template_name>/`. BAN copy `node_modules/`, `.git/`.
+- Links: After mirror, write `LINKS.md` at `<vault_root>/<project_name>/<template_name>/LINKS.md`. List `memory/`, `rules/`, `archives/`, `skills/` as `[[wiki links]]`. Overwrite each sync.
 - Overwrite: Unconditional. Latest wins. BAN skip/rename/merge/deduplicate.
 - Verification: List all copied files to user before ending.
 - Delegation: STRICT. Subagent executes; main context gets summary only.
