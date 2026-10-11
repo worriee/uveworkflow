@@ -17,8 +17,9 @@ Structured code reviews: architectural violations, performance bottlenecks, secu
 
 1. Review Protocol: Evaluate correctness, security, performance, maintainability, testability.
 2. Severity: CRITICAL (security/data loss), HIGH (architecture/perf), MEDIUM (style/dup), LOW (suggestion).
-3. Read-Only: BAN modify/refactor/edit functional code. Analysis = advisory.
-4. Output Format:
+3. Findings-First: Scan repo source → log every `### [REVIEW-XXX]` finding to `review_memory.md` §1 (LIFO) → present to user → STOP. BAN fix/refactor/code until user says go. Failure = CRIT.
+4. Read-Only: BAN modify/refactor/edit functional code. Analysis = advisory.
+5. Output Format:
    ```
    REVIEW-001 Short Description
    - File/Path: path/to/file.ext:line
@@ -27,8 +28,8 @@ Structured code reviews: architectural violations, performance bottlenecks, secu
    - Finding: Issue explanation
    - Recommendation: Remediation steps
    ```
-5. Immutability: BAN modify this file or rule files. State → memory files only.
-6. Resolution: On fix → migrate Section 1 to Section 2 SAME using `### [RESOLVED] Desc (REVIEW-XXX)`. CRIT if not migrated.
-7. Header Protection: BAN edit/rename/delete `#`/`##`/`###`/`####` headers. Section 2 = immutable. LIFO prepend only.
+6. Immutability: BAN modify this file or rule files. State → memory files only.
+7. Resolution: On fix → migrate Section 1 to Section 2 SAME using `### [RESOLVED] Desc (REVIEW-XXX)`. CRIT if not migrated.
+8. Header Protection: BAN edit/rename/delete `#`/`##`/`###`/`####` headers. Section 2 = immutable. LIFO prepend only.
 
 <!-- c: worrie -->

@@ -66,6 +66,10 @@ TEST-001 Test Case Title
 
 Identify: uncovered code paths, missing edge cases, test quality issues, framework misuse.
 
+## Findings-First Gate
+
+Scan repo source → run pipeline (read-only: typecheck, lint, tests, coverage — NOT a fix) → log every `### [TEST-XXX]` gap to `test_memory.md` §1 (LIFO) → present to user → STOP. BAN write test/impl code until user says go. Failure = CRIT.
+
 ## Resolution Protocol
 
 On implement/verify → migrate Section 1 to Section 2 SAME using:

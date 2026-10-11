@@ -46,9 +46,9 @@
 - Trigger: `-update` → Mandatory Template Update. Bootstrap: still execute if user describes intent.
 - Source: EXCLUSIVELY `https://github.com/worriee/uveworkflow`. BAN other repos. Any deviation = CRIT.
 - Fetch: `git clone --depth 1` to temp dir. Clone fail → HALT, zero changes.
-- Detect: Identify all templates (`.clinerules/`, `.kilo/`, `.pi/`, `.roo/`, `.clinerules/`). Update ALL.
+- Detect: Identify all templates (`.opencode/`, `.kilo/`, `.pi/`, `.roo/`, `.clinerules/`, `.claude/`). Update ALL.
 - Backup: Snapshot local rules to temp dir before overwriting.
-- Overwrite: Per template: `rules/.clinerules`, `rules/system_instructions.md` (flat for Cline), `skills/*/SKILL.md`.
+- Overwrite: Per template: `rules/.clinerules`, `rules/system_instructions.md` (flat for Cline), `skills/*/SKILL.md` (Claude: `rules/core-rules.md`, `CLAUDE.md`).
 - Preserve: BAN modify `project_memory.md`, `memory/`, `archives/`, `workspace.json` identity fields.
 - Flag Survival: After overwrite, check `-obsidian`/`-update` sections. If missing → re-insert from backup. Flags must never self-delete.
 - Version Sync: Compare `template_version` upstream vs local. If newer → update ONLY `template_version`. Preserve all other fields.
@@ -70,8 +70,15 @@ Match operational mindset to skill based on flag:
 7. `-r`: Reviewer → `skills/reviewer/SKILL.md`. Code quality, architectural compliance, best practices. On fix → migrate to Section 2 SAME using `### [RESOLVED] Short Desc (REVIEW-XXX)`.
 8. `-t`: Tester → `skills/tester/SKILL.md`. Test strategies, coverage gaps. Enforce pipeline: typecheck → lint → unit → E2E → coverage. Discover tools via web search based on project stack. Gates: 90% critical, 80% utility, 70% UI. On resolve → migrate to Section 2 SAME using `### [RESOLVED] Short Desc (TEST-XXX)`. Breaking pipeline/skipping gates = CRIT.
 
+## FINDINGS GATE (`-d`, `-r`, `-t`, `-s`)
+- Flow: Scan repo source → log findings FIRST → present to user → STOP. Running tests/typecheck/lint/coverage = allowed. Fixing = banned.
+- Scan Scope: Source files only. Skip `node_modules/`, `.git/`, build artifacts, `.gitignore`d files.
+- Log Target: `-d` → `error_memory.md` (`### [ERR-XXX]`), `-r` → `review_memory.md` (`### [REVIEW-XXX]`), `-s` → `security_memory.md` (`### [SEC-XXX]`), `-t` → `test_memory.md` (`### [TEST-XXX]`). LIFO prepend, Section 1.
+- BAN fix, code, refactor, patch, or write test/impl files before user approval. Failure = CRIT.
+- Present findings, ask for approval, then HALT. Resume only on explicit user go.
+
 ## Strict Rule Modification Constraints
-- Core Rule Mutation Ban: BAN edit/delete `.clinerules/.clinerules`, `system_instructions.md`, `skills/*/SKILL.md`. Immutable.
+- Core Rule Mutation Ban: BAN edit/delete `.clinerules/.clinerules`, `system_instructions.md`, `skills/*/SKILL.md` (Claude: `rules/core-rules.md`, `CLAUDE.md`). Immutable.
 - Authorized Scope: Only edit dynamic memory layers (`project_memory.md`, `error_memory.md`, `codebase_map.md`, `implementation_memory.md`, `security_memory.md`, `review_memory.md`, `test_memory.md`).
 - File Creation Ban: BAN create files in `.clinerules/rules/` or `.clinerules/memory/`. Only pre-defined configs + dynamic layers permitted.
 

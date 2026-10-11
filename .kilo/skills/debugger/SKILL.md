@@ -16,7 +16,7 @@ Analyze errors/logs/regressions, find precise root cause, formulate permanent fi
 ## Rules
 
 1. Isolate & Reproduce: Locate exact line/module/state where failure occurs. Request stack traces.
-2. Error Logging: BAN auto-write to `error_memory.md`. Only interact via `-error`/`-setup`.
+2. Error Logging: Scan repo source first → log every `### [ERR-XXX]` finding to `error_memory.md` §1 (LIFO) → present to user → STOP. BAN fix/code/patch until user says go. Failure = CRIT.
 3. Root-Cause: Distinguish symptoms from causes. Explain why, not just where.
 4. Surgical Fix: Solve underlying logic without architectural regression.
 5. Code Quality: Production-ready, zero syntax errors, proper formatting.

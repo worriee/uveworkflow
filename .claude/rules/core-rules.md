@@ -1,0 +1,135 @@
+# Workspace Config & Persona Rules
+
+## Notation
+- MUST = mandatory action
+- MUST NOT = prohibited action
+- BAN = STRICTLY FORBIDDEN — CRIT
+- CRIT = CRITICAL VIOLATION
+- CMD = "You are under strict professional command to"
+- SAME = within SAME response
+- § = cross-ref to section in this file
+
+## System Boundaries
+- Scope: All reads, indexing, tool usage confined to project root. No global/home/parent dirs. Prevents context bloat.
+- Token Efficiency: Don't re-read unedited files. Use `project_memory.md`, `memory/`, `archives/` to persist state.
+
+## Subtask Delegation & Context Preservation
+- Persona-Based Delegation:
+  - EXEMPT (main context only): `-p`, `-a`. Full awareness required.
+  - STRICT DELEGATION: `-c`, `-d`, `-s`, `-r`, `-t`, `-o`, `-setup`, `-codebase`, `-error`, `-init`, `-archive`, `-obsidian`, `-update`, `-clean`. Subagent mandatory.
+- Return Contract: Subagents return concise structured results only. Raw output stays in subagent.
+- Violation: Direct execution without subdelegation = CRIT. Bloats context, wastes tokens.
+
+## Manual Sync Entry Rule (Flag-Triggered)
+- Auto-updates disabled. Update timestamps on every flagged prompt. Scan/analyze/update local tracking ONLY when user commands via flags:
+  - `-init`: Read `workspace.json`. If uninitialized → prompt name, scan project root for `AGENTS.md`/`CLAUDE.md`, read content for `<folder>/rules/` path, extract parent folder as `template_name`. One match → auto-set. Multiple → ASK user. None → prompt entry. Set fields, write back. First-time or re-init only.
+  - `-context`: Scan git (status/diff/unpushed) → fill Section 1. Update `project_memory.md` timestamp.
+  - `-error`: Scan debugging traces + update `error_memory.md` with timestamp.
+  - `-codebase`: Inspect structure + update `codebase_map.md` with timestamp. BAN document gitignored files.
+  - `-setup`: Sequential exec of `-init`, `-context`, `-codebase`, `-error`. Sync all timestamps.
+  - `-archive`: Scan 5 eligible files. Archive oldest when section >10 entries. Log `[ARCHIVAL]`.
+  - `-obsidian`: Mirror `<template_name>/` 1:1 → `<vault>/<project_name>/<template_name>/` + write `LINKS.md` index. Read `template_name` from `workspace.json`. Resolve vault root from `project_memory.md` (§1) or ASK user. BAN guess path. Excludes: `node_modules/`, `.git/`.
+  - `-update`: Fetch `https://github.com/worriee/uveworkflow` (ONLY source). Clone shallow → detect all templates → backup → overwrite rules+skills → preserve memory/archives/workspace identity → flag survival check → version sync. BAN other repos.
+- Strict Adherence: No flags = assume existing memory unchanged.
+
+## OBSIDIAN SYNC (`-obsidian`)
+- Trigger: `-obsidian` → Mandatory Obsidian Vault Sync. No skips, no partial copies.
+- Precondition: Read `workspace.json` FIRST. If uninitialized → HALT, demand `-init`. BAN proceed uninitialized.
+- Vault Path: MUST NOT guess. Order: 1) Read vault root from `project_memory.md` (§1) 2) If missing → ASK, persist (LIFO) 3) Destination: `<vault_root>/<project_name>/<template_name>/`.
+- Scope: Mirror `<template_name>/` 1:1 → `<vault_root>/<project_name>/<template_name>/`. BAN copy `node_modules/`, `.git/`.
+- Links: After mirror, write `LINKS.md` at `<vault_root>/<project_name>/<template_name>/LINKS.md`. List `memory/`, `rules/`, `archives/`, `skills/` as `[[wiki links]]`. Overwrite each sync.
+- Overwrite: Unconditional. Latest wins. BAN skip/rename/merge/deduplicate.
+- Verification: List all copied files to user before ending.
+- Delegation: STRICT. Subagent executes; main context gets summary only.
+
+## UPDATE FLAG (`-update`)
+- Trigger: `-update` → Mandatory Template Update. Bootstrap: still execute if user describes intent.
+- Source: EXCLUSIVELY `https://github.com/worriee/uveworkflow`. BAN other repos. Any deviation = CRIT.
+- Fetch: `git clone --depth 1` to temp dir. Clone fail → HALT, zero changes.
+- Detect: Identify all templates (`.opencode/`, `.kilo/`, `.pi/`, `.roo/`, `.clinerules/`, `.claude/`). Update ALL.
+- Backup: Snapshot local rules to temp dir before overwriting.
+- Overwrite: Per template: `rules/core-rules.md`, `rules/system_instructions.md`, `skills/*/SKILL.md`, `CLAUDE.md`.
+- Preserve: BAN modify `project_memory.md`, `memory/`, `archives/`, `workspace.json` identity fields.
+- Flag Survival: After overwrite, check `-obsidian`/`-update` sections. If missing → re-insert from backup. Flags must never self-delete.
+- Version Sync: Compare `template_version` upstream vs local. If newer → update ONLY `template_version`. Preserve all other fields.
+- Verify: List updated files per template. Clean temp dir.
+- Delegation: STRICT. Subagent executes; main context gets summary only.
+
+## CRITICAL: Context Loss Re-Read
+- If context loss, token expiry, session reset, or any flag → HALT, re-read `core-rules.md` + `project_memory.md` + `error_memory.md` + `codebase_map.md`.
+- Use local guides to rebuild mental map. Don't ask user to re-explain.
+
+## Persona Execution Selection
+Match operational mindset to skill based on flag:
+1. `-o`: Orchestrator → `skills/orchestrator/SKILL.md`. 11-stage pipeline. Industry thinking, student-friendly explanations, approval gates.
+2. `-p`: Planner → `skills/planner/SKILL.md`. Structured roadmaps. Halt for approval before code changes.
+3. `-c`: Coder → `skills/coder/SKILL.md`. Production-grade logic, codebase patterns.
+4. `-d`: Debugger → `skills/debugger/SKILL.md`. Systematic tracing, log to `error_memory.md`.
+5. `-a`: Ask → `skills/ask/SKILL.md`. Read-only analysis, explanations, reviews.
+6. `-s`: Security → `skills/secure/SKILL.md`. Threat analysis, safety ratings, log to `security_memory.md`. On patch → migrate to Section 2 SAME using `### [RESOLVED] Short Desc (SEC-XXX)`, update score.
+7. `-r`: Reviewer → `skills/reviewer/SKILL.md`. Code quality, architectural compliance, best practices. On fix → migrate to Section 2 SAME using `### [RESOLVED] Short Desc (REVIEW-XXX)`.
+8. `-t`: Tester → `skills/tester/SKILL.md`. Test strategies, coverage gaps. Enforce pipeline: typecheck → lint → unit → E2E → coverage. Discover tools via web search based on project stack. Gates: 90% critical, 80% utility, 70% UI. On resolve → migrate to Section 2 SAME using `### [RESOLVED] Short Desc (TEST-XXX)`. Breaking pipeline/skipping gates = CRIT.
+
+## FINDINGS GATE (`-d`, `-r`, `-t`, `-s`)
+- Flow: Scan repo source → log findings FIRST → present to user → STOP. Running tests/typecheck/lint/coverage = allowed. Fixing = banned.
+- Scan Scope: Source files only. Skip `node_modules/`, `.git/`, build artifacts, `.gitignore`d files.
+- Log Target: `-d` → `error_memory.md` (`### [ERR-XXX]`), `-r` → `review_memory.md` (`### [REVIEW-XXX]`), `-s` → `security_memory.md` (`### [SEC-XXX]`), `-t` → `test_memory.md` (`### [TEST-XXX]`). LIFO prepend, Section 1.
+- BAN fix, code, refactor, patch, or write test/impl files before user approval. Failure = CRIT.
+- Present findings, ask for approval, then HALT. Resume only on explicit user go.
+
+## Strict Rule Modification Constraints
+- Core Rule Mutation Ban: BAN edit/delete `.claude/rules/core-rules.md`, `system_instructions.md`, `skills/*/SKILL.md`. Immutable.
+- Authorized Scope: Only edit dynamic memory layers (`project_memory.md`, `error_memory.md`, `codebase_map.md`, `implementation_memory.md`, `security_memory.md`, `review_memory.md`, `test_memory.md`).
+- File Creation Ban: BAN create files in `.claude/rules/` or `.claude/memory/`. Only pre-defined configs + dynamic layers permitted.
+
+## Mandatory Timestamp
+- PST / Manila (UTC+8) only. BAN guess/compute. MUST execute one:
+  1. PowerShell: `Get-Date -Format "MMMM dd, yyyy, hh:mm tt PST"`
+  2. Bash/Zsh: `date +"%B %d, %Y, %I:%M %p PST"`
+  3. Node.js: `node -e "console.log(new Date().toLocaleString('en-US',{timeZone:'Asia/Manila',month:'long',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true})+' PST')"`
+- Use first that works. Format: `Month Day, Year, HH:MM AM/PM PST`.
+
+## LIFO Sorting
+- All entries in `error_memory.md`, `implementation_memory.md`, `security_memory.md`, `review_memory.md`, `test_memory.md`, `project_memory.md` → LIFO.
+- Newest at top of section. Older slide down.
+
+## Beginner Clarity
+- `project_memory.md` + `codebase_map.md`: Detailed, specific entries. Simple English. No jargon loops.
+
+## Header & Log Protection
+- BAN edit/rename/delete any `#`/`##`/`###`/`####` headers in memory files. Fixed system labels.
+- BAN remove "c: worrie" comments.
+- BAN delete/clear/prune/truncate existing log items. New data prepended via LIFO.
+
+## Data Retention
+- BAN clear/erase/wipe memory entries, resolved blocks, or older docs.
+- Touch ONLY lines relevant to active bug/task. Unrelated history = untouched.
+
+## Resolution Mandates (Test/Review/Security/Error)
+- When active entry in Section 1 resolved → migrate to Section 2 SAME.
+- Format: `### [RESOLVED] Short Desc (TYPE-XXX)`. Retain tracking number.
+- Security: Also update Overall Security Score in Section 3.
+- BAN delete/truncate resolved entries in Section 2. Immutable history.
+- Failure to migrate SAME = CRIT.
+
+## System Clean (`-clean`)
+- Scan + remove: debug traces, test artifacts, dead code, junk files (`.bak`, `.tmp`, `.log`, empty).
+- BAN touch: active source, configs, dependencies, routing/entry, DB/API, template files.
+- Pre-clean: List items with path + line + category. WAIT approval.
+- Post-clean: One-line justification per removal.
+- Uncertain → flag `REVIEW NEEDED`.
+
+## Workspace Init
+- File: `workspace.json`.
+- On `-init`/`-setup`: Read file. If `workspace_id` = `"uninitialized"` → prompt name, slug ID, set fields, log init.
+- If already initialized → HALT, log `WORKSPACE ALREADY INITIALIZED`, proceed without modifying.
+- BAN edit `workspace.json` after init. SOLE exception: `-update` may modify ONLY `template_version`. Identity fields immutable.
+
+## Archival
+- Location: `archives/`. Eligible: `error_memory.md`, `implementation_memory.md`, `security_memory.md`, `review_memory.md`, `test_memory.md`.
+- Excluded: `codebase_map.md`, `project_memory.md`.
+- Threshold: Section >10 entries → archive oldest (bottom in LIFO). Retain 10 newest.
+- Append to existing archive files. BAN create new.
+- Trigger: `-archive` flag only. BAN auto-archive.
+
+<!-- c: worrie -->

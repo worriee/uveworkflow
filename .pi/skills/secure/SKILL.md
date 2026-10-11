@@ -19,7 +19,7 @@ Inspect for data leaks, structural flaws, credential exposure, injection points.
 2. Threat Modeling: Identify attack surfaces. Explain exploit paths.
 3. Security Rating: Score 0-10 (0=exposed, 10=hardened).
 4. Remediation: Step-by-step production-grade patch approach.
-5. Memory Sync: Write to `security_memory.md` using LIFO format.
+5. Memory Sync: Scan repo source → log every `### [SEC-XXX]` finding to `security_memory.md` §1 (LIFO) → present to user → STOP. BAN patch/code/remediate until user says go. Failure = CRIT.
 6. Resolution: On patch → migrate Section 1 to Section 2 SAME using `### [RESOLVED] Desc (SEC-XXX)`. Update score Section 3. CRIT if not migrated.
 7. Header Protection: BAN edit/rename/delete `#`/`##`/`###`/`####` headers. Section 2 = immutable. LIFO prepend only.
 

@@ -1,7 +1,7 @@
 # Ultimate Vibe Experience (UVE Coding Strat)
 
 <p align="center">
-  <img src="https://badgen.net/badge/Template%20Version/V5.0/blue" height="30" alt="Template V5.5"/>
+  <img src="https://badgen.net/badge/Template%20Version/V6.0/blue" height="30" alt="Template V5.5"/>
   <img src="https://badgen.net/badge/AI%20Personas/8/red" height="30" alt="AI Personas 8"/>
   <img src="https://badgen.net/badge/Memory%20Layers/7/purple" height="30" alt ="Memory Layers 7"/>
 </p>
@@ -17,15 +17,43 @@
 
 ## Quick Links
 
-[What is this?](#what-is-this-for) | [Problem We Solve](#the-problem-we-solve) | [Memory Layers](#memory-layers) | [Folder Structure](#folder-structure-on-opencode-template) | [Persona Triggers](#prompt-triggers-manual-commands) | [Installation](#installation-guide) | [FAQ](#faq) | [Usages](#own-usages)
+[What's this for?](#whats-this-for) | [Problem We Solve](#the-problem-we-solve) | [Memory Layers](#memory-layers) | [Folder Structure](#folder-structure-on-opencode-template) | [How to Use?](#how-to-use-persona-triggers) | [Installation](#installation-guide) | [FAQ](#faq) | [Usages](#own-usages)
 
 ---
 
 ## Recent Updates
 
-1. **Obsidian Sync v5.5 — smarter + zero-hassle:** `-obsidian` now syncs only your active template (`template_name` auto-detected from `AGENTS.md`/`CLAUDE.md` on `-init`, with smart fallback when multiple rules files are found) and auto-writes **`LINKS.md`** — a ready-made Obsidian index with `[[wiki links]]` to every `memory/`, `rules/`, `archives/`, and `skills/` file. Open your vault and get instant graph-view navigation to every log — no hunting, no clutter. Version bumped to **5.5**.
+1. **Claude Code Template — full parity in 25 files:** The workflow now runs identically on Claude Code via a native `.claude/` template. All 8 personas, all 5 workflow flags, the full memory + archive + archive-threshold system — nothing dropped. Because Claude Code speaks the same Agent Skills open standard as OpenCode, every `SKILL.md` ported byte-for-byte; `CLAUDE.md` and `rules/*.md` auto-load, so zero manual wiring. Flags still work as `-c`, `-r`, `-d` (no collision with Claude's built-in `/init`), and every persona additionally resolves as a native slash skill (`/coder`, `/reviewer`, `/tester`). Version bumped to **6.0**.
 
-2. **Template Compression (v5.0):** Full template compressed for token savings. Same rules, shorter words.
+2. **Obsidian Sync v5.5 — smarter + zero-hassle:** `-obsidian` now syncs only your active template (`template_name` auto-detected from `AGENTS.md`/`CLAUDE.md` on `-init`, with smart fallback when multiple rules files are found) and auto-writes **`LINKS.md`** — a ready-made Obsidian index with `[[wiki links]]` to every `memory/`, `rules/`, `archives/`, and `skills/` file. Open your vault and get instant graph-view navigation to every log — no hunting, no clutter. Version bumped to **5.5**.
+
+3. **Template Compression (v5.0 to up):** Full template compressed for token savings. Same behavior, more direct approach. [See the numbers](#template-compression-64-smaller-same-rules).
+
+---
+
+4. Added `-obsidian` and `-update` flag prompt. For more details check the [how to use](#how-to-use-persona-triggers) section.
+
+---
+
+5. **MUST READ IF U ARE FROM OLD VERSION IF YOU'RE NEW THEN IGNORE:** If you are from old version of this template (4.0 and below) please go to this path `[anytemplate]/rules/.clinerules` then **copy** the entire section of update flag prompt from **line 40-52**. After that **paste** it to your ai agent then **include `-update` in your prompt**. Like this format:
+
+```
+[PASTED LINES]
+
+-update
+```
+
+After that your workspace template is updated... well done! You only do this once then run `-update` in the future.
+
+---
+
+6. **`project_memory.md` restructured:** Replaced milestone/sprint/backlog tracker with compaction-style layout (inspired by opencode compaction). Sections now: Recent Changes (git diff visual with +/− marks, new file tree, push counts), Objective, Important Details (vault path), Completed, Blocked, Next Move, Relevant Files. Updated all connected references in `.clinerules` (flag definitions) and `orchestrator/SKILL.md`.
+
+---
+
+## Template Compression (64% Smaller, Same Behavior, Less tokens spent)
+
+>From v5.0 to current
 
 ### Rules & Skills
 
@@ -83,27 +111,7 @@
 
 ---
 
-3. Added `-obsidian` and `-update` flag prompt. For more details check the [persona triggers](#prompt-triggers-manual-commands) in the last row.
-
----
-
-4. **MUST READ IF U ARE FROM OLD VERSION IF YOU'RE NEW THEN IGNORE:** If you are from old version of this template (4.0 and below) please go to this path `[anytemplate]/rules/.clinerules` then **copy** the entire section of update flag prompt from **line 40-52**. After that **paste** it to your ai agent then **include `-update` in your prompt**. Like this format:
-
-```
-[PASTED LINES]
-
--update
-```
-
-After that your workspace template is updated... well done! You only do this once then run `-update` in the future.
-
----
-
-5. **`project_memory.md` restructured:** Replaced milestone/sprint/backlog tracker with compaction-style layout (inspired by opencode compaction). Sections now: Recent Changes (git diff visual with +/− marks, new file tree, push counts), Objective, Important Details (vault path), Completed, Blocked, Next Move, Relevant Files. Updated all connected references in `.clinerules` (flag definitions) and `orchestrator/SKILL.md`.
-
----
-
-## What is this for?
+## What's this for?
 
 AI coding tools forget your project fast. They read too many files, fill up context, and lose track of what they built last session.
 
@@ -189,13 +197,13 @@ Your-Project-Root/
     └── opencode.json                   OpenCode configuration pointing to instruction files.
 ```
 
-_All templates share the same internal structure but use their respective root folder names for path references._
+_All templates (aside .clinerules) share the same internal structure but use their respective root folder names for path references._
 
 ---
 
-## Prompt Triggers (Manual Commands)
+## How to Use? (Persona Triggers)
 
-Use these flag commands:
+Use these triggers depending on the situations:
 
 | Command / Flag | Type            | What it does                                                                                                      | Use Case                                                                                                                                 |
 | :------------- | :-------------- | :---------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
@@ -265,6 +273,7 @@ git clone https://github.com/worriee/uveworkflow.git
 | Kilo Code           | `.kilo`       |
 | OpenCode            | `.opencode`   |
 | Pi                  | `.pi`         |
+| Claude Code         | `.claude`     |
 
 _\*this will work in any platforms if you can make the agent read these folders_
 
@@ -281,11 +290,12 @@ your-project/
 
 ### Step 4: Move Root Files
 
-| Tool     | Files to Move                   |
-| :------- | :------------------------------ |
-| OpenCode | `AGENTS.md` and `opencode.json` |
-| Kilo     | `AGENTS.md` and `kilo.json`     |
-| Pi       | `AGENTS.md`                     |
+| Tool       | Files to Move                   |
+| :--------- | :------------------------------ |
+| OpenCode   | `AGENTS.md` and `opencode.json` |
+| Kilo       | `AGENTS.md` and `kilo.json`     |
+| Pi         | `AGENTS.md`                     |
+| Claude Code| `CLAUDE.md`                     |
 
 ```
 your-project/

@@ -27,6 +27,7 @@
 - Security (`-s`): Vulnerability scans, threat assessments, security architecture. BAN edit source code.
 - Reviewer (`-r`): Code quality reviews, architectural compliance, best practices. Severity-classified findings.
 - Tester (`-t`): Test strategies, coverage gaps. Pipeline: typecheck → lint → unit → E2E → coverage. Discover tools via web search based on project stack. Gates: 90% critical, 80% utility, 70% UI.
+- Findings Gate (`-d`, `-r`, `-t`, `-s`): Scan repo source → log findings to memory FIRST → present to user → STOP. Running tests/typecheck/lint/coverage = allowed. Fixing/code = banned before approval. Failure = CRIT.
 
 ## 3. Manual Memory Sync & Trigger Rules
 

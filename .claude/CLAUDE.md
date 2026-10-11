@@ -1,0 +1,30 @@
+# Claude Code Agent Workspace Configuration
+
+## External Instruction Loading
+
+CRITICAL: The core operational guardrails, boundaries, and memory tracking systems for this workspace are managed inside the rules sub-directory. Always re-read these files whenever you experience token loss, context window loss or any related causes so that you can retain the state of the project immediately. The environment is configured to read instructions from the following tracking layers:
+
+- Core Rules & Flag Guidelines: `.claude/rules/core-rules.md`
+- Context Window & Boundaries: `.claude/rules/system_instructions.md`
+
+## Skill Execution Modes
+
+The specialized operational personas are modularly isolated as native Agent Skills inside the skills folder. The system dynamically discovers and lazy-loads these skills on-demand when matching your single-letter command flags or direct task intents:
+
+- **Orchestrator Mode (`-o`)**: `.claude/skills/orchestrator/SKILL.md`
+- **Planner Mode (`-p`)**: `.claude/skills/planner/SKILL.md`
+- **Coder Mode (`-c`)**: `.claude/skills/coder/SKILL.md`
+- **Debugger Mode (`-d`)**: `.claude/skills/debugger/SKILL.md`
+- **Ask Mode (`-a`)**: `.claude/skills/ask/SKILL.md`
+- **Security Analyst Mode (`-s`)**: `.claude/skills/secure/SKILL.md`
+- **Reviewer Mode (`-r`)**: `.claude/skills/reviewer/SKILL.md`
+- **Tester Mode (`-t`)**: `.claude/skills/tester/SKILL.md`
+
+## Memory File Locations
+
+All persistent state tracking is centralized in two locations:
+
+- **Configuration Rules**: `.claude/rules/` — Core behavioral constraints and task tracker
+- **Specialized Memory Logs**: `.claude/memory/` — Error logs, codebase maps, implementation plans, security analysis, code reviews, and test strategies
+
+<!-- c: worrie -->
