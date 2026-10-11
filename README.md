@@ -1,23 +1,20 @@
 # Ultimate Vibe Experience (UVE Coding Strat)
 
 <p align="center">
-  <img src="https://badgen.net/badge/Template%20Version/V6.0/blue" height="30" alt="Template V5.5"/>
+  <img src="https://badgen.net/badge/Template%20Version/V6.0/blue" height="30" alt="Template V6.0"/>
   <img src="https://badgen.net/badge/AI%20Personas/8/red" height="30" alt="AI Personas 8"/>
   <img src="https://badgen.net/badge/Memory%20Layers/7/purple" height="30" alt ="Memory Layers 7"/>
 </p>
 
 <p align="center">
-  <strong>A workflow template that keeps your vibe consistent across every session.</strong>
-</p>
-<p align="center">
-  <strong>You build. We track.</strong>
+  <strong>Want this kind of </strong> <del>vibing</del> <strong>coding experience? (Y/n):</strong>
 </p>
 
 ---
 
 ## Quick Links
 
-[What's this for?](#whats-this-for) | [Problem We Solve](#the-problem-we-solve) | [Memory Layers](#memory-layers) | [Folder Structure](#folder-structure-on-opencode-template) | [How to Use?](#how-to-use-persona-triggers) | [Installation](#installation-guide) | [FAQ](#faq) | [Usages](#own-usages)
+[What's this for?](#whats-this-for) | [How to Use?](#how-to-use-persona-triggers) | [Problem We Solve](#the-problem-we-solve) | [Memory Layers](#memory-layers) | [Folder Structure](#folder-structure-on-opencode-template) | [Installation](#installation-guide) | [FAQ](#faq) | [Usages](#own-usages) | [Template Compression](#template-compression-64-leaner-same-behavior-less-tokens-spent)
 
 ---
 
@@ -25,17 +22,17 @@
 
 1. **Claude Code Template — full parity in 25 files:** The workflow now runs identically on Claude Code via a native `.claude/` template. All 8 personas, all 5 workflow flags, the full memory + archive + archive-threshold system — nothing dropped. Because Claude Code speaks the same Agent Skills open standard as OpenCode, every `SKILL.md` ported byte-for-byte; `CLAUDE.md` and `rules/*.md` auto-load, so zero manual wiring. Flags still work as `-c`, `-r`, `-d` (no collision with Claude's built-in `/init`), and every persona additionally resolves as a native slash skill (`/coder`, `/reviewer`, `/tester`). Version bumped to **6.0**.
 
+---
+
 2. **Obsidian Sync v5.5 — smarter + zero-hassle:** `-obsidian` now syncs only your active template (`template_name` auto-detected from `AGENTS.md`/`CLAUDE.md` on `-init`, with smart fallback when multiple rules files are found) and auto-writes **`LINKS.md`** — a ready-made Obsidian index with `[[wiki links]]` to every `memory/`, `rules/`, `archives/`, and `skills/` file. Open your vault and get instant graph-view navigation to every log — no hunting, no clutter. Version bumped to **5.5**.
 
-3. **Template Compression (v5.0 to up):** Full template compressed for token savings. Same behavior, more direct approach. [See the numbers](#template-compression-64-smaller-same-rules).
+---
+
+3. Added `-obsidian` and `-update` flag prompt. For more details check the [how to use](#how-to-use-persona-triggers) section.
 
 ---
 
-4. Added `-obsidian` and `-update` flag prompt. For more details check the [how to use](#how-to-use-persona-triggers) section.
-
----
-
-5. **MUST READ IF U ARE FROM OLD VERSION IF YOU'RE NEW THEN IGNORE:** If you are from old version of this template (4.0 and below) please go to this path `[anytemplate]/rules/.clinerules` then **copy** the entire section of update flag prompt from **line 40-52**. After that **paste** it to your ai agent then **include `-update` in your prompt**. Like this format:
+4. **MUST READ IF U ARE FROM OLD VERSION IF YOU'RE NEW THEN IGNORE:** If you are from old version of this template (4.0 and below) please go to this path `[anytemplate]/rules/.clinerules` then **copy** the entire section of update flag prompt from **line 40-52**. After that **paste** it to your ai agent then **include `-update` in your prompt**. Like this format:
 
 ```
 [PASTED LINES]
@@ -47,11 +44,11 @@ After that your workspace template is updated... well done! You only do this onc
 
 ---
 
-6. **`project_memory.md` restructured:** Replaced milestone/sprint/backlog tracker with compaction-style layout (inspired by opencode compaction). Sections now: Recent Changes (git diff visual with +/− marks, new file tree, push counts), Objective, Important Details (vault path), Completed, Blocked, Next Move, Relevant Files. Updated all connected references in `.clinerules` (flag definitions) and `orchestrator/SKILL.md`.
+5. **`project_memory.md` restructured:** Replaced milestone/sprint/backlog tracker with compaction-style layout (inspired by opencode compaction). Sections now: Recent Changes (git diff visual with +/− marks, new file tree, push counts), Objective, Important Details (vault path), Completed, Blocked, Next Move, Relevant Files. Updated all connected references in `.clinerules` (flag definitions) and `orchestrator/SKILL.md`.
 
 ---
 
-## Template Compression (64% Smaller, Same Behavior, Less tokens spent)
+## Template Compression (64% Leaner, Same Behavior, Less tokens spent)
 
 >From v5.0 to current
 
@@ -197,7 +194,7 @@ Your-Project-Root/
     └── opencode.json                   OpenCode configuration pointing to instruction files.
 ```
 
-_All templates (aside .clinerules) share the same internal structure but use their respective root folder names for path references._
+_All templates (except .clinerules) share the same internal structure but use their respective root folder names for path references._
 
 ---
 
