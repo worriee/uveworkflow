@@ -6,7 +6,6 @@
 
 ## 1. Recent Changes (Git)
 
-- **Vault Path**: [set after first `-obsidian`]
 - **Last Scan**: [Month Day, Year, HH:MM AM/PM PST]
 
 > `-context` scan: `git status` + `git diff` + `git log @{u}..HEAD`. LIFO, newest on top.
@@ -46,6 +45,8 @@ src/
 
 ## 3. Important Details
 
+- **Vault Root**: [set after first `-obsidian`]
+- **Backup Root**: [set after first `-obsidian`]
 - _constraints, gotchas, key decisions_
 
 ---

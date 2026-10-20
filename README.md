@@ -1,7 +1,7 @@
 # Ultimate Vibe Experience (UVE Coding Strat)
 
 <p align="center">
-  <img src="https://badgen.net/badge/Template%20Version/V6.0/blue" height="30" alt="Template V6.0"/>
+  <img src="https://badgen.net/badge/Template%20Version/V7.0/blue" height="30" alt="Template V7.0"/>
   <img src="https://badgen.net/badge/AI%20Personas/8/red" height="30" alt="AI Personas 8"/>
   <img src="https://badgen.net/badge/Memory%20Layers/7/purple" height="30" alt ="Memory Layers 7"/>
 </p>
@@ -14,43 +14,46 @@
 
 ## Quick Links
 
-[What's this for?](#whats-this-for) | [How to Use?](#how-to-use-persona-triggers) | [Problem We Solve](#the-problem-we-solve) | [Memory Layers](#memory-layers) | [Folder Structure](#folder-structure-on-opencode-template) | [Installation](#installation-guide) | [FAQ](#faq) | [Usages](#own-usages) | [Template Compression](#template-compression-64-leaner-same-behavior-less-tokens-spent)
+[What's this for?](#whats-this-for) | [How to Use?](#how-to-use-persona-triggers) | [Problem We Solve](#the-problem-we-solve) | [Memory Layers](#memory-layers) | [Folder Structure](#folder-structure-on-opencode-template) | [Installation](#installation-guide) | [FAQ](#faq) | [Usages](#own-usages) | [Template Compression](#template-compression-v50-baseline)
 
 ---
 
 ## Recent Updates
 
-1. **Claude Code Template — full parity in 25 files:** The workflow now runs identically on Claude Code via a native `.claude/` template. All 8 personas, all 5 workflow flags, the full memory + archive + archive-threshold system — nothing dropped. Because Claude Code speaks the same Agent Skills open standard as OpenCode, every `SKILL.md` ported byte-for-byte; `CLAUDE.md` and `rules/*.md` auto-load, so zero manual wiring. Flags still work as `-c`, `-r`, `-d` (no collision with Claude's built-in `/init`), and every persona additionally resolves as a native slash skill (`/coder`, `/reviewer`, `/tester`). Version bumped to **6.0**.
+<details>
+<summary>Show updates</summary>
+
+1. **v7.0 — one rules file, smarter backups:** `.clinerules` and `system_instructions.md` merged into a single `instructions.md` per template. Same rules, one place, no contradictions. `-obsidian` now asks for your vault paths once, stores them in `project_memory.md`, copies only changed files, and writes a graph hub note named after your project. Tone matching added.
 
 ---
 
-2. **Obsidian Sync v5.5 — smarter + zero-hassle:** `-obsidian` now syncs only your active template (`template_name` auto-detected from `AGENTS.md`/`CLAUDE.md` on `-init`, with smart fallback when multiple rules files are found) and auto-writes **`LINKS.md`** — a ready-made Obsidian index with `[[wiki links]]` to every `memory/`, `rules/`, `archives/`, and `skills/` file. Open your vault and get instant graph-view navigation to every log — no hunting, no clutter. Version bumped to **5.5**.
+2. **Claude Code template (6.0):** Added a native `.claude/` template so the workflow runs on Claude Code too. Same 8 personas, same flags, same memory system — nothing dropped.
 
 ---
 
-3. Added `-obsidian` and `-update` flag prompt. For more details check the [how to use](#how-to-use-persona-triggers) section.
+3. **Obsidian sync:** `-obsidian` turns your project logs into a graph-ready backup. The first run asks for two paths — your vault root and your backup root — and saves both in `project_memory.md`, editable by hand any time. Every run after that compares each file and copies only what changed, reports what it skipped, and asks before deleting anything. A hub note named after your project links every backup, so the project sits at the center of the graph.
 
 ---
 
-4. **MUST READ IF U ARE FROM OLD VERSION IF YOU'RE NEW THEN IGNORE:** If you are from old version of this template (4.0 and below) please go to this path `[anytemplate]/rules/.clinerules` then **copy** the entire section of update flag prompt from **line 40-52**. After that **paste** it to your ai agent then **include `-update` in your prompt**. Like this format:
+4. **Updating from an older version:** Versions 6.0 and below ship two rule files instead of `instructions.md`. If your template already has the `-update` flag, just run it — it overwrites the rules, deletes the obsolete files, and keeps your memory logs and `workspace.json` identity.
 
 ```
-[PASTED LINES]
-
 -update
 ```
 
-After that your workspace template is updated... well done! You only do this once then run `-update` in the future.
+Still on 4.0 or below with no `-update` section? Copy the `-update` row from the [how to use](#how-to-use-persona-triggers) table, paste it to your agent, then include `-update` in your prompt. Once only.
+
+</details>
 
 ---
 
-5. **`project_memory.md` restructured:** Replaced milestone/sprint/backlog tracker with compaction-style layout (inspired by opencode compaction). Sections now: Recent Changes (git diff visual with +/− marks, new file tree, push counts), Objective, Important Details (vault path), Completed, Blocked, Next Move, Relevant Files. Updated all connected references in `.clinerules` (flag definitions) and `orchestrator/SKILL.md`.
-
----
-
-## Template Compression (64% Leaner, Same Behavior, Less tokens spent)
+## Template Compression (v5.0 baseline)
 
 >From v5.0 to current
+
+_File names below are the ones measured at v5.0. `.clinerules` and `system_instructions.md` were merged into a single `instructions.md` in 7.0._
+
+> 7.0: 16.7KB → 15.0KB in one file, 17 duplicate rules removed, 3 contradictions fixed.
 
 ### Rules & Skills
 
@@ -90,7 +93,7 @@ After that your workspace template is updated... well done! You only do this onc
 ### What Changed
 
 - Notation legend (MUST/BAN/CRIT/CMD/SAME) replaces verbose phrases
-- Cross-file dedup (system_instructions references .clinerules)
+- Two rule files merged into one `instructions.md`, duplicates removed
 - Resolution mandates consolidated (4 blocks → 1)
 - SKILL.md personas trimmed to role + rules only
 - Memory file preambles shortened, duplicate rules removed
@@ -156,8 +159,7 @@ When any section passes 10 entries, the oldest are moved to `archives/`.
 Your-Project-Root/
 └── .opencode/                          Root configuration directory for OpenCode.
     ├── rules/                          Core behavioral rules and task tracking.
-    │   ├── .clinerules                 Primary recovery ground truth during context loss.
-    │   ├── system_instructions.md      System operational limitations, token management.
+    │   ├── instructions.md             All rules: boundaries, flags, personas, gates, skills.
     │   └── project_memory.md           Task tracker: objective, recent git changes, completed/blocked/next move.
     ├── memory/                         Specialized memory logs separated by concern.
     │   ├── error_memory.md             LIFO-sorted tracking for active and resolved bugs.
@@ -194,7 +196,7 @@ Your-Project-Root/
     └── opencode.json                   OpenCode configuration pointing to instruction files.
 ```
 
-_All templates (except .clinerules) share the same internal structure but use their respective root folder names for path references._
+_All templates share the same internal structure. Only the root folder name differs._
 
 ---
 
@@ -218,8 +220,8 @@ Use these triggers depending on the situations:
 | `-error`       | Memory          | Updates `error_memory.md` with bugs and fixes.                                                                    | Every debugging session.                                                                                                                 |
 | `-codebase`    | Memory          | Updates `codebase_map.md` with file descriptions.                                                                 | Before deployment.                                                                                                                       |
 | `-init`        | Utility         | Initializes `workspace.json`.                                                                                     | First-time setup.                                                                                                                        |
-| `-archive`     | Utility         | Moves old entries to archive files.                                                                               | When memory files get too large.                                                                                                         |
-| `-obsidian`    | Utility         | Mirrors `<template_name>/` → `<vault>/<project_name>/<template_name>/`.                                           | Sync workflow logs to Obsidian.                                                                                                          |
+| `-archive`     | Utility         | Appends the oldest entries to `archives/*.md` once a section passes 10.                                            | When memory files get too large.                                                                                                         |
+| `-obsidian`    | Utility         | Incremental vault backup. Asks for your vault path once, stores it in `project_memory.md`, then copies only changed files.           | Sync workflow logs to Obsidian.                                                                                                          |
 | `-update`      | Utility         | Fetches this current repository for newest updates of the templates while preserving logs and workspace identity. | Keep your workflow templates current with the upstream repo.                                                                             |
 
 ### Why Manual Triggers Instead of Auto-Updates?
@@ -316,6 +318,9 @@ Type `-setup` in your AI Agent. It will read the template and learn your project
 
 ## FAQ
 
+<details>
+<summary>Show Questions</summary>
+
 **Q: What happens if I forget to type a memory flag manually?**
 <br>The AI will still write code normally, but it won't update its internal progress tracking logs. If your chat session expires or resets, the AI won't know where you left off. Just type the correct flag (`-context`, `-error`, etc.) on your next prompt to sync it up.
 
@@ -332,7 +337,7 @@ Type `-setup` in your AI Agent. It will read the template and learn your project
 <br>Yes, free or smaller API models often have smaller context limits or weaker memory retention. If the AI starts acting lost or forgets instructions, just run `-setup` again in a fresh prompt to force-reload its brain with your project context.
 
 **Q: What if I have a huge project plan or database design map? Where should the AI save it?**
-<br>Don't let the AI make random markdown files on your root directory. It is strictly instructed to log all architectural roadmaps, system flows, and complex feature plans inside `.opencode/memory/implementation_memory.md` using the standardized flow format.
+<br>Don't let the AI make random markdown files on your root directory. It is strictly instructed to log all architectural roadmaps, system flows, and complex feature plans inside the template's `memory/implementation_memory.md` using the standardized flow format.
 
 **Q: Can I mix persona flags with memory flags in the same prompt?**
 <br>Yes! If you want the AI to analyze a bug and update your logs simultaneously, you can type something like `-d here is the error trace, please fix it and run -error`. The AI will adopt the Debugger mindset and update your error memory file at the same time.
@@ -350,20 +355,28 @@ Type `-setup` in your AI Agent. It will read the template and learn your project
 <br>`project_memory.md` holds objective, recent git changes (diffs, new files, unpushed commits), completed work, blockers, next move, and relevant files. All specialized logs (errors, security vulnerabilities, code reviews, test strategies, implementation flows, and codebase maps) live in separate files inside the `memory/` folder to keep concerns isolated.
 
 **Q: How do the Reviewer (`-r`) and Tester (`-t`) personas work with the memory system?**
-<br>When you use `-r` or `-t`, the AI adopts the respective persona and performs its analysis. If you also include `-setup` or explicitly request logging, the findings are saved to `.opencode/memory/review_memory.md` or `.opencode/memory/test_memory.md` using the strict LIFO format with severity classifications and structured output templates.
+<br>When you use `-d`, `-r`, `-t`, or `-s`, the AI scans the repo, writes its findings to the matching memory file first, shows you the list, then stops. It does not fix anything until you approve. `-a` and `-p` never write to memory.
 
 **Q: What happens when a memory file has too many entries?**
-<br>The archive protocol activates when any section exceeds 10 entries. The AI counts entries, extracts the oldest ones (bottom entries since LIFO places newest on top), creates an archive file in `.opencode/archives/` with a timestamped filename, and retains only the 10 most recent entries in the active section. This prevents context bloat while preserving complete history.
+<br>When any section passes 10 entries, the oldest are appended to the matching file in `archives/`. The 10 newest stay in the active file. No new files are created. This prevents context bloat while preserving complete history.
 
 **Q: What is the `workspace.json` file for and do I need to configure it?**
 <br>`workspace.json` is the workspace identity marker. On first use, the AI detects it says `"uninitialized"`, prompts you for a project name, and writes the initialized values. After that, it prevents re-initialization conflicts. You don't need to edit it manually — the AI handles it during `-setup`.
 
-**Q: Can I use the Reviewer and Tester personas without saving logs to memory files?**
-<br>Yes. The `-r` and `-t` personas work in read-only advisory mode by default. They only write to memory files when you explicitly include `-setup` in the prompt or directly request logging. This gives you full control over what gets persisted.
+**Q: Where does `-obsidian` write my files?**
+<br>Wherever you told it once. The first time you run `-obsidian` it asks two questions: your vault root (the folder that contains `.obsidian/`) and your backup root (defaults to `<vault>/Memory`). Both are saved in `project_memory.md` under Important Details. You can edit those two lines by hand any time, and the AI will use the new paths next run. Later runs compare each file and copy only what changed, so nothing is duplicated.
+
+**Q: Why is there one rules file now instead of two?**
+<br>`.clinerules` and `system_instructions.md` said many of the same things in slightly different words, and they had already started disagreeing with each other. They are now merged into `instructions.md`, with each rule appearing once. Fewer files, fewer tokens, no contradictions.
+
+</details>
 
 ---
 
 ## Own Usages
+
+<details>
+<summary>Show usage</summary>
 
 <p align="center">
     <p><img src="assets/usage1.png" width="200"/></p>
@@ -372,3 +385,5 @@ Type `-setup` in your AI Agent. It will read the template and learn your project
     <p><img src="assets/usage4.png" width="200"/></p>
     <p><img src="assets/usage5.png" width="200"/></p>
 </p>
+
+</details>

@@ -1,7 +1,6 @@
 {
   "instructions": [
-    ".kilo/rules/.clinerules",
-    ".kilo/rules/system_instructions.md",
+    ".kilo/rules/instructions.md",
   ],
 }
 // c: worrie

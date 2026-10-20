@@ -2,10 +2,9 @@
 
 ## External Instruction Loading
 
-CRITICAL: The core operational guardrails, boundaries, and memory tracking systems for this workspace are managed inside the rules sub-directory. Always re-read these files whenever you experience token loss, context window loss or any related causes so that you can retain the state of the project immediately. The environment is configured to read instructions from the following tracking layers:
+CRITICAL: The core operational guardrails, boundaries, and memory tracking systems for this workspace are managed inside the rules sub-directory. Always re-read this file whenever you experience token loss, context window loss or any related causes so that you can retain the state of the project immediately. The environment is configured to read instructions from the following tracking layers:
 
-- Core Rules & Flag Guidelines: `.kilo/rules/.clinerules`
-- Context Window & Boundaries: `.kilo/rules/system_instructions.md`
+- Core Rules & Boundaries: `.kilo/rules/instructions.md`
 
 ## Skill Execution Modes
 
