@@ -21,7 +21,7 @@
 ## Recent Updates
 
 <details>
-<summary>Show updates</summary>
+<summary>Show Updates</summary>
 
 1. **v7.0 — one rules file, smarter backups:** `.clinerules` and `system_instructions.md` merged into a single `instructions.md` per template. Same rules, one place, no contradictions. `-obsidian` now asks for your vault paths once, stores them in `project_memory.md`, copies only changed files, and writes a graph hub note named after your project. Tone matching added.
 
@@ -48,6 +48,9 @@ Still on 4.0 or below with no `-update` section? Copy the `-update` row from the
 ---
 
 ## Template Compression (v5.0 baseline)
+
+<details>
+<summary>Show More Details</summary>
 
 >From v5.0 to current
 
@@ -109,6 +112,8 @@ _File names below are the ones measured at v5.0. `.clinerules` and `system_instr
 - LIFO sorting rules intact
 - Archive threshold (10 entries) unchanged
 
+</details>
+
 ---
 
 ## What's this for?
@@ -125,7 +130,7 @@ This template adds a **memory layer** to your project. It gives the AI strict ru
 
 ### Key Differences
 
-| Aspect                | Without Template            | With UVE Coding Strat      |
+| Aspect                | Without UVE                 | With UVE                   |
 | :-------------------- | :-------------------------- | :------------------------- |
 | **Memory**            | Lost after context reset    | Saved in markdown files    |
 | **Token Usage**       | Reads entire repo each time | Only reads relevant memory |
@@ -154,6 +159,9 @@ When any section passes 10 entries, the oldest are moved to `archives/`.
 ---
 
 ## Folder Structure (on .opencode template)
+
+<details>
+    <summary>Show More</summary>
 
 ```text
 Your-Project-Root/
@@ -197,6 +205,8 @@ Your-Project-Root/
 ```
 
 _All templates share the same internal structure. Only the root folder name differs._
+
+</details>
 
 ---
 
@@ -312,7 +322,7 @@ These files must be in your project root, not inside the template folder.
 Type `-setup` in your AI Agent. It will read the template and learn your project.
 
 > incase `-setup` won't work prompt this instead:\
-> @AGENTS.md read your rules and follow them strictly.
+> @AGENTS.md read your rules and follow it. -setup
 
 ---
 
@@ -376,7 +386,7 @@ Type `-setup` in your AI Agent. It will read the template and learn your project
 ## Own Usages
 
 <details>
-<summary>Show usage</summary>
+<summary>Show Usage</summary>
 
 <p align="center">
     <p><img src="assets/usage1.png" width="200"/></p>
