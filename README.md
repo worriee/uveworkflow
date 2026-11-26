@@ -1,7 +1,7 @@
 # Ultimate Vibe Experience (UVE Coding Strat)
 
 <p align="center">
-  <img src="https://badgen.net/badge/Template%20Version/V7.0/blue" height="30" alt="Template V7.0"/>
+  <img src="https://badgen.net/badge/Template%20Version/V8.0/blue" height="30" alt="Template V8.0"/>
   <img src="https://badgen.net/badge/AI%20Personas/8/red" height="30" alt="AI Personas 8"/>
   <img src="https://badgen.net/badge/Memory%20Layers/7/purple" height="30" alt ="Memory Layers 7"/>
 </p>
@@ -23,19 +23,23 @@
 <details>
 <summary>Show Updates</summary>
 
-1. **v7.0 — one rules file, smarter backups:** `.clinerules` and `system_instructions.md` merged into a single `instructions.md` per template. Same rules, one place, no contradictions. `-obsidian` now asks for your vault paths once, stores them in `project_memory.md`, copies only changed files, and writes a graph hub note named after your project. Tone matching added.
+1. **Antigravity CLI template (8.0):** Added a native `.agents/` template so the workflow runs on `agy`. Same 8 personas, same flags, same memory system — nothing dropped.
 
 ---
 
-2. **Claude Code template (6.0):** Added a native `.claude/` template so the workflow runs on Claude Code too. Same 8 personas, same flags, same memory system — nothing dropped.
+2. **v7.0 — one rules file, smarter backups:** `.clinerules` and `system_instructions.md` merged into a single `instructions.md` per template. Same rules, one place, no contradictions. `-obsidian` now asks for your vault paths once, stores them in `project_memory.md`, copies only changed files, and writes a graph hub note named after your project. Tone matching added.
 
 ---
 
-3. **Obsidian sync:** `-obsidian` turns your project logs into a graph-ready backup. The first run asks for two paths — your vault root and your backup root — and saves both in `project_memory.md`, editable by hand any time. Every run after that compares each file and copies only what changed, reports what it skipped, and asks before deleting anything. A hub note named after your project links every backup, so the project sits at the center of the graph.
+3. **Claude Code template (6.0):** Added a native `.claude/` template so the workflow runs on Claude Code too. Same 8 personas, same flags, same memory system — nothing dropped.
 
 ---
 
-4. **Updating from an older version:** Versions 6.0 and below ship two rule files instead of `instructions.md`. If your template already has the `-update` flag, just run it — it overwrites the rules, deletes the obsolete files, and keeps your memory logs and `workspace.json` identity.
+4. **Obsidian sync:** `-obsidian` turns your project logs into a graph-ready backup. The first run asks for two paths — your vault root and your backup root — and saves both in `project_memory.md`, editable by hand any time. Every run after that compares each file and copies only what changed, reports what it skipped, and asks before deleting anything. A hub note named after your project links every backup, so the project sits at the center of the graph.
+
+---
+
+5. **Updating from an older version:** `-update` now diffs the upstream template against yours instead of using a fixed file list. Rules and skills are added, overwritten, or removed to match upstream — including old files like `system_instructions.md` and `.clinerules`. Anything inside your template that upstream doesn't ship is listed and you decide keep or delete, every run. Memory files are never overwritten blindly: only the headers are compared, matching sections keep your logs, and anything unmatched is written to `backups/<version>/` before the new structure lands.
 
 ```
 -update
@@ -232,7 +236,7 @@ Use these triggers depending on the situations:
 | `-init`        | Utility         | Initializes `workspace.json`.                                                                                     | First-time setup.                                                                                                                        |
 | `-archive`     | Utility         | Appends the oldest entries to `archives/*.md` once a section passes 10.                                            | When memory files get too large.                                                                                                         |
 | `-obsidian`    | Utility         | Incremental vault backup. Asks for your vault path once, stores it in `project_memory.md`, then copies only changed files.           | Sync workflow logs to Obsidian.                                                                                                          |
-| `-update`      | Utility         | Fetches this current repository for newest updates of the templates while preserving logs and workspace identity. | Keep your workflow templates current with the upstream repo.                                                                             |
+| `-update`      | Utility         | Diffs upstream against your template: adds, overwrites, and removes rules and skills. Memory files are header-checked, migrated, and backed up before any change. | Keep your workflow templates current without losing logs.                                                                               |
 
 ### Why Manual Triggers Instead of Auto-Updates?
 
@@ -283,6 +287,7 @@ git clone https://github.com/worriee/uveworkflow.git
 | OpenCode            | `.opencode`   |
 | Pi                  | `.pi`         |
 | Claude Code         | `.claude`     |
+| Antigravity CLI     | `.agents`     |
 
 _\*this will work in any platforms if you can make the agent read these folders_
 
@@ -305,6 +310,7 @@ your-project/
 | Kilo       | `AGENTS.md` and `kilo.json`     |
 | Pi         | `AGENTS.md`                     |
 | Claude Code| `CLAUDE.md`                     |
+| Antigravity CLI| — (auto-discovered)         |
 
 ```
 your-project/

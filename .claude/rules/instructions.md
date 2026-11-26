@@ -33,7 +33,7 @@
 
 ## Manual Sync Entry Rule (Flag-Triggered)
 - Auto-updates disabled. Update timestamps on every flagged prompt. Scan/analyze/update local tracking ONLY when user commands via flags:
-  - `-init`: Read `workspace.json`. If uninitialized → prompt name, scan project root for `AGENTS.md`/`CLAUDE.md`, read content for `<folder>/rules/` path, extract parent folder as `template_name`. No entry file → check for a rules directory in the root (`.opencode/`, `.claude/`, `.roo/`, `.kilo/`, `.pi/`, `.clinerules/`) containing `instructions.md` or a `rules/` subfolder, and use its name. One match → auto-set. Multiple → ASK user. None → prompt entry. Set fields, write back. First-time or re-init only.
+  - `-init`: Read `workspace.json`. If uninitialized → prompt name, scan project root for `AGENTS.md`/`CLAUDE.md`, read content for `<folder>/rules/` path, extract parent folder as `template_name`. No entry file → check for a rules directory in the root (`.opencode/`, `.claude/`, `.roo/`, `.kilo/`, `.pi/`, `.clinerules/`, `.agents/`) containing `instructions.md` or a `rules/` subfolder, and use its name. One match → auto-set. Multiple → ASK user. None → prompt entry. Set fields, write back. First-time or re-init only.
   - `-context`: Scan git (status/diff/unpushed) → fill Section 1. Update `project_memory.md` timestamp. BAN overwrite `Vault Root` / `Backup Root` in §3.
   - `-error`: Scan debugging traces + update `error_memory.md` with timestamp.
   - `-codebase`: Inspect structure + update `codebase_map.md` with timestamp. BAN document gitignored files.
@@ -55,7 +55,7 @@
   - Validate: `Vault Root/.obsidian/` must exist (warn + reconfirm if not); `Backup Root` must be inside `Vault Root` (else HALT); create `Backup Root` if absent.
   - Persist both values in `project_memory.md` §3. Then tell the user the two paths are saved there and can be edited by hand at any time.
   - BAN hardcode, BAN guess, BAN write outside `Backup Root`, BAN overwrite the two stored lines.
-- Source: Choice prompt. 1) Template folder detected in project root (default), validated against `api.github.com/repos/worriee/uveworkflow/contents/` (fail → static list `.opencode/`, `.kilo/`, `.pi/`, `.roo/`, `.clinerules/`, `.claude/`). 2) User-typed exact full path — MUST exist and be a directory, else re-ask. BAN globs.
+- Source: Choice prompt. 1) Template folder detected in project root (default), validated against `api.github.com/repos/worriee/uveworkflow/contents/` (fail → static list `.opencode/`, `.kilo/`, `.pi/`, `.roo/`, `.clinerules/`, `.claude/`, `.agents/`). 2) User-typed exact full path — MUST exist and be a directory, else re-ask. BAN globs.
 - Hub Name: Choice prompt. 1) `project_name` from the SELECTED template's `workspace.json` (default). 2) User-typed custom name. BAN `/`, `\`, `..`, empty, leading `.`.
 - Destination: default → `<backup_root>/<project_name>/`; custom → `<backup_root>/<project_name>/<HubName>/`.
 - Collision: Destination exists with a different `source:` in its hub frontmatter → HALT, ask for a custom hub name. BAN merge.
@@ -71,14 +71,20 @@
 - Trigger: `-update` → Mandatory Template Update. Bootstrap: still execute if user describes intent.
 - Source: EXCLUSIVELY `https://github.com/worriee/uveworkflow`. BAN other repos. Any deviation = CRIT.
 - Fetch: `git clone --depth 1` to temp dir. Clone fail → HALT, zero changes.
-- Detect: Identify all templates (`.opencode/`, `.kilo/`, `.pi/`, `.roo/`, `.clinerules/`, `.claude/`). Update ALL.
-- Backup: Snapshot local rules to temp dir before overwriting.
-- Overwrite: Per template: the rules file (`rules/instructions.md`, flat for Cline), every `SKILL.md`, and the entry file (`AGENTS.md` / `CLAUDE.md`).
-- Obsolete: After overwrite, delete `rules/.clinerules`, `rules/system_instructions.md`, `rules/core-rules.md`, `.clinerules/system_instructions.md`, `.clinerules/.clinerules`. BAN leave duplicates behind.
-- Preserve: BAN modify `project_memory.md`, `memory/`, `archives/`, `workspace.json` identity fields.
+- Detect: Identify all templates in the project root (`.opencode/`, `.claude/`, `.roo/`, `.kilo/`, `.pi/`, `.clinerules/`, `.agents/`, plus any other template folder found upstream). Update ALL.
+- Manifest: Build the upstream file list per template from the clone and the local list from disk. Classify every file: `added` (upstream only), `changed` (both, different), `same`, `obsolete` (local only).
+- Backup: Copy every affected file to `<template>/backups/<old_version>/<relative path>` before writing or deleting. If `template_version` is `uninitialized` → `backups/unknown/`. BAN delete without a backup.
+- Rules & Skills (no logs): copy `added`, overwrite `changed`, skip `same`. Managed scope = everything inside the template except `project_memory.md`, `memory/`, `archives/`, `backups/`.
+- Obsolete: delete local-only files that are legacy shipped names (`system_instructions.md`, `core-rules.md`, `.clinerules`, `rules/.clinerules`). Any other local-only file → present the full list → ASK keep/delete EVERY run (default keep). BAN delete silently, BAN remember the answer.
+- Memory (logs): NEVER overwrite blindly. Applies to `project_memory.md`, `memory/*.md`, `archives/*.md`.
+  - Compare headers in order: `#` and `##` first, then structural `###` excluding entry headers (`### [ERR-001]`). Extra local headers are log entries, ignore.
+  - Headers match → leave the file untouched, zero writes.
+  - Headers differ → back up, then migrate: keep the upstream structure, carry each old section body into the new section with the same header, write unmatched sections to `backups/<old_version>/<name>.unmatched.md`, and ASK once for all mismatched files: replace with migration / keep current / custom backup path. BAN delete, BAN drop entries.
+  - Upstream adds a memory file → copy in. Upstream removes one → ASK, default keep.
+- Preserve: BAN modify `project_memory.md` content, `memory/*`, `archives/*`, `workspace.json` identity fields.
 - Flag Survival: After overwrite, check `-obsidian`/`-update` sections. If missing → re-insert from backup. Flags must never self-delete.
 - Version Sync: Compare `template_version` upstream vs local. If newer → update ONLY `template_version`. Preserve all other fields.
-- Verify: List updated files per template. Clean temp dir.
+- Verify: List added/changed/deleted/skipped/backed-up/migrated files per template. Clean temp dir.
 - Delegation: STRICT. Subagent executes; main context gets summary only.
 
 ## CRITICAL: Context Loss Re-Read
@@ -154,7 +160,7 @@ Match operational mindset to skill based on flag:
 
 ## System Clean (`-clean`)
 - Scan + remove: debug traces, test artifacts, dead code, junk files (`.bak`, `.tmp`, `.log`, empty).
-- BAN touch: active source, configs, dependencies, routing/entry, DB/API, template files.
+- BAN touch: active source, configs, dependencies, routing/entry, DB/API, template files, `backups/`.
 - Pre-clean: List items with path + line + category. WAIT approval.
 - Post-clean: One-line justification per removal.
 - Uncertain → flag `REVIEW NEEDED`.
